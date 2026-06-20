@@ -36,7 +36,7 @@ const questions = all.slice(0, examLength).map((q) => ({
 const bundle = {
   version: 1,
   setId: "wa-set-01",
-  setName: "Bộ đề 1 (offline)",
+  setName: "Bộ đề 1",
   examLength,
   passCount: 32,
   generatedAt: new Date().toISOString(),

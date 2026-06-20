@@ -11,6 +11,9 @@ import { FeedbackBanner } from "@repo/ui/feedback-banner";
 import { vi } from "@repo/ui/i18n/vi";
 import { apiFetch, ensureUser, useTelemetry } from "../../lib/api";
 import { loadOfflineExamBundle } from "../../lib/offline";
+import { OfflineExamBanner } from "../../components/offline-exam-banner";
+import { OfflineExamCard } from "../../components/offline-exam-card";
+import { useOfflineExamReady } from "../../hooks/use-offline-exam";
 import { HeaderAction } from "../../components/header-action";
 import { VoiceButton } from "../../components/voice-button";
 import { QuestionSignImage } from "../../components/question-sign-image";
@@ -62,6 +65,50 @@ export default function ExamPage() {
     Map<string, { correctOptionId: string; explanationVi: string }>
   >(new Map());
   const [error, setError] = useState<string | null>(null);
+  const { ready: offlineReady, isOnline, bundle: offlineBundle } = useOfflineExamReady();
+
+  const applyOfflineBundle = (bundle: NonNullable<typeof offlineBundle>) => {
+    const answerMap = new Map(
+      bundle.questions.map((q) => [
+        q.id,
+        { correctOptionId: q.correctOptionId, explanationVi: q.explanationVi },
+      ]),
+    );
+    setOfflineAnswers(answerMap);
+    setQuestions(
+      bundle.questions.map((q) => ({
+        id: q.id,
+        questionTextVi: q.questionTextVi,
+        imageUrl: q.imageUrl,
+        options: q.options,
+      })),
+    );
+    setSetName(bundle.setName.replace(/\s*\(offline\)\s*/i, ""));
+    setPassCount(bundle.passCount);
+    setSelectedSet("wa-set-01");
+    setStarted(true);
+    setOfflineMode(true);
+    setAttempts([]);
+    setScore(0);
+    setCurrent(0);
+    setStartTime(Date.now());
+  };
+
+  const beginOfflineExam = async () => {
+    setLoading(true);
+    setError(null);
+    track("exam_start", { setId: "wa-set-01", offline: true });
+    try {
+      const bundle = offlineBundle ?? (await loadOfflineExamBundle());
+      if (!bundle) {
+        setError("Chưa tải được bài thi về máy. Mở app khi có WiFi rồi thử lại.");
+        return;
+      }
+      applyOfflineBundle(bundle);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     apiFetch<{ sets: ExamSet[]; dmv: { passCount: number } }>("/learning/exam-sets")
@@ -69,8 +116,23 @@ export default function ExamPage() {
         setSets(data.sets);
         setPassCount(data.dmv.passCount);
         if (data.sets[0]) setSelectedSet(data.sets[0].id);
+        setError(null);
       })
-      .catch(() => setError("Không tải được danh sách bộ đề. Thử lại sau."))
+      .catch(() => {
+        setSets([
+          {
+            id: "wa-set-01",
+            name: "Bộ đề 1",
+            description: "50 câu chuẩn DMV — cần mạng hoặc dùng thi offline bên dưới",
+            questionCount: 50,
+            examLength: 40,
+            passCount: 32,
+          },
+        ]);
+        setSelectedSet("wa-set-01");
+        if (!navigator.onLine) setError(null);
+        else setError("Không tải được danh sách bộ đề. Bạn vẫn có thể thi offline Bộ đề 1.");
+      })
       .finally(() => setSetsLoading(false));
   }, []);
 
@@ -96,31 +158,9 @@ export default function ExamPage() {
       setStartTime(Date.now());
     } catch (err) {
       if (selectedSet === "wa-set-01") {
-        const bundle = await loadOfflineExamBundle();
+        const bundle = offlineBundle ?? (await loadOfflineExamBundle());
         if (bundle) {
-          const answerMap = new Map(
-            bundle.questions.map((q) => [
-              q.id,
-              { correctOptionId: q.correctOptionId, explanationVi: q.explanationVi },
-            ]),
-          );
-          setOfflineAnswers(answerMap);
-          setQuestions(
-            bundle.questions.map((q) => ({
-              id: q.id,
-              questionTextVi: q.questionTextVi,
-              imageUrl: q.imageUrl,
-              options: q.options,
-            })),
-          );
-          setSetName(`${bundle.setName} (offline)`);
-          setPassCount(bundle.passCount);
-          setStarted(true);
-          setOfflineMode(true);
-          setAttempts([]);
-          setScore(0);
-          setCurrent(0);
-          setStartTime(Date.now());
+          applyOfflineBundle(bundle);
           setLoading(false);
           return;
         }
@@ -229,30 +269,43 @@ export default function ExamPage() {
 
         {setsLoading && <LoadingState message="Đang tải bộ đề..." />}
 
-        {!setsLoading && error && (
-          <p style={{ color: "var(--color-error)", textAlign: "center", marginBottom: "var(--space-md)" }}>{error}</p>
-        )}
-
-        {!setsLoading && !error && (
+        {!setsLoading && (
           <>
-            <p className="question-topic">Chọn bộ đề ({sets.length} bộ)</p>
-            <div className="options-list">
-              {sets.map((s) => (
-                <OptionCard
-                  key={s.id}
-                  id={s.id}
-                  text={`${s.name} — ${s.description}`}
-                  index={0}
-                  selected={selectedSet === s.id}
-                  onSelect={setSelectedSet}
-                />
-              ))}
-            </div>
+            {error && (
+              <p style={{ color: "var(--color-error)", textAlign: "center", marginBottom: "var(--space-md)" }}>{error}</p>
+            )}
+
+            {!error && (
+              <>
+                {!isOnline && <OfflineExamBanner variant="full" />}
+
+                <p className="question-topic">Chọn bộ đề ({sets.length} bộ)</p>
+                <div className="options-list">
+                  {sets.map((s) => (
+                    <OptionCard
+                      key={s.id}
+                      id={s.id}
+                      text={`${s.name} — ${s.description}`}
+                      index={0}
+                      selected={selectedSet === s.id}
+                      onSelect={setSelectedSet}
+                    />
+                  ))}
+                </div>
+              </>
+            )}
+
+            <OfflineExamCard
+              ready={offlineReady}
+              loading={loading}
+              isOnline={isOnline}
+              onStartOffline={beginOfflineExam}
+            />
           </>
         )}
 
-        <ElderButton onClick={beginExam} loading={loading} disabled={!selectedSet || setsLoading || sets.length === 0}>
-          {vi.exam.start}
+        <ElderButton onClick={beginExam} loading={loading} disabled={!selectedSet || setsLoading || sets.length === 0 || !isOnline}>
+          {isOnline ? vi.exam.start : "Cần mạng để thi online — dùng thi offline bên dưới"}
         </ElderButton>
       </ScreenLayout>
     );
@@ -333,6 +386,11 @@ export default function ExamPage() {
               📋 Xem lại {wrongAttempts.length} câu sai (có giải thích)
             </ElderButton>
           )}
+          {offlineMode && (
+            <p className="offline-result-note">
+              📴 Bạn thi ở chế độ không mạng. Khi có WiFi, thi lại online để lưu tiến độ lên app.
+            </p>
+          )}
           <ElderButton variant={wrongAttempts.length > 0 ? "secondary" : "success"} onClick={() => router.push("/learn")}>
             Học bài (có giải thích)
           </ElderButton>
@@ -355,6 +413,7 @@ export default function ExamPage() {
       }}
       headerAction={<HeaderAction />}
     >
+      {offlineMode && <OfflineExamBanner />}
       <StepBar total={questions.length} current={current} />
       {error && (
         <p style={{ color: "var(--color-error)", textAlign: "center", marginBottom: "var(--space-md)" }}>{error}</p>

@@ -110,7 +110,7 @@ export function MomOnboarding() {
               <li>🔤 Bấm <strong>A+</strong> góc màn hình để phóng to chữ</li>
               <li>📖 <strong>Tiếp tục học</strong> — ôn chủ đề yếu tự động</li>
               <li>📝 <strong>Thi thử</strong> — 40 câu, cần 32 câu đúng để đậu</li>
-              <li>📴 Có thể thi thử <strong>offline</strong> (Bộ đề 1) khi không có mạng</li>
+              <li>📴 <strong>Thi không cần WiFi</strong> — Bộ đề 1 tải sẵn trên máy</li>
             </ul>
             <div style={{ display: "flex", gap: "8px", marginTop: "16px" }}>
               <ElderButton variant="secondary" onClick={() => setStep(1)}>← Quay lại</ElderButton>

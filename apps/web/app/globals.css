@@ -259,6 +259,119 @@ a { color: inherit; text-decoration: none; }
   font-size: var(--font-size-base);
 }
 
+/* Offline exam — designed UI (JSON is backend-only, users never see raw file) */
+.offline-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, #e8f4fd 0%, #f0f7ff 100%);
+  border: 2px solid var(--color-primary);
+  margin-bottom: var(--space-md);
+  font-size: var(--font-size-sm);
+  line-height: 1.5;
+}
+
+.offline-banner--compact {
+  align-items: center;
+  padding: var(--space-sm) var(--space-md);
+}
+
+.offline-banner__icon {
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.offline-banner__icon-wrap {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.offline-banner__title {
+  font-weight: 700;
+  font-size: var(--font-size-base);
+  margin: 0 0 var(--space-xs);
+  color: var(--color-primary);
+}
+
+.offline-banner__desc {
+  margin: 0;
+  color: var(--color-text-secondary);
+}
+
+.offline-exam-card {
+  margin-top: var(--space-lg);
+  padding: var(--space-lg);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(160deg, #f8fafc 0%, #eef6ff 100%);
+  border: 2px dashed var(--color-primary);
+  box-shadow: 0 4px 20px rgba(11, 92, 173, 0.08);
+}
+
+.offline-exam-card__header {
+  margin-bottom: var(--space-sm);
+}
+
+.offline-exam-card__badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: var(--color-primary);
+  color: white;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  margin-bottom: var(--space-sm);
+}
+
+.offline-exam-card__title {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  margin: 0;
+  color: var(--color-text);
+}
+
+.offline-exam-card__desc {
+  color: var(--color-text-secondary);
+  line-height: 1.65;
+  margin: 0 0 var(--space-md);
+}
+
+.offline-exam-card__features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--space-md);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.9;
+}
+
+.offline-exam-card__hint {
+  font-size: var(--font-size-sm);
+  margin: 0 0 var(--space-md);
+  padding: var(--space-sm);
+  border-radius: var(--radius-sm);
+  background: rgba(11, 92, 173, 0.08);
+}
+
+.offline-exam-card__hint--warn {
+  background: rgba(234, 179, 8, 0.15);
+  color: #854d0e;
+  font-weight: 600;
+}
+
+.offline-result-note {
+  text-align: center;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  padding: var(--space-md);
+  margin: var(--space-md) 0;
+  border-radius: var(--radius-md);
+  background: #f0f7ff;
+  border: 1px solid rgba(11, 92, 173, 0.2);
+  line-height: 1.6;
+}
+
 .stream-cursor {
   display: inline-block;
   width: 3px;
