@@ -139,9 +139,15 @@ export async function getCuratedQuestionCount(stateCode = "WA"): Promise<number>
   return rows[0]?.count ?? 0;
 }
 
+function pickFromPool<T>(pool: T[]): T | null {
+  if (pool.length === 0) return null;
+  return pool[Math.floor(Math.random() * pool.length)] ?? null;
+}
+
 export async function getNextCuratedQuestion(
   userId: string,
   stateCode = "WA",
+  priorityTopics: string[] = [],
 ): Promise<(typeof questions.$inferSelect) | null> {
   const db = getDb();
 
@@ -158,17 +164,40 @@ export async function getNextCuratedQuestion(
 
   if (rows.length === 0) return null;
 
-  // Prefer questions the user hasn't attempted yet
-  const attempted = await db.execute(sql`
-    SELECT DISTINCT question_id FROM user_attempts WHERE user_id = ${userId}
+  const attemptRows = await db.execute(sql`
+    SELECT question_id, is_correct
+    FROM user_attempts
+    WHERE user_id = ${userId}
+    ORDER BY created_at DESC
   `);
-  const attemptedIds = new Set(
-    (attempted as unknown as Array<{ question_id: string }>).map((r) => r.question_id),
-  );
+  const attempts = attemptRows as unknown as Array<{ question_id: string; is_correct: boolean }>;
+  const attemptedIds = new Set(attempts.map((r) => r.question_id));
+  const wrongIds = new Set(attempts.filter((r) => !r.is_correct).map((r) => r.question_id));
 
-  const unseen = rows.filter((q) => !attemptedIds.has(q.id));
-  const pool = unseen.length > 0 ? unseen : rows;
-  return pool[Math.floor(Math.random() * pool.length)] ?? null;
+  const filterUnseen = (pool: typeof rows) => pool.filter((q) => !attemptedIds.has(q.id));
+  const filterWrong = (pool: typeof rows) => pool.filter((q) => wrongIds.has(q.id));
+  const filterTopics = (pool: typeof rows, topics: string[]) =>
+    topics.length > 0 ? pool.filter((q) => topics.includes(q.topic)) : pool;
+
+  // 1. Weak topics — prefer unseen, then previously wrong
+  if (priorityTopics.length > 0) {
+    const topicPool = filterTopics(rows, priorityTopics);
+    const unseenWeak = filterUnseen(topicPool);
+    if (unseenWeak.length > 0) return pickFromPool(unseenWeak);
+    const wrongWeak = filterWrong(topicPool);
+    if (wrongWeak.length > 0) return pickFromPool(wrongWeak);
+    if (topicPool.length > 0) return pickFromPool(topicPool);
+  }
+
+  // 2. Any previously wrong answers
+  const wrongPool = filterWrong(rows);
+  if (wrongPool.length > 0) return pickFromPool(wrongPool);
+
+  // 3. Unseen questions
+  const unseen = filterUnseen(rows);
+  if (unseen.length > 0) return pickFromPool(unseen);
+
+  return pickFromPool(rows);
 }
 
 export async function startWaExamSet(

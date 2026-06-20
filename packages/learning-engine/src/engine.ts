@@ -92,7 +92,21 @@ export async function getNextQuestion(userId: string): Promise<NextQuestionResul
 
   // WA curated DMV bank — fixed answers, no AI generation
   if (stateCode === "WA") {
-    const curated = await getNextCuratedQuestion(userId, "WA");
+    const clusters = await analyzeFailureClusters(userId);
+    const weakFromMastery = await db
+      .select({ topic: masteryStates.topic, masteryLevel: masteryStates.masteryLevel })
+      .from(masteryStates)
+      .where(eq(masteryStates.userId, userId))
+      .orderBy(masteryStates.masteryLevel);
+
+    const dueTopics = [
+      ...new Set([
+        ...clusters.map((c) => c.topic),
+        ...weakFromMastery.filter((m) => m.masteryLevel < 0.6).map((m) => m.topic),
+      ]),
+    ].slice(0, 3);
+
+    const curated = await getNextCuratedQuestion(userId, "WA", dueTopics);
     if (curated) {
       return {
         question: {
@@ -103,7 +117,7 @@ export async function getNextQuestion(userId: string): Promise<NextQuestionResul
           options: curated.options,
           difficultyScore: curated.difficultyScore,
         },
-        dueTopics: [],
+        dueTopics,
       };
     }
   }

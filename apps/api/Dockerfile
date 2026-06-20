@@ -5,7 +5,7 @@ RUN corepack enable && corepack prepare pnpm@9.0.0 --activate
 WORKDIR /app
 
 # Install deps
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml turbo.json ./
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml turbo.json .npmrc ./
 COPY apps/api/package.json ./apps/api/
 COPY packages/ ./packages/
 

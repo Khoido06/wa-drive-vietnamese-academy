@@ -47,6 +47,7 @@ export default function LearnPage() {
   const router = useRouter();
   const { track } = useTelemetry("learn");
   const [question, setQuestion] = useState<Question | null>(null);
+  const [dueTopics, setDueTopics] = useState<string[]>([]);
   const [selected, setSelected] = useState<string | null>(null);
   const [result, setResult] = useState<AttemptResult | null>(null);
   const [loading, setLoading] = useState(true);
@@ -62,8 +63,9 @@ export default function LearnPage() {
     setStartTime(Date.now());
     try {
       const userId = await ensureUser();
-      const data = await apiFetch<{ question: Question }>(`/learning/${userId}/next`);
+      const data = await apiFetch<{ question: Question; dueTopics?: string[] }>(`/learning/${userId}/next`);
       setQuestion(data.question);
+      setDueTopics(data.dueTopics ?? []);
     } catch (err) {
       setError(err instanceof Error ? err.message : vi.common.error);
     } finally {
@@ -97,6 +99,11 @@ export default function LearnPage() {
     }
   };
 
+  const weakTopicHint =
+    dueTopics.length > 0
+      ? dueTopics.map((t) => TOPIC_LABELS[t] ?? t).join(", ")
+      : null;
+
   return (
     <ScreenLayout title={vi.learn.title} subtitle={vi.learn.subtitle} onBack={() => router.push("/")} headerAction={<HeaderAction />}>
       {loading && <LoadingState message={vi.common.loading} />}
@@ -108,6 +115,11 @@ export default function LearnPage() {
       )}
       {question && !loading && (
         <>
+          {weakTopicHint && !result && (
+            <div className="weak-topic-banner" role="status">
+              🎯 Ôn chủ đề yếu: <strong>{weakTopicHint}</strong>
+            </div>
+          )}
           <div className="question-card">
             <p className="question-topic">{TOPIC_LABELS[question.topic] ?? question.topic}</p>
             <p className="question-text">{question.questionTextVi}</p>
@@ -147,6 +159,9 @@ export default function LearnPage() {
                 title={result.isCorrect ? vi.learn.correct : vi.learn.incorrect}
                 explanation={result.explanationVi}
               />
+              {result.explanationVi && (
+                <VoiceButton text={result.explanationVi} label="🔊 Đọc giải thích" />
+              )}
               <ElderButton variant="success" onClick={loadQuestion}>{vi.learn.next}</ElderButton>
             </>
           )}

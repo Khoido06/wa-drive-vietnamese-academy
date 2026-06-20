@@ -44,6 +44,9 @@ importers:
       '@upstash/redis':
         specifier: ^1.38.0
         version: 1.38.0
+      drizzle-orm:
+        specifier: ^0.39.3
+        version: 0.39.3(@opentelemetry/api@1.9.1)(postgres@3.4.9)
       hono:
         specifier: ^4.6.14
         version: 4.12.26

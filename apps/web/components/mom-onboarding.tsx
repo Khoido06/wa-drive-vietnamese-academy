@@ -31,7 +31,7 @@ export function MomOnboarding() {
         <h2 id="onboard-title" className="onboarding-title">Chào mừng!</h2>
         <p className="onboarding-desc">
           Ứng dụng giúp bạn luyện thi bằng lái xe Washington bằng tiếng Việt.
-          Mỗi lần chỉ học <strong>một câu</strong>, không vội nhé.
+          Học từng câu có giải thích, rồi thi thử <strong>40 câu</strong> giống bài thi thật.
         </p>
         <label htmlFor="mom-name" className="question-topic">Tên của bạn</label>
         <input
@@ -43,9 +43,10 @@ export function MomOnboarding() {
           autoFocus
         />
         <ul className="onboarding-tips">
-          <li>🔊 Bấm <strong>Đọc to</strong> để nghe câu hỏi</li>
+          <li>🔊 Bấm <strong>Đọc to</strong> để nghe câu hỏi và giải thích</li>
           <li>🔤 Bấm <strong>A+</strong> góc màn hình để phóng to chữ</li>
-          <li>📖 Chọn <strong>Tiếp tục học</strong> để bắt đầu</li>
+          <li>📖 <strong>Tiếp tục học</strong> — ôn chủ đề yếu tự động</li>
+          <li>📝 <strong>Thi thử</strong> — 40 câu, cần 32 câu đúng để đậu</li>
         </ul>
         <ElderButton variant="success" onClick={finish}>
           Bắt đầu học →

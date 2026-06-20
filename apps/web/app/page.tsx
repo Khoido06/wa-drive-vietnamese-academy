@@ -36,17 +36,17 @@ export default function HomePage() {
 
   return (
     <ScreenLayout title={vi.appName} subtitle={vi.appSubtitle} hero headerAction={<HeaderAction />}>
-      <div className="hero-badge">🚗 Washington State · Tiếng Việt · AI</div>
+      <div className="hero-badge">🚗 Washington State · Tiếng Việt · Đáp án chuẩn DMV</div>
       <p className="hero-greeting">
         {name ? `Chào ${name}!` : vi.home.welcome}
       </p>
-      <p className="hero-sub">Chọn một hoạt động — mỗi lần học một câu thôi nhé</p>
+      <p className="hero-sub">Chọn hoạt động — học từng câu có giải thích, thi thử 40 câu giống DMV</p>
 
       <StatePicker />
 
       <nav className="nav-grid" aria-label="Menu chính">
-        <NavCard icon="📖" label={vi.home.continueLearning} description="Nghe đọc to · Học từng câu" primary onClick={() => go("/learn", vi.home.continueLearning)} />
-        <NavCard icon="📝" label={vi.home.practiceExam} description="5 câu — cần 80% để đậu" onClick={() => go("/exam", vi.home.practiceExam)} />
+        <NavCard icon="📖" label={vi.home.continueLearning} description="Ôn chủ đề yếu · Có giải thích" primary onClick={() => go("/learn", vi.home.continueLearning)} />
+        <NavCard icon="📝" label={vi.home.practiceExam} description="40 câu · cần 32/40 (80%) để đậu" onClick={() => go("/exam", vi.home.practiceExam)} />
         <NavCard icon="🎓" label={vi.home.askQuestion} description="Hỏi AI · Trả lời tức thì" onClick={() => go("/tutor", vi.home.askQuestion)} />
         <NavCard icon="📊" label={vi.home.viewProgress} description="Theo dõi tiến độ học" onClick={() => go("/progress", vi.home.viewProgress)} />
         <NavCard icon="⭐" label="Gói Pro" description="Không giới hạn · Thêm bang" onClick={() => go("/pricing", "pricing")} />
