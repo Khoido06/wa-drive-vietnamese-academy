@@ -3,6 +3,7 @@ import { streamText } from "../llm/client.js";
 import { startRagTrace } from "../observability/langfuse.js";
 import { retrieve } from "./retriever.js";
 import { validateStreamAnswer } from "./validator.js";
+import { buildContextWithinBudget, groqPromptTokenBudget } from "./context-budget.js";
 import { DEFAULT_RAG_CONFIG, type RagConfig } from "../types.js";
 
 export async function* streamRagAnswer(
@@ -37,9 +38,13 @@ export async function* streamRagAnswer(
       return;
     }
 
-    const context = trace.chunks.map((c, i) => `[${i + 1}] ${c.content}`).join("\n\n");
     const systemPrompt = `Bạn là giáo viên dạy lái xe Washington cho người Việt lớn tuổi.
 Trả lời CHỈ từ nguồn được cung cấp. Trả lời bằng tiếng Việt, ngắn gọn, dễ hiểu.`;
+    const useGroqBudget =
+      process.env.AI_PROVIDER === "groq" || (!process.env.AI_PROVIDER && !!process.env.GROQ_API_KEY);
+    const context = useGroqBudget
+      ? buildContextWithinBudget(trace.chunks, systemPrompt, query, groqPromptTokenBudget())
+      : trace.chunks.map((c, i) => `[${i + 1}] ${c.content}`).join("\n\n");
 
     let fullText = "";
     for await (const token of streamText(

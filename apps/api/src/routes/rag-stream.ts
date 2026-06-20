@@ -99,7 +99,10 @@ export async function queryRagStream(c: Context) {
           await setCachedRagAnswer(query, effectiveState, fullAnswer.trim());
         }
       } catch (err) {
-        const message = err instanceof Error ? err.message : "Stream failed";
+        const raw = err instanceof Error ? err.message : "Stream failed";
+        const message = raw.includes("Request too large") || raw.includes("TPM")
+          ? "Hệ thống AI đang quá tải. Vui lòng thử lại sau vài giây hoặc hỏi câu ngắn hơn."
+          : raw;
         await stream.writeSSE({ data: JSON.stringify({ type: "error", data: message }) });
       }
     });

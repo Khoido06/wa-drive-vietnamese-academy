@@ -8,6 +8,7 @@ import { queryRag, ingestPdf, ragStatus, ragStates } from "./routes/rag.js";
 import {
   createUser,
   linkUser,
+  updateUserProfile,
   nextQuestion,
   submitAttempt,
   userProgress,
@@ -91,6 +92,7 @@ app.get("/rag/states", ragStates);
 
 app.post("/users", createUser);
 app.post("/users/link", linkUser);
+app.post("/users/:userId/profile", updateUserProfile);
 app.post("/users/:userId/state", setUserState);
 app.get("/billing/status/:userId", billingStatus);
 app.post("/billing/checkout", createCheckout);

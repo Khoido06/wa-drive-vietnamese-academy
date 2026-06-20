@@ -54,6 +54,26 @@ export async function getOrCreateUser(displayName: string) {
   return created;
 }
 
+/** Keep display name from onboarding/Clerk sync over stale default "Học viên". */
+function resolveDisplayName(preferred: string, fallback: string): string {
+  const trimmed = preferred.trim();
+  if (trimmed && trimmed.toLowerCase() !== "học viên") return trimmed;
+  return fallback.trim() || trimmed || "Học viên";
+}
+
+export async function syncUserDisplayName(userId: string, displayName: string) {
+  const db = getDb();
+  const trimmed = displayName.trim();
+  if (!trimmed) return null;
+
+  const [updated] = await db
+    .update(users)
+    .set({ displayName: trimmed, updatedAt: new Date() })
+    .where(eq(users.id, userId))
+    .returning();
+  return updated ?? null;
+}
+
 /** Link Clerk account to existing local user — keeps progress when mom signs in on new device */
 export async function linkClerkUser(
   clerkId: string,
@@ -63,14 +83,22 @@ export async function linkClerkUser(
   const db = getDb();
 
   const [byClerk] = await db.select().from(users).where(eq(users.clerkId, clerkId)).limit(1);
-  if (byClerk) return byClerk;
+  if (byClerk) {
+    const resolved = resolveDisplayName(displayName, byClerk.displayName);
+    if (resolved !== byClerk.displayName) {
+      const synced = await syncUserDisplayName(byClerk.id, resolved);
+      if (synced) return synced;
+    }
+    return byClerk;
+  }
 
   if (localUserId) {
     const [local] = await db.select().from(users).where(eq(users.id, localUserId)).limit(1);
     if (local && !local.clerkId) {
+      const resolved = resolveDisplayName(displayName, local.displayName);
       const [updated] = await db
         .update(users)
-        .set({ clerkId, displayName: local.displayName || displayName, updatedAt: new Date() })
+        .set({ clerkId, displayName: resolved, updatedAt: new Date() })
         .where(eq(users.id, localUserId))
         .returning();
       if (updated) return updated;

@@ -22,6 +22,10 @@ export default function HomePage() {
 
   useEffect(() => {
     setName(localStorage.getItem("wa_display_name") ?? "");
+    if (!localStorage.getItem("wa_onboarding_done")) {
+      setReady(true);
+      return;
+    }
     ensureUser()
       .then((id) => syncStudyStatsWithServer(id))
       .then(() => setReady(true))

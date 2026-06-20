@@ -12,6 +12,7 @@ export {
 export {
   getOrCreateUser,
   linkClerkUser,
+  syncUserDisplayName,
   getNextQuestion,
   recordAttempt,
   getProgress,

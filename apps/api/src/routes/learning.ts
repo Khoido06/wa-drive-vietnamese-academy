@@ -2,6 +2,7 @@ import type { Context } from "hono";
 import {
   getOrCreateUser,
   linkClerkUser,
+  syncUserDisplayName,
   getNextQuestion,
   recordAttempt,
   getProgress,
@@ -52,6 +53,18 @@ export async function linkUser(c: Context) {
     const message = err instanceof Error ? err.message : "Failed to link user";
     return c.json({ error: message }, 500);
   }
+}
+
+export async function updateUserProfile(c: Context) {
+  const userId = c.req.param("userId");
+  const { displayName } = await c.req.json<{ displayName: string }>();
+  if (!userId || !displayName?.trim()) {
+    return c.json({ error: "userId and displayName required" }, 400);
+  }
+
+  const user = await syncUserDisplayName(userId, displayName);
+  if (!user) return c.json({ error: "User not found" }, 404);
+  return c.json(user);
 }
 
 export async function nextQuestion(c: Context) {

@@ -85,13 +85,21 @@ export function useTelemetry(screen: string) {
 }
 
 export async function ensureUser(displayName?: string): Promise<string> {
-  const existing = getUserId();
-  if (existing) return existing;
-
   const name =
     displayName ??
     (typeof window !== "undefined" ? localStorage.getItem("wa_display_name") : null) ??
     "Học viên";
+
+  const existing = getUserId();
+  if (existing) {
+    if (name.trim() && name.trim().toLowerCase() !== "học viên") {
+      await apiFetch(`/users/${existing}/profile`, {
+        method: "POST",
+        body: JSON.stringify({ displayName: name.trim() }),
+      }).catch(() => {});
+    }
+    return existing;
+  }
 
   const user = await apiFetch<{ id: string }>("/users", {
     method: "POST",

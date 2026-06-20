@@ -1,12 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ScreenLayout } from "@repo/ui/screen-layout";
 import { ElderButton } from "@repo/ui/elder-button";
 import { LoadingState } from "@repo/ui/loading-state";
 import { vi } from "@repo/ui/i18n/vi";
-import { streamRagQuery, useTelemetry } from "../../lib/api";
+import { streamRagQuery, useTelemetry, ensureUser } from "../../lib/api";
 import { HeaderAction } from "../../components/header-action";
 import { UsageMeter } from "../../components/usage-meter";
 import { VoiceButton } from "../../components/voice-button";
@@ -28,6 +28,12 @@ export default function TutorPage() {
   const [streaming, setStreaming] = useState(false);
   const [done, setDone] = useState(false);
   const [rejected, setRejected] = useState(false);
+
+  useEffect(() => {
+    if (localStorage.getItem("wa_onboarding_done")) {
+      void ensureUser().catch(() => {});
+    }
+  }, []);
 
   const ask = async (text?: string) => {
     const q = (text ?? query).trim();

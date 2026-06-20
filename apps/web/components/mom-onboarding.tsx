@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ElderButton } from "@repo/ui/elder-button";
 import { isClerkEnabled } from "../lib/clerk-config";
+import { ensureUser } from "../lib/api";
 
 const DAILY_GOALS = [
   { value: 10, label: "10 phút / ngày" },
@@ -48,6 +49,7 @@ export function MomOnboarding() {
     localStorage.setItem("wa_onboarding_done", "1");
     if (examDate) localStorage.setItem("wa_exam_date", examDate);
     localStorage.setItem("wa_daily_goal", String(dailyGoal));
+    void ensureUser(displayName).catch(() => {});
     setShow(false);
     if (goSignIn && isClerkEnabled()) {
       router.push("/sign-in");
