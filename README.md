@@ -161,14 +161,10 @@ Deploy: [docs/DEPLOY_NOW.md](docs/DEPLOY_NOW.md)
 ## For Mom (Hạnh) 👩
 
 1. Mở https://wa-drive-vietnamese-academy.vercel.app → **Add to Home Screen**
-2. Nhập tên **Hạnh** — **bỏ qua** nút Đăng nhập
+2. Nhập tên **Hạnh** → bước **Lưu tiến độ** → **Đăng nhập** (email/Gmail 1 lần)
 3. **Học** → **Thi thử** → **Hỏi thầy giáo AI**
 
-Unlimited free: set `PREMIUM_DISPLAY_NAMES=Mẹ,Hạnh,Lan,Mom` on **Railway API** → see [docs/BILLING.md](docs/BILLING.md).
-
-- **🔊 Đọc to** — Web Speech API tiếng Việt
-- **A / A+ / A++** — chỉnh cỡ chữ góc màn hình
-- **Một câu/lần** — không rối, không vội
+Unlimited: `PREMIUM_DISPLAY_NAMES=Mẹ,Hạnh,Lan,Mom` on **Railway API**. Clerk setup: [docs/CLERK.md](docs/CLERK.md).
 
 ---
 

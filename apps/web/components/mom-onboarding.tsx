@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ElderButton } from "@repo/ui/elder-button";
+import { isClerkEnabled } from "../lib/clerk-config";
 
 const DAILY_GOALS = [
   { value: 10, label: "10 phút / ngày" },
@@ -31,20 +32,26 @@ export function MomOnboarding() {
 
   if (!show) return null;
 
-  const finish = () => {
+  const finish = (goSignIn = false) => {
     const displayName = name.trim() || "Mẹ";
     localStorage.setItem("wa_display_name", displayName);
     localStorage.setItem("wa_onboarding_done", "1");
     if (examDate) localStorage.setItem("wa_exam_date", examDate);
     localStorage.setItem("wa_daily_goal", String(dailyGoal));
     setShow(false);
-    router.refresh();
+    if (goSignIn && isClerkEnabled()) {
+      router.push("/sign-in");
+    } else {
+      router.refresh();
+    }
   };
 
   return (
     <div className="onboarding-overlay" role="dialog" aria-modal="true" aria-labelledby="onboard-title">
       <div className="onboarding-card">
-        <p style={{ fontSize: "48px", marginBottom: "16px" }}>{step === 0 ? "👋" : step === 1 ? "📅" : "🎯"}</p>
+        <p style={{ fontSize: "48px", marginBottom: "16px" }}>
+          {step === 0 ? "👋" : step === 1 ? "📅" : step === 2 ? "🎯" : "💾"}
+        </p>
 
         {step === 0 && (
           <>
@@ -107,15 +114,37 @@ export function MomOnboarding() {
             </div>
             <ul className="onboarding-tips">
               <li>🔊 Bấm <strong>Đọc to</strong> để nghe câu hỏi và giải thích</li>
-          <li>🔤 Bấm <strong>A+</strong> góc màn hình để phóng to chữ</li>
-          <li>👤 <strong>Không cần đăng nhập</strong> — bỏ qua nút Đăng nhập nếu thấy</li>
-          <li>📖 <strong>Tiếp tục học</strong> — ôn chủ đề yếu tự động</li>
+              <li>🔤 Bấm <strong>A+</strong> góc màn hình để phóng to chữ</li>
+              <li>📖 <strong>Tiếp tục học</strong> — ôn chủ đề yếu tự động</li>
               <li>📝 <strong>Thi thử</strong> — 40 câu, cần 32 câu đúng để đậu</li>
               <li>📴 <strong>Thi không cần WiFi</strong> — Bộ đề 1 tải sẵn trên máy</li>
             </ul>
-            <div style={{ display: "flex", gap: "8px", marginTop: "16px" }}>
+            <div style={{ display: "flex", gap: "8px", marginTop: "16px", flexWrap: "wrap" }}>
               <ElderButton variant="secondary" onClick={() => setStep(1)}>← Quay lại</ElderButton>
-              <ElderButton variant="success" onClick={finish}>Bắt đầu học →</ElderButton>
+              {isClerkEnabled() ? (
+                <ElderButton variant="success" onClick={() => setStep(3)}>Tiếp theo →</ElderButton>
+              ) : (
+                <ElderButton variant="success" onClick={() => finish()}>Bắt đầu học →</ElderButton>
+              )}
+            </div>
+          </>
+        )}
+
+        {step === 3 && isClerkEnabled() && (
+          <>
+            <h2 id="onboard-title" className="onboarding-title">Lưu tiến độ</h2>
+            <p className="onboarding-desc">
+              Đăng nhập <strong>1 lần</strong> bằng email hoặc Google — khi đổi điện thoại, bài đã học vẫn còn.
+              Con có thể giúp mẹ tạo tài khoản nếu cần.
+            </p>
+            <ul className="onboarding-tips">
+              <li>✅ Nên đăng nhập nếu sắp đổi máy hoặc muốn backup tiến độ</li>
+              <li>⏭️ Có thể bỏ qua — đăng nhập sau qua nút góc màn hình</li>
+            </ul>
+            <div style={{ display: "flex", gap: "8px", marginTop: "16px", flexWrap: "wrap" }}>
+              <ElderButton variant="secondary" onClick={() => setStep(2)}>← Quay lại</ElderButton>
+              <ElderButton variant="secondary" onClick={() => finish(false)}>Bỏ qua, học luôn</ElderButton>
+              <ElderButton variant="success" onClick={() => finish(true)}>Đăng nhập →</ElderButton>
             </div>
           </>
         )}

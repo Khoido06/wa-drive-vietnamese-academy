@@ -1,45 +1,39 @@
 # Clerk Auth (Optional)
 
-> **Mẹ không cần đăng nhập.** App chạy đầy đủ với tên + localStorage.  
-> Clerk chỉ hữu ích khi **con muốn thử đăng nhập** hoặc **sync tiến độ** qua tài khoản.
+> **Khuyên mẹ Hạnh đăng nhập 1 lần** để đồng bộ tiến độ khi đổi điện thoại.  
+> Vẫn học được nếu chưa login — unlimited qua tên **Hạnh** trên Railway.
 
 ---
 
-## Ba mức (chọn 1)
+## Luồng cho mẹ Hạnh (khuyên dùng)
 
-| Mức | Ai | Clerk keys | Domain |
-|-----|-----|------------|--------|
-| **1 — Mẹ thi bằng** | Mẹ | Không set | `*.vercel.app` OK |
-| **2 — Gia đình / thử login** | Con test trên web live | `pk_test_` / `sk_test_` (Development) | `*.vercel.app` OK |
-| **3 — Portfolio / user trả phí** | Scale thật | `pk_live_` / `sk_live_` (Production) | **Domain riêng** bắt buộc |
+1. Mở https://wa-drive-vietnamese-academy.vercel.app
+2. Onboarding → nhập **Hạnh**
+3. Bước **Lưu tiến độ** → **Đăng nhập** (email hoặc Google)
+4. Học / thi — tiến độ lưu cloud, đổi máy đăng nhập lại là có
 
-Mẹ unlimited free qua **tên** (`PREMIUM_DISPLAY_NAMES`), **không** qua Clerk hay Stripe.
-
----
-
-## Mức 1 — Mẹ (không Clerk)
-
-**Không set** Clerk env trên Vercel → không có nút Đăng nhập.
-
-App vẫn: học / thi / AI tutor / offline Bộ đề 1 / unlimited cho **Hạnh**, **Mẹ**, **Lan**, **Mom**.
+**Con giúp mẹ:** tạo tài khoản email/Gmail trên `/sign-in` lần đầu.
 
 ---
 
-## Mức 2 — Dev keys trên vercel.app (khuyên dùng hiện tại)
+## Setup Clerk trên vercel.app (Mức 2 — không cần domain riêng)
 
-Cho phép **con thử đăng nhập** trên https://wa-drive-vietnamese-academy.vercel.app **không cần mua domain**.
-
-### 1. Clerk Dashboard (Development — không tạo Production)
+### 1. Clerk Dashboard → **Development**
 
 1. [dashboard.clerk.com](https://dashboard.clerk.com) → **Go to app**
-2. Giữ **Development** (không cần "Create production instance")
-3. **Configure → Domains** (hoặc Paths) → thêm:
-   ```
-   https://wa-drive-vietnamese-academy.vercel.app
-   ```
-4. **Configure → API Keys** (tab **Development**) → copy:
-   - `pk_test_...`
-   - `sk_test_...`
+2. **Configure → Paths** (không phải Domains Primary):
+
+| Field | Giá trị |
+|-------|---------|
+| Home URL | `https://wa-drive-vietnamese-academy.vercel.app` |
+| Sign-in URL | `https://wa-drive-vietnamese-academy.vercel.app/sign-in` |
+| Sign-up URL | `https://wa-drive-vietnamese-academy.vercel.app/sign-up` |
+| After sign-in | `https://wa-drive-vietnamese-academy.vercel.app/` |
+
+3. **Configure → API keys** (tab **Development**) → `pk_test_` + `sk_test_`
+4. **User & authentication** → bật **Email** và **Google** (dễ cho mẹ có Gmail)
+
+> **Domains** (`fine-mallard-61.clerk.accounts.dev`) — để nguyên, không cần sửa.
 
 ### 2. Vercel env (Production)
 
@@ -50,88 +44,53 @@ Cho phép **con thử đăng nhập** trên https://wa-drive-vietnamese-academy.
 | `NEXT_PUBLIC_CLERK_SIGN_IN_URL` | `/sign-in` |
 | `NEXT_PUBLIC_CLERK_SIGN_UP_URL` | `/sign-up` |
 
-**Redeploy** sau khi set env.
+Redeploy sau khi set.
 
-### 3. Hạn chế (chấp nhận được cho gia đình)
+### 3. Railway (unlimited cho mẹ)
 
-- Console có thể báo *"development keys"* — bình thường với `pk_test_`
-- Google OAuth dùng credential dev của Clerk
-- Không dùng cho scale user trả phí lớn
-
-### 4. Verify
-
-- [ ] Nút **Đăng nhập** góc phải
-- [ ] `/sign-in` → đăng ký email test → **UserButton** hiện
-- [ ] Mẹ **không login** vẫn học/thi bình thường
-
----
-
-## Mức 3 — Production thật (sau này)
-
-Khi có **domain riêng** (~$10/năm) gắn Vercel:
-
-1. Clerk → **Create production instance**
-2. **Domains** → domain riêng (vd. `hoclaixewa.com`) — **không** dùng `*.vercel.app`
-3. DNS records → **Deploy certificates**
-4. Copy `pk_live_` / `sk_live_` → Vercel Production
-5. Chạy:
-
-```bash
-./scripts/setup-clerk-production.sh
+```env
+FAMILY_UNLIMITED=false
+PREMIUM_DISPLAY_NAMES=Mẹ,Hạnh,Lan,Mom
 ```
 
-OAuth (Google) production: tạo credentials riêng trên Google Cloud.
+Mẹ nhập **Hạnh** lúc onboarding → giữ tên khi link Clerk (code merge `wa_display_name`).
 
 ---
 
-## Ai cần gì?
+## Verify
 
-| Người dùng | Cần đăng nhập? | Cách dùng |
-|------------|----------------|-----------|
-| **Mẹ** | ❌ Không | Nhập **Hạnh** / **Mẹ** → học/thi/AI ngay |
-| **Con** | ✅ Tuỳ chọn | Mức 2: đăng nhập trên vercel.app |
-| **User Pro** | ✅ Tuỳ chọn | Mức 3: sync cross-device với domain riêng |
+- [ ] Nút **Đăng nhập** góc phải
+- [ ] Mẹ đăng ký → avatar hiện → refresh vẫn đăng nhập
+- [ ] Làm vài câu học → đăng xuất → đăng nhập lại → tiến độ còn
+- [ ] Banner **💾 Lưu tiến độ** trên trang chủ (khi chưa login)
+
+Console có thể báo *development keys* — OK với `pk_test_`.
 
 ---
 
 ## Luồng kỹ thuật
 
 ```
-Mẹ (không login):
-  localStorage wa_user_id → API /users → Neon
+Mẹ nhập Hạnh → localStorage wa_display_name + wa_user_id
 
-User đăng nhập Clerk:
-  Clerk session → UserSync → POST /users/link
-  → merge localUserId + clerkId → một user Neon
+Đăng nhập Clerk:
+  UserSync → POST /users/link { clerkId, displayName: "Hạnh", localUserId }
+  → merge tiến độ cũ + clerk_id trên Neon
+  → setUserId(linked.id) — cùng user trên mọi máy
 ```
 
-Code: `apps/web/components/user-sync.tsx`, `apps/web/lib/clerk-config.ts`, `apps/web/middleware.ts`.
+Code: `user-sync.tsx`, `engine.ts` (`linkClerkUser`), `sync-login-banner.tsx`, `mom-onboarding.tsx` (bước Lưu tiến độ).
 
 ---
 
-## Hướng dẫn mẹ (không cần Clerk)
+## Mức 3 — Production thật (sau này)
 
-1. Mở https://wa-drive-vietnamese-academy.vercel.app
-2. Add to Home Screen
-3. Nhập tên **Hạnh** — **bỏ qua** nút Đăng nhập
-4. Học → Thi thử → Hỏi AI
-
----
-
-## DB (đã có sẵn)
-
-```bash
-pnpm db:migrate:users-auth
-```
-
-Cột `users.clerk_id` link Clerk ↔ tiến độ học.
+Domain riêng + `pk_live_` — xem `./scripts/setup-clerk-production.sh`.
 
 ---
 
 ## Chi phí
 
-Clerk Free: **10,000 MAU/tháng** — đủ gia đình + vài user.
+Clerk Free: **10,000 MAU/tháng** — đủ gia đình.
 
----
-
-*Liên quan: [BILLING.md](./BILLING.md) (mom unlimited) · [OBSERVABILITY.md](./OBSERVABILITY.md)*
+*Liên quan: [BILLING.md](./BILLING.md)*

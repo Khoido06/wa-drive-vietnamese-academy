@@ -82,7 +82,7 @@ Do **not** set `FAMILY_UNLIMITED=true` unless you want everyone unlimited.
 
 ## 6. Clerk auth (optional — mom does NOT need login)
 
-**Mẹ (Hạnh):** mở app, nhập tên **Hạnh** hoặc **Mẹ** → học/thi/AI — **không cần đăng nhập**. Unlimited qua `PREMIUM_DISPLAY_NAMES` trên Railway.
+**Mẹ (Hạnh):** nhập **Hạnh** → **đăng nhập 1 lần** (Clerk) để đồng bộ tiến độ khi đổi điện thoại. Unlimited qua `PREMIUM_DISPLAY_NAMES` trên Railway.
 
 Clerk chỉ cho:
 - Con thử đăng nhập / xem tiến độ (Family)

@@ -70,7 +70,7 @@ export async function linkClerkUser(
     if (local && !local.clerkId) {
       const [updated] = await db
         .update(users)
-        .set({ clerkId, displayName, updatedAt: new Date() })
+        .set({ clerkId, displayName: local.displayName || displayName, updatedAt: new Date() })
         .where(eq(users.id, localUserId))
         .returning();
       if (updated) return updated;

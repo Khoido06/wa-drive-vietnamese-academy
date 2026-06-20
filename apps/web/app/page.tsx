@@ -9,6 +9,7 @@ import { vi } from "@repo/ui/i18n/vi";
 import { useTelemetry, ensureUser } from "../lib/api";
 import { HeaderAction } from "../components/header-action";
 import { StatePicker } from "../components/state-picker";
+import { SyncLoginBanner } from "../components/sync-login-banner";
 
 export default function HomePage() {
   const router = useRouter();
@@ -41,6 +42,8 @@ export default function HomePage() {
         {name ? `Chào ${name}!` : vi.home.welcome}
       </p>
       <p className="hero-sub">Chọn hoạt động — học từng câu có giải thích, thi thử 40 câu giống DMV</p>
+
+      <SyncLoginBanner />
 
       <StatePicker />
 

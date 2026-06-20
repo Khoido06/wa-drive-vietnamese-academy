@@ -16,9 +16,10 @@ function UserSync() {
     synced.current = true;
 
     const displayName =
-      user.firstName ??
-      user.fullName ??
-      user.primaryEmailAddress?.emailAddress?.split("@")[0] ??
+      (typeof window !== "undefined" ? localStorage.getItem("wa_display_name") : null)?.trim() ||
+      user.firstName ||
+      user.fullName ||
+      user.primaryEmailAddress?.emailAddress?.split("@")[0] ||
       "Học viên";
 
     apiFetch<{ id: string }>("/users/link", {

@@ -4,7 +4,7 @@ export default function SignUpPage() {
   return (
     <main className="auth-page">
       <p className="auth-page__hint">
-        Tạo tài khoản để lưu tiến độ học. Mẹ có thể bỏ qua và dùng app không cần đăng ký.
+        Tạo tài khoản để <strong>lưu tiến độ</strong> khi đổi điện thoại. Nhập email hoặc dùng Google.
       </p>
       <SignUp
         routing="path"
