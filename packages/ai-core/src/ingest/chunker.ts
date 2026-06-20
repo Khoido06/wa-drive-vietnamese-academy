@@ -27,7 +27,8 @@ export function chunkText(
 }
 
 export function extractSections(text: string): TextChunk[] {
-  const sectionPattern = /^(?:Chapter|Section|CHAPTER|SECTION)\s+\d+[.:]\s*(.+)$/gm;
+  const sectionPattern =
+    /^(?:#{1,3}\s*)?(?:Chapter|Section|CHAPTER|SECTION|CHƯƠNG)\s+\d+[.:]\s*(.+)$/gim;
   const chunks: TextChunk[] = [];
   let lastIndex = 0;
   let sectionTitle = "Introduction";
