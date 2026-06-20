@@ -60,7 +60,7 @@ app.get("/docs", openApiDocs);
 
 app.post("/rag/query", ragRateLimit, queryRag);
 app.post("/rag/query/stream", ragRateLimit, queryRagStream);
-app.post("/rag/ingest", queryRag);
+app.post("/rag/ingest", ingestPdf);
 app.get("/rag/status", ragStatus);
 app.get("/rag/states", ragStates);
 

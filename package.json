@@ -17,7 +17,9 @@
     "setup:ollama": "bash scripts/setup-ollama.sh",
     "env:check": "node scripts/connect-all-keys.mjs",
     "env:sync": "node scripts/connect-all-keys.mjs --apply",
-    "env:merge-local": "node scripts/connect-all-keys.mjs --merge-local"
+    "env:merge-local": "node scripts/connect-all-keys.mjs --merge-local",
+    "ingest:states": "node --import tsx scripts/ingest-states.ts",
+    "ingest:states:all": "node --import tsx scripts/ingest-states.ts --all"
   },
   "devDependencies": {
     "prettier": "^3.7.4",

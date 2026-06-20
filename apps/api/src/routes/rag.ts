@@ -1,10 +1,11 @@
 import type { Context } from "hono";
 import {
   queryRag as ragQuery,
-  ingestPdf as doIngest,
+  ingestDocument as doIngest,
   getChunkCount,
   getProviderStatus,
   getAvailableStates,
+  resolveStateDocumentPath,
 } from "@repo/ai-core";
 import { resolveRagConfig } from "@repo/mutation-engine";
 import { getRagCacheStats } from "../cache/rag-cache.js";
@@ -24,24 +25,20 @@ export async function queryRag(c: Context) {
 }
 
 export async function ingestPdf(c: Context) {
-  let body: { stateCode?: string; pdfPath?: string } = {};
+  let body: { stateCode?: string; pdfPath?: string; replace?: boolean } = {};
   try {
-    body = await c.req.json<{ stateCode?: string; pdfPath?: string }>();
+    body = await c.req.json<{ stateCode?: string; pdfPath?: string; replace?: boolean }>();
   } catch {
     // empty body — default WA ingest
   }
-  const pdfPath =
-    body.pdfPath ??
-    (body.stateCode === "CA"
-      ? process.env.CA_DRIVER_GUIDE_PDF_PATH
-      : undefined) ??
-    process.env.WA_DRIVER_GUIDE_PDF_PATH ??
-    "./docs/driver-guide-vi.pdf";
+  const stateCode = body.stateCode ?? "WA";
+  const docPath = resolveStateDocumentPath(stateCode, body.pdfPath);
 
   try {
-    const config = await resolveRagConfig({ stateCode: body.stateCode ?? "WA" });
-    const result = await doIngest(pdfPath, config, {
-      stateCode: body.stateCode ?? "WA",
+    const config = await resolveRagConfig({ stateCode });
+    const result = await doIngest(docPath, config, {
+      stateCode,
+      replace: body.replace ?? true,
     });
     return c.json(result);
   } catch (err) {

@@ -25,6 +25,9 @@ const RAILWAY_VARS = [
   "EMBED_MODEL",
   "EMBEDDING_DIMENSIONS",
   "WA_DRIVER_GUIDE_PDF_PATH",
+  "CA_DRIVER_GUIDE_PATH",
+  "TX_DRIVER_GUIDE_PATH",
+  "FL_DRIVER_GUIDE_PATH",
   "MUTATION_ENABLED",
   "MUTATION_INTERVAL_MS",
   "WEB_URL",
@@ -64,6 +67,9 @@ const DEFAULTS = {
   LLM_MODEL: "llama-3.1-8b-instant",
   EMBEDDING_DIMENSIONS: "768",
   WA_DRIVER_GUIDE_PDF_PATH: "./docs/driver-guide-vi.pdf",
+  CA_DRIVER_GUIDE_PATH: "./docs/states/ca-driver-guide-vi.md",
+  TX_DRIVER_GUIDE_PATH: "./docs/states/tx-driver-guide-vi.md",
+  FL_DRIVER_GUIDE_PATH: "./docs/states/fl-driver-guide-vi.md",
   MUTATION_ENABLED: "true",
   MUTATION_INTERVAL_MS: "3600000",
   WEB_URL: "https://wa-drive-vietnamese-academy.vercel.app",
@@ -161,7 +167,12 @@ function mergeIntoLocalEnv() {
 
   for (const [key, val] of Object.entries(merged)) {
     if (!hasValue(val) || existingKeys.has(key)) continue;
-    if (key.startsWith("VERCEL_") || key.startsWith("NX_") || key.startsWith("TURBO_"))
+    if (
+      key.startsWith("VERCEL_") ||
+      key === "VERCEL" ||
+      key.startsWith("NX_") ||
+      key.startsWith("TURBO_")
+    )
       continue;
     lines.push(`${key}=${val}`);
     added.push(key);
