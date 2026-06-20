@@ -2061,6 +2061,34 @@ a { color: inherit; text-decoration: none; }
   color: var(--color-primary);
 }
 
+.drive-sim__viewport--night,
+.drive-sim__viewport--rain {
+  box-shadow: inset 0 0 0 3px #1e293b;
+}
+
+.drive-sim__collision-warn {
+  margin: var(--space-xs) 0;
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-md);
+  background: #fef2f2;
+  border: 2px solid #ef4444;
+  color: #991b1b;
+  font-weight: var(--font-weight-bold);
+  text-align: center;
+  animation: shake 0.35s ease;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+
+.drive-sim__hud-hit {
+  color: #ef4444;
+  font-weight: var(--font-weight-bold);
+}
+
 .drive-sim__viewport--cockpit {
   box-shadow: inset 0 0 0 4px #1c1917;
 }

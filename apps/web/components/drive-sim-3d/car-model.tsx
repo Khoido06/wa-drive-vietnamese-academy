@@ -13,6 +13,7 @@ interface Props {
   signalRight: boolean;
   steer: number;
   hideInCockpit?: boolean;
+  headlights?: boolean;
 }
 
 function Wheel({ x, z }: { x: number; z: number }) {
@@ -24,7 +25,7 @@ function Wheel({ x, z }: { x: number; z: number }) {
   );
 }
 
-export function CarModel({ carRef, signalLeft, signalRight, steer, hideInCockpit }: Props) {
+export function CarModel({ carRef, signalLeft, signalRight, steer, hideInCockpit, headlights }: Props) {
   const group = useRef<THREE.Group>(null);
   const bodyMat = useMemo(
     () => new THREE.MeshStandardMaterial({ color: "#2563eb", metalness: 0.55, roughness: 0.35 }),
@@ -90,7 +91,14 @@ export function CarModel({ carRef, signalLeft, signalRight, steer, hideInCockpit
       </group>
       <Wheel x={-0.85} z={-1.35} />
       <Wheel x={0.85} z={-1.35} />
-      <pointLight position={[0, 0.8, 2.2]} intensity={signalLeft || signalRight ? 0.4 : 0.15} color="#fffbeb" distance={6} />
+      {headlights ? (
+        <>
+          <spotLight position={[0.7, 0.55, 2.1]} angle={0.42} intensity={2.2} distance={16} color="#fffbeb" />
+          <spotLight position={[-0.7, 0.55, 2.1]} angle={0.42} intensity={2.2} distance={16} color="#fffbeb" />
+        </>
+      ) : (
+        <pointLight position={[0, 0.8, 2.2]} intensity={signalLeft || signalRight ? 0.4 : 0.15} color="#fffbeb" distance={6} />
+      )}
     </group>
   );
 }

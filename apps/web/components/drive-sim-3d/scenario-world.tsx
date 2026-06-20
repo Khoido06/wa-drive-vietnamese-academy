@@ -63,8 +63,11 @@ function RoadMarkings({ scenario }: { scenario: SimScenario }) {
   return null;
 }
 
-export function ScenarioWorld({ scenario }: { scenario: SimScenario }) {
-  const asphalt = useMemo(() => new THREE.MeshStandardMaterial({ color: "#44403c", roughness: 0.95 }), []);
+export function ScenarioWorld({ scenario, dimmed }: { scenario: SimScenario; dimmed?: boolean }) {
+  const asphalt = useMemo(
+    () => new THREE.MeshStandardMaterial({ color: dimmed ? "#292524" : "#44403c", roughness: 0.95 }),
+    [dimmed],
+  );
 
   return (
     <group>

@@ -101,8 +101,28 @@ export function evaluateScenario(
     wheelChoice?: "toward-curb" | "away-curb" | "toward-edge";
     handbrake: boolean;
     inPark: boolean;
+    collisions?: number;
   },
 ): SimResult {
+  const collisions = ctx.collisions ?? 0;
+  const collisionPenalty = Math.min(collisions * 15, 45);
+  const collisionNote =
+    collisions > 0 ? ` (trừ ${collisionPenalty} điểm do ${collisions} va chạm)` : "";
+
+  const finalize = (result: SimResult): SimResult => {
+    const score = Math.max(0, result.score - collisionPenalty);
+    const passed = result.passed && collisions < 3;
+    return {
+      passed,
+      score,
+      message: passed
+        ? `${result.message}${collisionNote}`
+        : collisions >= 3
+          ? `Quá nhiều va chạm (${collisions}) — thi thực tế sẽ trượt${collisionNote}`
+          : `${result.message}${collisionNote}`,
+    };
+  };
+
   switch (scenario.id) {
     case "parallel_parking": {
       const zone = scenario.parkingZone!;
@@ -118,20 +138,20 @@ export function evaluateScenario(
       if (parallel <= 12) score += 20;
       if (ctx.signalBeforeAction || ctx.signalRight) score += 10;
       const passed = inZone && curbDist <= 35 && parallel <= 15;
-      return {
+      return finalize({
         passed,
         score,
         message: passed
           ? `✅ Đỗ tốt! Cách lề ~${inches} inch, góc ${parallel.toFixed(0)}°`
           : `Chưa đạt — ${!inZone ? "chưa vào vạch đỗ" : curbDist > 35 ? `cách lề ~${inches} inch (cần ≤12)` : `xe nghiêng ${parallel.toFixed(0)}° (cần song song)`}`,
-      };
+      });
     }
     case "backing_corner": {
       const curbDist = scenario.curbX ? distanceToCurb(car, scenario.curbX) : 99;
       const backed = car.x > 200 && car.y < 400;
       const score = (backed ? 50 : 0) + (curbDist <= 40 ? 40 : 0) + (ctx.signalRight ? 10 : 0);
       const passed = backed && curbDist <= 45;
-      return {
+      return finalize({
         passed,
         score,
         message: passed
@@ -139,7 +159,7 @@ export function evaluateScenario(
           : !backed
             ? "Lùi thêm quanh góc về phía trên bản đồ"
             : `Cách lề còn xa (~${Math.round(curbDist)}px) — lùi sát hơn`,
-      };
+      });
     }
     case "lane_change": {
       const goalY = scenario.goalLaneY ?? 220;
@@ -149,7 +169,7 @@ export function evaluateScenario(
         (ctx.headCheckRecent ? 35 : 0) +
         (inGoalLane ? 40 : 0);
       const passed = inGoalLane && ctx.signalLeft && ctx.headCheckRecent;
-      return {
+      return finalize({
         passed,
         score,
         message: passed
@@ -159,7 +179,7 @@ export function evaluateScenario(
             : !ctx.headCheckRecent
               ? "Nhấn «Nhìn qua vai» trước khi đổi làn"
               : "Lái sang làn trên (làn nhanh nhất bên trái)",
-      };
+      });
     }
     case "enter_exit_traffic": {
       const pastLine = car.x > (scenario.stopLineX ?? 380);
@@ -168,7 +188,7 @@ export function evaluateScenario(
         (pastLine && Math.abs(car.speed) < 0.5 ? 30 : 0) +
         (ctx.signalLeft && pastLine ? 20 : 0);
       const passed = ctx.stoppedAtLine && pastLine && car.speed === 0;
-      return {
+      return finalize({
         passed,
         score,
         message: passed
@@ -178,7 +198,7 @@ export function evaluateScenario(
             : !pastLine
               ? "Tiến tới vạch STOP và phanh hết"
               : "Dừng hẳn trước khi đi tiếp",
-      };
+      });
     }
     case "hill_parking": {
       const correct =
@@ -187,7 +207,7 @@ export function evaluateScenario(
         (scenario.hillMode === "no-curb" && ctx.wheelChoice === "toward-edge");
       const score = (correct ? 60 : 0) + (ctx.handbrake ? 25 : 0) + (ctx.inPark ? 15 : 0);
       const passed = correct && ctx.handbrake && ctx.inPark;
-      return {
+      return finalize({
         passed,
         score,
         message: passed
@@ -197,7 +217,7 @@ export function evaluateScenario(
             : !ctx.handbrake
               ? "Kéo phanh tay"
               : "Đặt số P (Park)",
-      };
+      });
     }
     default:
       return { passed: false, score: 0, message: "Không rõ thao tác" };

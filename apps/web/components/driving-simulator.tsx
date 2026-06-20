@@ -11,9 +11,11 @@ import {
   type SimResult,
 } from "../lib/drive-sim/scenarios";
 import { useEngineSound, useBlinkerSound, vibrateShort } from "../lib/drive-sim/engine-sound";
+import { spawnTraffic, updateTraffic, type AiVehicle } from "../lib/drive-sim/traffic";
+import { applyCollisionResponse, detectCollision } from "../lib/drive-sim/collision";
 import { SteeringWheel } from "./steering-wheel";
 import { MirrorHud } from "./mirror-hud";
-import type { CameraMode } from "./drive-sim-3d/drive-canvas-3d";
+import type { CameraMode, WeatherMode } from "./drive-sim-3d/drive-canvas-3d";
 
 const DriveCanvas3D = dynamic(
   () => import("./drive-sim-3d/drive-canvas-3d").then((m) => m.DriveCanvas3D),
@@ -67,6 +69,13 @@ export function DrivingSimulator({ scenarioId, onExit }: Props) {
   const rightMirrorRef = useRef<HTMLCanvasElement>(null);
   const [hillMode, setHillMode] = useState<"down-curb" | "up-curb" | "no-curb">("down-curb");
   const [speedDisplay, setSpeedDisplay] = useState(0);
+  const [weather, setWeather] = useState<WeatherMode>("day");
+  const [collisionCount, setCollisionCount] = useState(0);
+  const [collisionMsg, setCollisionMsg] = useState<string | null>(null);
+  const trafficRef = useRef<AiVehicle[]>([]);
+  const [trafficIds, setTrafficIds] = useState<string[]>([]);
+  const lastHitAtRef = useRef(0);
+  const collisionMsgTimerRef = useRef<number>(0);
 
   const steerValue =
     Math.abs(steerWheel) > 0.04
@@ -83,6 +92,9 @@ export function DrivingSimulator({ scenarioId, onExit }: Props) {
   const reset = useCallback(() => {
     if (!scenario) return;
     carRef.current = scenario.init();
+    const traffic = spawnTraffic(scenario);
+    trafficRef.current = traffic;
+    setTrafficIds(traffic.map((v) => v.id));
     setSignalLeft(false);
     setSignalRight(false);
     setReverse(false);
@@ -94,6 +106,9 @@ export function DrivingSimulator({ scenarioId, onExit }: Props) {
     setResult(null);
     setSpeedDisplay(0);
     setSteerWheel(0);
+    setCollisionCount(0);
+    setCollisionMsg(null);
+    lastHitAtRef.current = 0;
     controlsRef.current = { throttle: 0, brake: 0, steer: 0, reverse: false };
   }, [scenario]);
 
@@ -148,6 +163,18 @@ export function DrivingSimulator({ scenarioId, onExit }: Props) {
       car.y = Math.max(40, Math.min(WORLD_H - 40, car.y));
       setSpeedDisplay(Math.abs(car.speed * 8));
 
+      updateTraffic(trafficRef.current);
+      const hit = detectCollision(car, trafficRef.current, scenario.curbX, lastHitAtRef.current);
+      if (hit) {
+        lastHitAtRef.current = Date.now();
+        applyCollisionResponse(car, hit.kind);
+        setCollisionCount((c) => c + 1);
+        setCollisionMsg(hit.message);
+        vibrateShort();
+        window.clearTimeout(collisionMsgTimerRef.current);
+        collisionMsgTimerRef.current = window.setTimeout(() => setCollisionMsg(null), 2500);
+      }
+
       if (scenario.stopLineX) {
         const nearLine =
           car.x >= scenario.stopLineX - 25 &&
@@ -180,6 +207,7 @@ export function DrivingSimulator({ scenarioId, onExit }: Props) {
       wheelChoice,
       handbrake,
       inPark,
+      collisions: collisionCount,
     });
     setResult(res);
   };
@@ -195,8 +223,34 @@ export function DrivingSimulator({ scenarioId, onExit }: Props) {
         <p>{scenario.briefVi}</p>
         {!isHill ? (
           <p className="drive-sim__tagline">
-            Mô phỏng 3D · Gương chiếu hật · Vô-lăng · {cameraMode === "cockpit" ? "Ngồi trong xe" : "Nhìn từ sau"}
+            Mô phỏng 3D · Xe AI · Va chạm · {weather === "rain" ? "Mưa" : weather === "night" ? "Đêm" : "Ban ngày"} ·{" "}
+            {cameraMode === "cockpit" ? "Ngồi trong xe" : "Nhìn từ sau"}
           </p>
+        ) : null}
+        {!isHill ? (
+          <div className="drive-sim__cam-toggle">
+            <button
+              type="button"
+              className={`drive-sim__cam-btn${weather === "day" ? " drive-sim__cam-btn--on" : ""}`}
+              onClick={() => setWeather("day")}
+            >
+              ☀️ Ngày
+            </button>
+            <button
+              type="button"
+              className={`drive-sim__cam-btn${weather === "night" ? " drive-sim__cam-btn--on" : ""}`}
+              onClick={() => setWeather("night")}
+            >
+              🌙 Đêm
+            </button>
+            <button
+              type="button"
+              className={`drive-sim__cam-btn${weather === "rain" ? " drive-sim__cam-btn--on" : ""}`}
+              onClick={() => setWeather("rain")}
+            >
+              🌧️ Mưa
+            </button>
+          </div>
         ) : null}
         {!isHill ? (
           <div className="drive-sim__cam-toggle">
@@ -300,14 +354,23 @@ export function DrivingSimulator({ scenarioId, onExit }: Props) {
             signalRight={signalRight}
             steer={steerValue}
             cameraMode={cameraMode}
+            weather={weather}
+            trafficRef={trafficRef}
+            trafficIds={trafficIds}
             mirrors={{
               rear: rearMirrorRef,
               left: leftMirrorRef,
               right: rightMirrorRef,
             }}
           />
+          {collisionMsg ? (
+            <div className="drive-sim__collision-warn" role="alert">
+              {collisionMsg}
+            </div>
+          ) : null}
           <div className="drive-sim__hud">
             <span>{Math.round(speedDisplay)} mph</span>
+            {collisionCount > 0 ? <span className="drive-sim__hud-hit">💥 {collisionCount}</span> : null}
             {reverse ? <span className="drive-sim__hud-rev">LÙI</span> : null}
             {signalLeft ? <span className="drive-sim__hud-blink">◀</span> : null}
             {signalRight ? <span className="drive-sim__hud-blink">▶</span> : null}
