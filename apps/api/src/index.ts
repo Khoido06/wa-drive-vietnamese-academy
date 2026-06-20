@@ -54,7 +54,7 @@ app.use("*", requestLogger());
 const ragRateLimit = createRateLimit({ windowMs: 60_000, max: 20, keyPrefix: "rag" });
 
 app.get("/health", (c) =>
-  c.json({ status: "ok", system: "wa-drive-vietnamese-academy", version: "0.3.0" }),
+  c.json({ status: "ok", system: "wa-drive-vietnamese-academy", version: "0.4.0" }),
 );
 
 app.get("/openapi.json", openApiJson);

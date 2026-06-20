@@ -53,6 +53,7 @@ export default function ExamPage() {
   const [score, setScore] = useState(0);
   const [attempts, setAttempts] = useState<ExamAttempt[]>([]);
   const [loading, setLoading] = useState(false);
+  const [setsLoading, setSetsLoading] = useState(true);
   const [started, setStarted] = useState(false);
   const [startTime, setStartTime] = useState(Date.now());
   const [error, setError] = useState<string | null>(null);
@@ -64,7 +65,8 @@ export default function ExamPage() {
         setPassCount(data.dmv.passCount);
         if (data.sets[0]) setSelectedSet(data.sets[0].id);
       })
-      .catch(() => setError("Không tải được danh sách bộ đề. Thử lại sau."));
+      .catch(() => setError("Không tải được danh sách bộ đề. Thử lại sau."))
+      .finally(() => setSetsLoading(false));
   }, []);
 
   const beginExam = async () => {
@@ -169,25 +171,31 @@ export default function ExamPage() {
           </p>
         </div>
 
-        {error && (
+        {setsLoading && <LoadingState message="Đang tải bộ đề..." />}
+
+        {!setsLoading && error && (
           <p style={{ color: "var(--color-error)", textAlign: "center", marginBottom: "var(--space-md)" }}>{error}</p>
         )}
 
-        <p className="question-topic">Chọn bộ đề</p>
-        <div className="options-list">
-          {sets.map((s) => (
-            <OptionCard
-              key={s.id}
-              id={s.id}
-              text={`${s.name} — ${s.description}`}
-              index={0}
-              selected={selectedSet === s.id}
-              onSelect={setSelectedSet}
-            />
-          ))}
-        </div>
+        {!setsLoading && !error && (
+          <>
+            <p className="question-topic">Chọn bộ đề ({sets.length} bộ)</p>
+            <div className="options-list">
+              {sets.map((s) => (
+                <OptionCard
+                  key={s.id}
+                  id={s.id}
+                  text={`${s.name} — ${s.description}`}
+                  index={0}
+                  selected={selectedSet === s.id}
+                  onSelect={setSelectedSet}
+                />
+              ))}
+            </div>
+          </>
+        )}
 
-        <ElderButton onClick={beginExam} loading={loading} disabled={!selectedSet}>
+        <ElderButton onClick={beginExam} loading={loading} disabled={!selectedSet || setsLoading || sets.length === 0}>
           {vi.exam.start}
         </ElderButton>
       </ScreenLayout>
