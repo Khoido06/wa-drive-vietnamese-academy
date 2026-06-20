@@ -20,6 +20,13 @@ export function getRequestedProvider(): AiProvider {
 }
 
 async function bestEmbedProvider(): Promise<LlmProvider> {
+  const preferred = (process.env.EMBED_PROVIDER ?? "").toLowerCase();
+
+  // Production: Groq LLM + OpenAI embed-only (set EMBED_PROVIDER=openai + OPENAI_API_KEY)
+  if (preferred === "openai" && (await openaiProvider.isAvailable())) {
+    return openaiProvider;
+  }
+
   if (await ollamaProvider.isAvailable()) return ollamaProvider;
   if (await openaiProvider.isAvailable()) return openaiProvider;
   return mockProvider;
@@ -80,10 +87,14 @@ export async function getProviderStatus() {
   return {
     active,
     embedProvider: embedProvider.name,
+    embedProviderRequested: process.env.EMBED_PROVIDER ?? "auto",
     requested: getRequestedProvider(),
     ollama: await ollamaProvider.isAvailable(),
     groq: await groqProvider.isAvailable(),
     openai: await openaiProvider.isAvailable(),
+    langfuse: !!(process.env.LANGFUSE_PUBLIC_KEY && process.env.LANGFUSE_SECRET_KEY),
+    sentry: !!process.env.SENTRY_DSN,
+    upstash: !!(process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN),
   };
 }
 

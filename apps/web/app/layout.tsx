@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { FontSizeProvider } from "../lib/font-size";
 import { MomOnboarding } from "../components/mom-onboarding";
 import { ServiceWorkerRegister } from "../components/sw-register";
+import { AppProviders } from "../components/app-providers";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -34,11 +35,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="icon" href="/icon.svg" type="image/svg+xml" />
       </head>
       <body>
-        <FontSizeProvider>
-          {children}
-          <MomOnboarding />
-          <ServiceWorkerRegister />
-        </FontSizeProvider>
+        <AppProviders>
+          <FontSizeProvider>
+            {children}
+            <MomOnboarding />
+            <ServiceWorkerRegister />
+          </FontSizeProvider>
+        </AppProviders>
       </body>
     </html>
   );

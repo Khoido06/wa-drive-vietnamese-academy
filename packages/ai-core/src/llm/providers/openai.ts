@@ -19,9 +19,13 @@ export const openaiProvider: LlmProvider = {
     const client = getOpenAIClient();
     if (!client) throw new Error("OPENAI_API_KEY not set");
 
+    const model =
+      config.embeddingModel.includes("embed") ? config.embeddingModel : "text-embedding-3-small";
+
     const response = await client.embeddings.create({
-      model: config.embeddingModel,
+      model,
       input: text,
+      dimensions: config.embeddingDimensions,
     });
     const vec = response.data[0]?.embedding;
     if (!vec) throw new Error("OpenAI returned empty embedding");

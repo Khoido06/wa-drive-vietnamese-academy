@@ -1,3 +1,5 @@
+import "./instrument.js";
+
 import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
@@ -12,19 +14,27 @@ import {
 import { mutationStatus, runMutations } from "./routes/mutation.js";
 import { queryRagStream } from "./routes/rag-stream.js";
 import { openApiDocs, openApiJson } from "./routes/docs.js";
-import { rateLimit } from "./middleware/rate-limit.js";
+import { createRateLimit } from "./middleware/rate-limit-upstash.js";
 import { logger, requestLogger } from "./middleware/logger.js";
 import { startMutationCron } from "./jobs/mutation-cron.js";
 
 const app = new Hono();
 
+app.onError((err, c) => {
+  logger.error("unhandled error", { error: err.message, path: c.req.path });
+  if (process.env.SENTRY_DSN) {
+    import("@sentry/node").then(({ captureException }) => captureException(err));
+  }
+  return c.json({ error: "Internal server error" }, 500);
+});
+
 app.use("*", cors());
 app.use("*", requestLogger());
 
-const ragRateLimit = rateLimit({ windowMs: 60_000, max: 20, keyPrefix: "rag" });
+const ragRateLimit = createRateLimit({ windowMs: 60_000, max: 20, keyPrefix: "rag" });
 
 app.get("/health", (c) =>
-  c.json({ status: "ok", system: "wa-drive-vietnamese-academy", version: "0.2.0" }),
+  c.json({ status: "ok", system: "wa-drive-vietnamese-academy", version: "0.3.0" }),
 );
 
 app.get("/openapi.json", openApiJson);
@@ -46,7 +56,14 @@ app.post("/mutation/run", runMutations);
 
 const port = Number(process.env.PORT ?? process.env.API_PORT ?? 4000);
 
-logger.info("server starting", { port, mutation: process.env.MUTATION_ENABLED ?? "false" });
+logger.info("server starting", {
+  port,
+  mutation: process.env.MUTATION_ENABLED ?? "false",
+  sentry: !!process.env.SENTRY_DSN,
+  upstash: !!process.env.UPSTASH_REDIS_REST_URL,
+  langfuse: !!process.env.LANGFUSE_PUBLIC_KEY,
+});
+
 startMutationCron();
 
 serve({ fetch: app.fetch, port });

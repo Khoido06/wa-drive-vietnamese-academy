@@ -1,11 +1,19 @@
 # WA Drive Vietnamese Academy
 
-**Live Demo:** https://wa-drive-vietnamese-academy.vercel.app  
-**API Health:** https://api-production-72db.up.railway.app/health  
-**API Docs:** https://api-production-72db.up.railway.app/docs  
-**Repository:** https://github.com/Khoido06/wa-drive-vietnamese-academy
+[![Live Demo](https://img.shields.io/badge/demo-live-0b5cad?style=for-the-badge)](https://wa-drive-vietnamese-academy.vercel.app)
+[![CI](https://img.shields.io/github/actions/workflow/status/Khoido06/wa-drive-vietnamese-academy/ci.yml?branch=main&label=CI&style=for-the-badge)](https://github.com/Khoido06/wa-drive-vietnamese-academy/actions)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green?style=for-the-badge)](LICENSE)
 
-AI-powered learning platform for **Vietnamese-speaking elderly learners** preparing for the **Washington State Driver Knowledge Test**. Production RAG over the official 191-page Vietnamese WA Driver Guide — built entirely on **free-tier** infrastructure.
+**AI learning platform for Vietnamese-speaking elderly learners preparing for the Washington State Driver Knowledge Test.**
+
+| | |
+|---|---|
+| **Live App** | https://wa-drive-vietnamese-academy.vercel.app |
+| **API** | https://api-production-72db.up.railway.app |
+| **API Docs** | https://api-production-72db.up.railway.app/docs |
+| **Repository** | https://github.com/Khoido06/wa-drive-vietnamese-academy |
+
+Production RAG over the official **191-page Vietnamese WA Driver Guide** (100 indexed chunks). Built on **free-tier** infrastructure — no paid AI tokens required for core features.
 
 ---
 
@@ -13,7 +21,7 @@ AI-powered learning platform for **Vietnamese-speaking elderly learners** prepar
 
 | Problem | Solution |
 |---------|----------|
-| 191-page English-heavy driver guide | Vietnamese PDF as sole RAG corpus (100 chunks) |
+| 191-page English-heavy driver guide | Vietnamese PDF as sole RAG corpus |
 | Static quiz apps hallucinate | Triple-check RAG + keyword hybrid fallback |
 | Seniors struggle with small UI | Elderly-first PWA: 64px touch, TTS, A/A+/A++ fonts |
 | One-size-fits-all learning | SM-2 spaced repetition + Elo difficulty + failure clusters |
@@ -28,10 +36,10 @@ AI-powered learning platform for **Vietnamese-speaking elderly learners** prepar
 │  Next.js 16 PWA │ ────────────► │   Hono API      │ ───────────────► │ Neon Postgres │
 │  Vercel (free)  │               │  Railway (free) │                  │  (free tier)  │
 └─────────────────┘               └────────┬────────┘                  └──────────────┘
-                                           │
-                                           ▼
-                                    ┌─────────────┐
-                                    │ Groq (free)  │  LLM inference
+         │                                 │
+         │ Analytics                       ▼
+         ▼                          ┌─────────────┐
+  Vercel · PostHog · Sentry         │ Groq (free)  │  LLM inference
                                     │ Ollama (dev) │  local embed + LLM
                                     └─────────────┘
 ```
@@ -47,7 +55,7 @@ AI-powered learning platform for **Vietnamese-speaking elderly learners** prepar
 
 ---
 
-## Tech Stack (100% Free Tier Friendly)
+## Tech Stack
 
 | Category | Technology | Cost |
 |----------|-----------|------|
@@ -57,12 +65,15 @@ AI-powered learning platform for **Vietnamese-speaking elderly learners** prepar
 | AI (prod) | Groq `llama-3.1-8b-instant` | Free tier |
 | AI (local) | Ollama `qwen2.5:7b` + `nomic-embed-text` | Free |
 | Search | pgvector + **keyword hybrid fallback** | $0 |
-| Observability | Structured JSON logging | $0 |
+| Observability | Sentry, PostHog, Vercel Analytics, Langfuse | Free tiers (optional) |
+| Rate Limiting | Upstash Redis → in-memory fallback | Free tiers |
+| Testing | Node.js test runner + Playwright E2E | $0 |
 | API Docs | OpenAPI 3 + Swagger UI | $0 |
-| Rate Limiting | In-memory (protects Groq quota) | $0 |
-| CI | GitHub Actions + Node.js test runner | $0 |
+| CI/CD | GitHub Actions (typecheck, unit, E2E, build) | $0 |
 
-> No OpenAI key required. Production uses **keyword hybrid search** when embedding API unavailable; Ollama provides full vector search locally.
+> **No OpenAI key required.** Production uses keyword hybrid search when embeddings unavailable. Optional `EMBED_PROVIDER=openai` improves vector search (~$0.00002/query).
+
+Observability setup: [docs/OBSERVABILITY.md](docs/OBSERVABILITY.md)
 
 ---
 
@@ -74,8 +85,10 @@ AI-powered learning platform for **Vietnamese-speaking elderly learners** prepar
 - **Adaptive practice** — dynamic questions from RAG, never a static bank
 - **SM-2 + Elo** — spaced repetition and difficulty adaptation
 - **Mutation cron** — auto-tunes retrieval params from telemetry (hourly)
-- **Rate limiting** — 20 req/min on RAG routes (protects free Groq quota)
+- **Rate limiting** — 20 req/min on RAG routes (Upstash or in-memory)
 - **OpenAPI docs** — `/docs` + `/openapi.json`
+- **Observability** — Sentry, PostHog, Vercel Analytics, Langfuse (all optional)
+- **Playwright E2E** — smoke tests in CI
 - **Elderly UX** — TTS 🔊, font scaling, one task per screen
 
 ---
@@ -86,7 +99,7 @@ AI-powered learning platform for **Vietnamese-speaking elderly learners** prepar
 |--------|------|-------------|
 | GET | `/health` | Health check |
 | GET | `/docs` | Swagger UI |
-| GET | `/rag/status` | Chunks + AI provider info |
+| GET | `/rag/status` | Chunks + AI provider + observability flags |
 | POST | `/rag/query/stream` | SSE streaming tutor |
 | POST | `/rag/query` | RAG Q&A (strict/fast) |
 | GET | `/learning/:userId/next` | Adaptive question |
@@ -107,7 +120,14 @@ pnpm setup:ollama      # qwen2.5:7b + nomic-embed-text
 pnpm dev               # web :3000 · api :4000
 
 curl -X POST http://localhost:4000/rag/ingest
+```
+
+### Testing
+
+```bash
 pnpm test              # unit tests (SM-2, keyword RAG)
+pnpm test:e2e          # Playwright smoke tests (4 tests)
+pnpm check-types       # TypeScript across monorepo
 ```
 
 Deploy: [docs/DEPLOY_NOW.md](docs/DEPLOY_NOW.md)
@@ -135,8 +155,11 @@ Deploy: [docs/DEPLOY_NOW.md](docs/DEPLOY_NOW.md)
 • Designed elderly-first PWA with Vietnamese TTS, dynamic font scaling, SM-2 spaced
   repetition, Elo difficulty, and telemetry-driven mutation engine
 
-• Monorepo (Turborepo, 11 packages): OpenAPI docs, structured logging, rate limiting,
-  GitHub Actions CI, Docker, unit tests — zero paid AI tokens required
+• Production observability: Sentry error tracking, PostHog analytics, Langfuse RAG tracing,
+  Upstash rate limiting — all optional free tiers with graceful fallbacks
+
+• Monorepo (Turborepo, 11 packages): OpenAPI docs, Playwright E2E, GitHub Actions CI,
+  Docker, unit tests — zero paid AI tokens required for core features
 ```
 
 ---
@@ -144,15 +167,18 @@ Deploy: [docs/DEPLOY_NOW.md](docs/DEPLOY_NOW.md)
 ## Monorepo Structure
 
 ```
-apps/web              Next.js PWA
+apps/web              Next.js PWA + Playwright E2E
 apps/api              Hono REST API + OpenAPI + cron
-packages/ai-core      RAG pipeline + hybrid retrieval
+packages/ai-core      RAG pipeline + hybrid retrieval + Langfuse
 packages/learning-engine   SM-2, Elo, failure clusters
 packages/mutation-engine   Self-improvement loop
 packages/db           Drizzle + pgvector
 packages/ui           Elderly-first design system
 infra/                Docker Compose
+docs/                 Deploy guide + observability setup
 ```
+
+---
 
 ## License
 

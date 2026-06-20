@@ -16,6 +16,9 @@
     "test": {
       "dependsOn": ["^test"]
     },
+    "test:e2e": {
+      "cache": false
+    },
     "dev": {
       "cache": false,
       "persistent": true

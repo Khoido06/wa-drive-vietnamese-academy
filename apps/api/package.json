@@ -16,6 +16,9 @@
     "@repo/db": "workspace:*",
     "@repo/learning-engine": "workspace:*",
     "@repo/mutation-engine": "workspace:*",
+    "@sentry/node": "^10.59.0",
+    "@upstash/ratelimit": "^2.0.8",
+    "@upstash/redis": "^1.38.0",
     "hono": "^4.6.14",
     "tsx": "^4.19.2"
   },
