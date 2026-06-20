@@ -67,7 +67,7 @@ const SET_FILES: Record<string, string> = {
 function loadSetFile(setId: string): CuratedQuestionInput[] {
   const file = SET_FILES[setId];
   if (!file) throw new Error(`Unknown exam set: ${setId}`);
-  const path = join(__dir, "../../data/wa", file);
+  const path = join(__dir, "../data/wa", file);
   if (!existsSync(path)) throw new Error(`Exam set file not found: ${path}`);
   return JSON.parse(readFileSync(path, "utf8")) as CuratedQuestionInput[];
 }
