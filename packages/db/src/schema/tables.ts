@@ -33,6 +33,9 @@ export const users = pgTable("users", {
   displayName: text("display_name").notNull(),
   locale: text("locale").notNull().default("vi"),
   clerkId: text("clerk_id").unique(),
+  subscriptionTier: text("subscription_tier").notNull().default("free"),
+  stripeCustomerId: text("stripe_customer_id"),
+  selectedState: text("selected_state").notNull().default("WA"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
@@ -42,6 +45,7 @@ export const ragChunks = pgTable(
   {
     id: uuid("id").primaryKey().defaultRandom(),
     sourceDocument: text("source_document").notNull(),
+    stateCode: text("state_code").notNull().default("WA"),
     pageNumber: integer("page_number"),
     sectionTitle: text("section_title"),
     content: text("content").notNull(),
@@ -53,6 +57,7 @@ export const ragChunks = pgTable(
   (table) => [
     index("rag_chunks_source_idx").on(table.sourceDocument),
     index("rag_chunks_section_idx").on(table.sectionTitle),
+    index("rag_chunks_state_idx").on(table.stateCode),
   ],
 );
 

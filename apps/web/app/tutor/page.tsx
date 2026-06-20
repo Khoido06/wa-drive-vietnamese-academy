@@ -47,6 +47,11 @@ export default function TutorPage() {
           setRejected(!!d.rejected);
           setDone(true);
         },
+        (message) => {
+          setAnswer(message);
+          setRejected(true);
+          setDone(true);
+        },
       );
     } catch {
       setAnswer((prev) => prev || vi.tutor.noAnswer);

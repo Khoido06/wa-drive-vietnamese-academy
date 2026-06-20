@@ -12,6 +12,7 @@ export interface RetrievalTrace {
   topK: number;
   latencyMs: number;
   retrievalMode?: "vector" | "keyword";
+  stateCode?: string;
 }
 
 export interface RagAnswer {
@@ -33,6 +34,10 @@ export interface RagConfig {
   embeddingModel: string;
   generationModel: string;
   embeddingDimensions: number;
+  /** US state corpus filter (default WA) */
+  stateCode?: string;
+  /** A/B test variant label when active */
+  abVariant?: string;
 }
 
 export const DEFAULT_RAG_CONFIG: RagConfig = {
@@ -49,6 +54,7 @@ export const DEFAULT_RAG_CONFIG: RagConfig = {
         ? "gpt-4o-mini"
         : (process.env.OLLAMA_LLM_MODEL ?? "qwen2.5:7b")),
   embeddingDimensions: Number(process.env.EMBEDDING_DIMENSIONS ?? 768),
+  stateCode: process.env.DEFAULT_STATE_CODE ?? "WA",
 };
 
 export interface GeneratedQuestion {

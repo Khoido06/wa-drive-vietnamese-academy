@@ -90,14 +90,27 @@ export async function streamRagQuery(
   onToken: (token: string) => void,
   onDone: (data: unknown) => void,
   onError?: (message: string) => void,
+  opts?: { stateCode?: string },
 ): Promise<void> {
+  const userId = getUserId();
+  const stateCode =
+    opts?.stateCode ??
+    (typeof window !== "undefined" ? localStorage.getItem("wa_state_code") : null) ??
+    "WA";
+
   const res = await fetch(`${API_URL}/rag/query/stream`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ query }),
+    body: JSON.stringify({ query, userId, stateCode }),
   });
 
-  if (!res.ok || !res.body) throw new Error("Stream failed");
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({ error: res.statusText }));
+    const message = (err as { error?: string }).error ?? "Stream failed";
+    onError?.(message);
+    throw new Error(message);
+  }
+  if (!res.body) throw new Error("Stream failed");
 
   const reader = res.body.getReader();
   const decoder = new TextDecoder();

@@ -19,9 +19,15 @@ function resolvePdfPath(pdfPath: string): string {
   return resolve(root, pdfPath);
 }
 
+export interface IngestOptions {
+  stateCode?: string;
+  sourceDocument?: string;
+}
+
 export async function ingestPdf(
   pdfPath: string,
   config: RagConfig = DEFAULT_RAG_CONFIG,
+  options: IngestOptions = {},
 ): Promise<IngestResult> {
   const resolved = resolvePdfPath(pdfPath);
   if (!existsSync(resolved)) {
@@ -30,7 +36,8 @@ export async function ingestPdf(
 
   const buffer = readFileSync(resolved);
   const parsed = await pdf(buffer);
-  const sourceDocument = "driver-guide-vi";
+  const stateCode = options.stateCode ?? config.stateCode ?? "WA";
+  const sourceDocument = options.sourceDocument ?? `driver-guide-vi-${stateCode.toLowerCase()}`;
 
   const sections = extractSections(parsed.text);
   const allChunks = sections.flatMap((section) => {
@@ -48,6 +55,7 @@ export async function ingestPdf(
     const embedding = await embedText(chunk.content, config);
     await db.insert(ragChunks).values({
       sourceDocument,
+      stateCode,
       content: chunk.content,
       chunkIndex: chunk.index,
       sectionTitle: chunk.sectionTitle ?? null,

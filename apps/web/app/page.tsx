@@ -8,6 +8,7 @@ import { LoadingState } from "@repo/ui/loading-state";
 import { vi } from "@repo/ui/i18n/vi";
 import { useTelemetry, ensureUser } from "../lib/api";
 import { HeaderAction } from "../components/header-action";
+import { StatePicker } from "../components/state-picker";
 
 export default function HomePage() {
   const router = useRouter();
@@ -41,11 +42,14 @@ export default function HomePage() {
       </p>
       <p className="hero-sub">Chọn một hoạt động — mỗi lần học một câu thôi nhé</p>
 
+      <StatePicker />
+
       <nav className="nav-grid" aria-label="Menu chính">
         <NavCard icon="📖" label={vi.home.continueLearning} description="Nghe đọc to · Học từng câu" primary onClick={() => go("/learn", vi.home.continueLearning)} />
         <NavCard icon="📝" label={vi.home.practiceExam} description="5 câu — cần 80% để đậu" onClick={() => go("/exam", vi.home.practiceExam)} />
         <NavCard icon="🎓" label={vi.home.askQuestion} description="Hỏi AI · Trả lời tức thì" onClick={() => go("/tutor", vi.home.askQuestion)} />
         <NavCard icon="📊" label={vi.home.viewProgress} description="Theo dõi tiến độ học" onClick={() => go("/progress", vi.home.viewProgress)} />
+        <NavCard icon="⭐" label="Gói Pro" description="Không giới hạn · Thêm bang" onClick={() => go("/pricing", "pricing")} />
       </nav>
     </ScreenLayout>
   );

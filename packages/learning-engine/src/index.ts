@@ -20,3 +20,13 @@ export {
   trackTelemetry,
   type NextQuestionResult,
 } from "./engine.js";
+
+export {
+  getUserTier,
+  setUserSubscription,
+  setUserState,
+  isPremium,
+  findUserByStripeCustomer,
+  findUserById,
+  type SubscriptionTier,
+} from "./billing.js";

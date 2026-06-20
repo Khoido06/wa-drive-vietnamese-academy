@@ -13,4 +13,6 @@ export {
   getMutationHistory,
 } from "./analytics.js";
 
+export { resolveRagConfig, getAbTestConfig, saveAbTestWinner } from "./ab-test.js";
+
 export { runMutationCycle, getSystemHealth } from "./engine.js";

@@ -95,7 +95,13 @@ Scale roadmap (A + B + C): [docs/SCALE_ROADMAP.md](docs/SCALE_ROADMAP.md)
 - **Admin dashboard** — `/admin` (RAG traces, mutations, system health)
 - **Clerk auth** — optional login, sync progress across devices
 - **Voice input (STT)** — 🎤 nói câu hỏi trên tutor page
+- **Stripe tiers** — Free / Pro / Family (mom WA stays free)
+- **Multi-state RAG** — `state_code` filter (WA default, Pro unlocks more)
+- **RAG response cache** — Upstash or in-memory (24h TTL)
+- **A/B RAG config** — optional topK variants (`RAG_AB_ENABLED`)
 - **Elderly UX** — TTS 🔊, font scaling, one task per screen
+
+Billing: [docs/BILLING.md](docs/BILLING.md)
 
 ---
 
@@ -110,7 +116,9 @@ Scale roadmap (A + B + C): [docs/SCALE_ROADMAP.md](docs/SCALE_ROADMAP.md)
 | POST | `/rag/query` | RAG Q&A (strict/fast) |
 | GET | `/learning/:userId/next` | Adaptive question |
 | POST | `/telemetry` | UX event tracking |
-| GET | `/mutation/status` | Self-improvement health |
+| GET | `/rag/states` | Available state corpora |
+| GET | `/billing/status/:userId` | Tier + daily usage |
+| POST | `/billing/checkout` | Stripe Checkout (Pro/Family) |
 
 ---
 

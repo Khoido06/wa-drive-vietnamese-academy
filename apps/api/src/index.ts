@@ -3,7 +3,7 @@ import "./instrument.js";
 import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
-import { queryRag, ingestPdf, ragStatus } from "./routes/rag.js";
+import { queryRag, ingestPdf, ragStatus, ragStates } from "./routes/rag.js";
 import {
   createUser,
   linkUser,
@@ -11,11 +11,18 @@ import {
   submitAttempt,
   userProgress,
   postTelemetry,
+  setUserState,
 } from "./routes/learning.js";
 import { mutationStatus, runMutations } from "./routes/mutation.js";
 import { queryRagStream } from "./routes/rag-stream.js";
 import { openApiDocs, openApiJson } from "./routes/docs.js";
 import { adminAuth, adminOverview, adminTraces, adminMutations } from "./routes/admin.js";
+import {
+  billingStatus,
+  createCheckout,
+  createPortal,
+  stripeWebhook,
+} from "./routes/billing.js";
 import { createRateLimit } from "./middleware/rate-limit-upstash.js";
 import { logger, requestLogger } from "./middleware/logger.js";
 import { startMutationCron } from "./jobs/mutation-cron.js";
@@ -46,9 +53,15 @@ app.post("/rag/query", ragRateLimit, queryRag);
 app.post("/rag/query/stream", ragRateLimit, queryRagStream);
 app.post("/rag/ingest", queryRag);
 app.get("/rag/status", ragStatus);
+app.get("/rag/states", ragStates);
 
 app.post("/users", createUser);
 app.post("/users/link", linkUser);
+app.post("/users/:userId/state", setUserState);
+app.get("/billing/status/:userId", billingStatus);
+app.post("/billing/checkout", createCheckout);
+app.post("/billing/portal", createPortal);
+app.post("/billing/webhook", stripeWebhook);
 app.get("/learning/:userId/next", nextQuestion);
 app.post("/learning/attempt", submitAttempt);
 app.get("/learning/:userId/progress", userProgress);

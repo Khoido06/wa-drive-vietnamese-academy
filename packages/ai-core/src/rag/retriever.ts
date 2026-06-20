@@ -1,4 +1,4 @@
-import { sql, desc } from "drizzle-orm";
+import { sql, desc, eq } from "drizzle-orm";
 import { getDb, ragChunks } from "@repo/db";
 import { embedText } from "../llm/client.js";
 import { resolveProviders } from "../llm/providers/resolver.js";
@@ -17,7 +17,11 @@ function cosineSimilarity(a: number[], b: number[]): number {
   return dot / (Math.sqrt(magA) * Math.sqrt(magB) || 1);
 }
 
-async function retrieveByKeywords(query: string, topK: number): Promise<RagChunk[]> {
+async function retrieveByKeywords(
+  query: string,
+  topK: number,
+  stateCode: string,
+): Promise<RagChunk[]> {
   const db = getDb();
   const rows = await db
     .select({
@@ -27,10 +31,25 @@ async function retrieveByKeywords(query: string, topK: number): Promise<RagChunk
       pageNumber: ragChunks.pageNumber,
     })
     .from(ragChunks)
+    .where(eq(ragChunks.stateCode, stateCode))
     .orderBy(desc(ragChunks.createdAt))
     .limit(100);
 
   return rankByKeywords(query, rows, topK);
+}
+
+export async function getAvailableStates(): Promise<Array<{ code: string; chunks: number }>> {
+  const db = getDb();
+  const rows = await db.execute(sql`
+    SELECT state_code AS code, COUNT(*)::int AS chunks
+    FROM rag_chunks
+    GROUP BY state_code
+    ORDER BY state_code
+  `);
+  return (rows as unknown as Array<{ code: string; chunks: number }>).map((r) => ({
+    code: r.code,
+    chunks: Number(r.chunks),
+  }));
 }
 
 export async function retrieve(
@@ -39,6 +58,7 @@ export async function retrieve(
 ): Promise<RetrievalTrace> {
   const start = Date.now();
   const db = getDb();
+  const stateCode = config.stateCode ?? "WA";
   const { embedProvider } = await resolveProviders();
   const canUseVectorSearch = embedProvider.name !== "mock" && !!process.env.DATABASE_URL;
 
@@ -51,6 +71,7 @@ export async function retrieve(
       SELECT id, content, section_title, page_number,
              1 - (embedding <=> ${embeddingStr}::vector) AS score
       FROM rag_chunks
+      WHERE state_code = ${stateCode}
       ORDER BY embedding <=> ${embeddingStr}::vector
       LIMIT ${config.topK}
     `);
@@ -63,14 +84,14 @@ export async function retrieve(
       score: Number(r.score),
     }));
   } else {
-    // Free production fallback — keyword hybrid search (no paid embed API)
-    chunks = await retrieveByKeywords(query, config.topK);
+    chunks = await retrieveByKeywords(query, config.topK, stateCode);
 
     if (chunks.length === 0) {
       const queryEmbedding = await embedText(query, config);
       const allChunks = await db
         .select()
         .from(ragChunks)
+        .where(eq(ragChunks.stateCode, stateCode))
         .orderBy(desc(ragChunks.createdAt))
         .limit(100);
 
@@ -95,5 +116,6 @@ export async function retrieve(
     topK: config.topK,
     latencyMs: Date.now() - start,
     retrievalMode: canUseVectorSearch ? "vector" : "keyword",
+    stateCode,
   };
 }

@@ -21,6 +21,8 @@ export async function* streamRagAnswer(
         chunkCount: trace.chunks.length,
         confidence,
         retrievalMode: trace.retrievalMode ?? "vector",
+        stateCode: trace.stateCode ?? config.stateCode,
+        abVariant: config.abVariant,
       },
     };
 

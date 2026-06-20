@@ -6,7 +6,11 @@ import {
   recordAttempt,
   getProgress,
   trackTelemetry,
+  setUserState as updateUserState,
+  getUserTier,
+  isPremium,
 } from "@repo/learning-engine";
+import { checkAndIncrementUsage } from "../services/usage.js";
 
 export async function createUser(c: Context) {
   const { displayName } = await c.req.json<{ displayName: string }>();
@@ -40,11 +44,35 @@ export async function nextQuestion(c: Context) {
   const userId = c.req.param("userId");
   if (!userId) return c.json({ error: "userId required" }, 400);
   try {
+    const { tier } = await getUserTier(userId);
+    const usage = await checkAndIncrementUsage(userId, "practice", isPremium(tier));
+    if (!usage.allowed) {
+      return c.json(
+        {
+          error: "Đã hết lượt luyện tập hôm nay. Nâng cấp Pro để luyện không giới hạn.",
+          code: "USAGE_LIMIT",
+        },
+        429,
+      );
+    }
     const result = await getNextQuestion(userId);
     return c.json(result);
   } catch (err) {
     const message = err instanceof Error ? err.message : "Failed to get question";
     return c.json({ error: message }, 500);
+  }
+}
+
+export async function setUserState(c: Context) {
+  const userId = c.req.param("userId");
+  const { stateCode } = await c.req.json<{ stateCode: string }>();
+  if (!userId || !stateCode) return c.json({ error: "userId and stateCode required" }, 400);
+  try {
+    await updateUserState(userId, stateCode.toUpperCase());
+    return c.json({ ok: true, stateCode: stateCode.toUpperCase() });
+  } catch (err) {
+    const message = err instanceof Error ? err.message : "Failed to set state";
+    return c.json({ error: message }, 400);
   }
 }
 
