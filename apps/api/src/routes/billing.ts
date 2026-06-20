@@ -5,7 +5,6 @@ import {
   findUserByStripeCustomer,
   getUserTier,
   setUserSubscription,
-  isPremium,
   isUserPremium,
   type SubscriptionTier,
 } from "@repo/learning-engine";
