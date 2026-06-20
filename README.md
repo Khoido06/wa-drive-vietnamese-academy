@@ -124,6 +124,10 @@ Billing: [docs/BILLING.md](docs/BILLING.md) · B2B: [docs/B2B.md](docs/B2B.md)
 | GET | `/rag/states` | Available state corpora |
 | GET | `/billing/status/:userId` | Tier + daily usage |
 | POST | `/billing/checkout` | Stripe Checkout (Pro/Family) |
+| POST | `/rag/feedback` | Tutor answer feedback 👍/👎 |
+| POST | `/b2b/v1/rag/query/stream` | B2B SSE tutor (API key) |
+| POST | `/family/invite` | Caregiver share link (Family) |
+| GET | `/family/shared/:token` | Read-only learner progress |
 
 ---
 
