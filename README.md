@@ -164,7 +164,7 @@ Deploy: [docs/DEPLOY_NOW.md](docs/DEPLOY_NOW.md)
 2. Nhập tên **Hạnh** → bước **Lưu tiến độ** → **Đăng nhập** (email/Gmail 1 lần)
 3. **Học** → **Thi thử** → **Hỏi thầy giáo AI**
 
-Unlimited: `PREMIUM_DISPLAY_NAMES=Mẹ,Hạnh,Lan,Mom` on **Railway API**. Clerk setup: [docs/CLERK.md](docs/CLERK.md).
+Unlimited: `PREMIUM_DISPLAY_NAMES=Mẹ,Hạnh,Mom` on **Railway API**. Clerk setup: [docs/CLERK.md](docs/CLERK.md).
 
 ---
 

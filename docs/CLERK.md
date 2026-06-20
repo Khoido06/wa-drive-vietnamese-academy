@@ -50,7 +50,7 @@ Redeploy sau khi set.
 
 ```env
 FAMILY_UNLIMITED=false
-PREMIUM_DISPLAY_NAMES=Mẹ,Hạnh,Lan,Mom
+PREMIUM_DISPLAY_NAMES=Mẹ,Hạnh,Mom
 ```
 
 Mẹ nhập **Hạnh** lúc onboarding → giữ tên khi link Clerk (code merge `wa_display_name`).

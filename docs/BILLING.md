@@ -62,7 +62,7 @@ Override: `FREE_TUTOR_DAILY`, `FREE_PRACTICE_DAILY`
 
 ```env
 FAMILY_UNLIMITED=false
-PREMIUM_DISPLAY_NAMES=Mẹ,Hạnh,Lan,Mom
+PREMIUM_DISPLAY_NAMES=Mẹ,Hạnh,Mom
 ```
 
 Mẹ nhập **Hạnh** (hoặc **Mẹ**) lúc onboarding → unlimited AI + luyện tập. User khác vẫn Free limits.
