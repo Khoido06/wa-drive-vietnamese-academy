@@ -2,7 +2,7 @@ import type { Context } from "hono";
 import { streamSSE } from "hono/streaming";
 import { streamRagAnswer } from "@repo/ai-core";
 import { resolveRagConfig } from "@repo/mutation-engine";
-import { getUserTier, isPremium } from "@repo/learning-engine";
+import { getUserTier, isUserPremium } from "@repo/learning-engine";
 import { checkAndIncrementUsage } from "../services/usage.js";
 import { getCachedRagAnswer, setCachedRagAnswer } from "../cache/rag-cache.js";
 
@@ -15,8 +15,8 @@ export async function queryRagStream(c: Context) {
   if (!query) return c.json({ error: "query required" }, 400);
 
   if (userId) {
-    const { tier } = await getUserTier(userId);
-    const usage = await checkAndIncrementUsage(userId, "tutor", isPremium(tier));
+    const premium = await isUserPremium(userId);
+    const usage = await checkAndIncrementUsage(userId, "tutor", premium);
     if (!usage.allowed) {
       return c.json(
         {
@@ -29,12 +29,13 @@ export async function queryRagStream(c: Context) {
     }
   }
 
-  const { tier, selectedState } = userId
+  const { selectedState } = userId
     ? await getUserTier(userId)
-    : { tier: "free" as const, selectedState: "WA" };
+    : { selectedState: "WA" };
+  const premium = userId ? await isUserPremium(userId) : false;
 
   const effectiveState = stateCode ?? selectedState ?? "WA";
-  if (effectiveState !== "WA" && !isPremium(tier)) {
+  if (effectiveState !== "WA" && !premium) {
     return c.json(
       { error: "Bang khác chỉ dành cho gói Pro. Mặc định Washington (WA) vẫn miễn phí.", code: "STATE_LOCKED" },
       403,

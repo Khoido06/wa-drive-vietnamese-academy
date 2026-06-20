@@ -26,6 +26,7 @@ export {
   setUserSubscription,
   setUserState,
   isPremium,
+  isUserPremium,
   findUserByStripeCustomer,
   findUserById,
   type SubscriptionTier,

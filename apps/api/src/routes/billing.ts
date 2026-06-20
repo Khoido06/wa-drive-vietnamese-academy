@@ -6,6 +6,7 @@ import {
   getUserTier,
   setUserSubscription,
   isPremium,
+  isUserPremium,
   type SubscriptionTier,
 } from "@repo/learning-engine";
 import { getUsageStatus } from "../services/usage.js";
@@ -28,8 +29,9 @@ export async function billingStatus(c: Context): Promise<Response> {
 
   try {
     const { tier, selectedState } = await getUserTier(userId);
-    const usage = await getUsageStatus(userId, isPremium(tier));
-    return c.json({ tier, selectedState, usage, premium: isPremium(tier) });
+    const premium = await isUserPremium(userId);
+    const usage = await getUsageStatus(userId, premium);
+    return c.json({ tier, selectedState, usage, premium });
   } catch (err) {
     const message = err instanceof Error ? err.message : "Billing status failed";
     return c.json({ error: message }, 500);

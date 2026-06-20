@@ -56,7 +56,28 @@ Or: `node --import tsx scripts/backfill-state-code.ts`
 
 Override: `FREE_TUTOR_DAILY`, `FREE_PRACTICE_DAILY`
 
-## 6. A/B RAG test (optional)
+## 5b. Unlimited for mom (no Stripe)
+
+**Option A — whole family app (simplest):** Railway API env:
+
+```env
+FAMILY_UNLIMITED=true
+```
+
+**Option B — by display name** (mom's onboarding name):
+
+```env
+PREMIUM_DISPLAY_NAMES=Mẹ,Cô Lan,Lan
+```
+
+**Option C — grant Pro in database:**
+
+```bash
+pnpm grant:premium -- "Cô Lan"
+pnpm grant:premium -- --all-matching "Mẹ"
+```
+
+All 5 exam sets are already available on Free — limits only apply to tutor (10/day) and practice (20/day).
 
 ```env
 RAG_AB_ENABLED=true

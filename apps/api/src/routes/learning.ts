@@ -8,7 +8,7 @@ import {
   trackTelemetry,
   setUserState as updateUserState,
   getUserTier,
-  isPremium,
+  isUserPremium,
   getWaExamSets,
   startWaExamSet,
 } from "@repo/learning-engine";
@@ -46,8 +46,8 @@ export async function nextQuestion(c: Context) {
   const userId = c.req.param("userId");
   if (!userId) return c.json({ error: "userId required" }, 400);
   try {
-    const { tier } = await getUserTier(userId);
-    const usage = await checkAndIncrementUsage(userId, "practice", isPremium(tier));
+    const premium = await isUserPremium(userId);
+    const usage = await checkAndIncrementUsage(userId, "practice", premium);
     if (!usage.allowed) {
       return c.json(
         {
@@ -125,8 +125,8 @@ export async function startExam(c: Context) {
   if (!userId) return c.json({ error: "userId required" }, 400);
 
   try {
-    const { tier } = await getUserTier(userId);
-    const usage = await checkAndIncrementUsage(userId, "practice", isPremium(tier));
+    const premium = await isUserPremium(userId);
+    const usage = await checkAndIncrementUsage(userId, "practice", premium);
     if (!usage.allowed) {
       return c.json(
         {

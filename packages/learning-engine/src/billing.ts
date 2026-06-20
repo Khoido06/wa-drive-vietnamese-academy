@@ -53,6 +53,28 @@ export function isPremium(tier: SubscriptionTier): boolean {
   return tier === "pro" || tier === "family" || tier === "school";
 }
 
+function parseList(envVal: string | undefined): string[] {
+  if (!envVal) return [];
+  return envVal.split(",").map((s) => s.trim()).filter(Boolean);
+}
+
+/** Unlimited AI + practice — Pro tier, family env, or whitelisted name/id */
+export async function isUserPremium(userId: string): Promise<boolean> {
+  if (process.env.FAMILY_UNLIMITED === "true") return true;
+
+  const ids = parseList(process.env.PREMIUM_USER_IDS);
+  if (ids.includes(userId)) return true;
+
+  const user = await findUserById(userId);
+  if (!user) return false;
+
+  if (isPremium((user.subscriptionTier ?? "free") as SubscriptionTier)) return true;
+
+  const names = parseList(process.env.PREMIUM_DISPLAY_NAMES);
+  const normalized = user.displayName.trim().toLowerCase();
+  return names.some((n) => normalized.includes(n.toLowerCase()) || n.toLowerCase().includes(normalized));
+}
+
 export async function findUserByStripeCustomer(stripeCustomerId: string) {
   const db = getDb();
   const [user] = await db
