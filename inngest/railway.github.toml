@@ -1,0 +1,7 @@
+# GitHub deploy config — set Railway Config File to inngest/railway.github.toml on inngest service
+[build]
+builder = "dockerfile"
+dockerfilePath = "inngest/Dockerfile"
+
+[deploy]
+restartPolicyType = "on_failure"

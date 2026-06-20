@@ -176,8 +176,10 @@ curl -X POST https://api-production-72db.up.railway.app/jobs/run \
   -d '{"name":"ingest","data":{"stateCode":"WA"}}'
 ```
 
-Inngest dashboard: `https://<inngest-service>.up.railway.app`  
+Inngest dashboard: `https://inngest-production-56cc.up.railway.app`  
 App sync URL: `https://api-production-72db.up.railway.app/api/inngest`
+
+Recreate if needed: `node scripts/recreate-inngest-railway.mjs`
 
 ---
 

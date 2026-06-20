@@ -45,7 +45,7 @@ Full-stack AI engineer — production RAG tutor (Next.js 16, Hono, pgvector) wit
 | Pattern | Big tech tương đương | Trong project | Production hiện tại |
 |---------|---------------------|---------------|------------------------|
 | **OpenTelemetry** | Google Dapper, Meta tracing | `apps/api/src/telemetry/tracing.ts` — spans on `rag.query.stream`; auto-export to **Langfuse OTLP** when keys set | ✅ Live — backend `langfuse` (Railway đã có LANGFUSE_*) |
-| **Inngest / durable jobs** | Temporal, Cloud Tasks | Self-hosted Inngest on Railway + `/api/inngest` serve; cron daily review reminders | ✅ Live — self-hosted, không cần Inngest Cloud account |
+| **Inngest / durable jobs** | Temporal, Cloud Tasks | Self-hosted Inngest on Railway + `/api/inngest` serve; cron daily review reminders | ✅ Server live (`inngest-production-56cc.up.railway.app`) + local queue fallback |
 | **JWT API auth** | Zero-trust microservices | `@clerk/backend` verify Bearer on `/users/link` | ✅ Live (Clerk pk_test on Vercel) |
 | **Eval-gated ML** | Google TFX, Meta FBLearner eval | 50 golden queries, RAGAS metrics, CI blocks <85% | ✅ 50/50 pass |
 | **SSE streaming LLM** | ChatGPT-style products | Hono `streamSSE` + Groq | ✅ Live |
