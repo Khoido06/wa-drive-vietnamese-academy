@@ -37,8 +37,14 @@ check "RAG status"      "$API/rag/status"
 check "OpenAPI docs"    "$API/docs"
 
 health=$(curl -sS "$API/health")
+obs=$(curl -sS "$API/health/observability" 2>/dev/null || echo "{}")
 echo ""
 echo "API: $health"
+echo "Observability: $obs"
+
+if echo "$obs" | rg -q '"enabled":true' 2>/dev/null; then
+  echo "✅ Tier 2 hooks active (OTEL and/or Inngest)"
+fi
 
 if [[ $fail -ne 0 ]]; then
   echo ""

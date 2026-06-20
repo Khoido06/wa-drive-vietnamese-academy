@@ -9,17 +9,22 @@ const EVENT_MAP: Record<InngestJobEvent, "ingest" | "reembed" | "review-reminder
   "wa/review-reminders": "review-reminders",
 };
 
-let client: Inngest | null = null;
+/** Shared client — used by serve() and optional cloud event emit. */
+export const inngest = new Inngest({
+  id: "wa-drive-vietnamese-academy",
+  eventKey: process.env.INNGEST_EVENT_KEY,
+});
 
-export function getInngestClient(): Inngest | null {
-  if (!process.env.INNGEST_EVENT_KEY?.trim()) return null;
-  if (!client) {
-    client = new Inngest({
-      id: "wa-drive-vietnamese-academy",
-      eventKey: process.env.INNGEST_EVENT_KEY,
-    });
-  }
-  return client;
+export function isInngestCloudEmitEnabled(): boolean {
+  return Boolean(process.env.INNGEST_EVENT_KEY?.trim());
+}
+
+export function isInngestServeEnabled(): boolean {
+  return Boolean(process.env.INNGEST_SIGNING_KEY?.trim());
+}
+
+export function isInngestConfigured(): boolean {
+  return isInngestCloudEmitEnabled() && isInngestServeEnabled();
 }
 
 /** Push job to Inngest Cloud when configured; returns true if sent. */
@@ -27,10 +32,9 @@ export async function emitInngestJob(
   name: "ingest" | "reembed" | "review-reminders",
   data: Record<string, unknown> = {},
 ): Promise<boolean> {
-  const inngest = getInngestClient();
-  if (!inngest) return false;
+  if (!isInngestCloudEmitEnabled()) return false;
 
-  const eventName = (`wa/${name}` as InngestJobEvent);
+  const eventName = `wa/${name}` as InngestJobEvent;
   await inngest.send({ name: eventName, data });
   logger.info("inngest event sent", { name: eventName });
   return true;
@@ -38,8 +42,4 @@ export async function emitInngestJob(
 
 export function inngestEventToJobName(event: string): "ingest" | "reembed" | "review-reminders" | null {
   return EVENT_MAP[event as InngestJobEvent] ?? null;
-}
-
-export function isInngestConfigured(): boolean {
-  return Boolean(process.env.INNGEST_EVENT_KEY?.trim());
 }

@@ -93,19 +93,19 @@ Free: 50k observations/month
 
 ---
 
-## 6b. OpenTelemetry (distributed tracing)
+## 6b. OpenTelemetry → Langfuse (auto)
 
-Spans instrument RAG SSE (`rag.query.stream`). Export is **optional** — without env vars, spans stay in-process (no backend cost).
+Spans instrument RAG SSE (`rag.query.stream`). **No extra env needed** when `LANGFUSE_PUBLIC_KEY` + `LANGFUSE_SECRET_KEY` are set on Railway — API auto-exports OTLP to Langfuse.
 
-1. [Honeycomb](https://www.honeycomb.io) or [Jaeger](https://www.jaegertracing.io) OTLP endpoint (free tiers exist)
-2. Set on Railway API:
+Optional override:
 
 ```env
 OTEL_EXPORTER_OTLP_ENDPOINT=https://.../v1/traces
+OTEL_EXPORTER_OTLP_HEADERS=Authorization=Basic ...
 OTEL_SERVICE_NAME=wa-drive-api
 ```
 
-Verify: trigger a RAG query, then check your OTLP backend for span attributes (`cache_hit`, `state_code`, etc.).
+View traces: [cloud.langfuse.com](https://cloud.langfuse.com) → Traces.
 
 ---
 
@@ -159,18 +159,25 @@ NEXT_PUBLIC_VAPID_PUBLIC_KEY=...   # same public key
 
 ---
 
-## 10. Job queue (Inngest-compatible)
+## 10. Job queue (Inngest self-hosted on Railway)
+
+Production uses **self-hosted Inngest** (second Railway service) — no Inngest Cloud account needed.
 
 ```bash
-# Trigger background ingest
-curl -X POST https://YOUR-API/jobs/run -H 'Content-Type: application/json' \
-  -d '{"name":"ingest","data":{"stateCode":"WA"}}'
-
-# Inngest webhook (same shape)
-curl -X POST https://YOUR-API/jobs/inngest -d '{"name":"review-reminders"}'
+# One-time setup (generates hex keys, creates inngest service, wires API)
+node scripts/setup-tier2-railway.mjs
 ```
 
-Set `INNGEST_EVENT_KEY` when wiring Inngest Cloud. Without it: in-memory queue with **3 retries** (production default on Railway).
+Manual trigger:
+
+```bash
+curl -X POST https://api-production-72db.up.railway.app/jobs/run \
+  -H 'Content-Type: application/json' \
+  -d '{"name":"ingest","data":{"stateCode":"WA"}}'
+```
+
+Inngest dashboard: `https://<inngest-service>.up.railway.app`  
+App sync URL: `https://api-production-72db.up.railway.app/api/inngest`
 
 ---
 

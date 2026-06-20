@@ -44,8 +44,8 @@ Full-stack AI engineer — production RAG tutor (Next.js 16, Hono, pgvector) wit
 
 | Pattern | Big tech tương đương | Trong project | Production hiện tại |
 |---------|---------------------|---------------|------------------------|
-| **OpenTelemetry** | Google Dapper, Meta tracing | `apps/api/src/telemetry/tracing.ts` — spans on `rag.query.stream`; OTLP khi set env | Spans chạy; export cần `OTEL_EXPORTER_OTLP_ENDPOINT` (Honeycomb/Jaeger free tier) |
-| **Inngest / durable jobs** | Temporal, Cloud Tasks | `inngest` SDK + `/jobs/inngest` webhook; local queue + **3 retries** | Local queue **đang chạy**; Inngest Cloud khi set `INNGEST_EVENT_KEY` |
+| **OpenTelemetry** | Google Dapper, Meta tracing | `apps/api/src/telemetry/tracing.ts` — spans on `rag.query.stream`; auto-export to **Langfuse OTLP** when keys set | ✅ Live — backend `langfuse` (Railway đã có LANGFUSE_*) |
+| **Inngest / durable jobs** | Temporal, Cloud Tasks | Self-hosted Inngest on Railway + `/api/inngest` serve; cron daily review reminders | ✅ Live — self-hosted, không cần Inngest Cloud account |
 | **JWT API auth** | Zero-trust microservices | `@clerk/backend` verify Bearer on `/users/link` | ✅ Live (Clerk pk_test on Vercel) |
 | **Eval-gated ML** | Google TFX, Meta FBLearner eval | 50 golden queries, RAGAS metrics, CI blocks <85% | ✅ 50/50 pass |
 | **SSE streaming LLM** | ChatGPT-style products | Hono `streamSSE` + Groq | ✅ Live |
@@ -61,11 +61,11 @@ Full-stack AI engineer — production RAG tutor (Next.js 16, Hono, pgvector) wit
 
 ### Câu hỏi: “OpenTelemetry production chưa?”
 
-**Trả lời thật:** “Instrumentation đã wire — mỗi RAG stream là một span với attributes cache_hit, state_code, answer length. OTLP exporter bật khi set `OTEL_EXPORTER_OTLP_ENDPOINT`. Hiện Railway chưa set exporter → spans in-process; pattern giống Google/Meta: instrument first, export when observability backend ready.”
+**Trả lời thật:** “Instrumentation wire sẵn — auto-export OTLP sang Langfuse (đã có trên Railway). Mỗi RAG stream là span với cache_hit, state_code. Xem trace trên Langfuse dashboard.”
 
 ### Câu hỏi: “Inngest hay queue tự viết?”
 
-**Trả lời thật:** “Dual-mode: `INNGEST_EVENT_KEY` → gửi event lên Inngest Cloud; không có key → in-memory queue với 3 lần retry. Webhook `/jobs/inngest` nhận cron từ Inngest hoặc manual trigger. Đúng pattern ‘serverless job fan-out’ mà Vercel/Railway hay dùng.”
+**Trả lời thật:** “Self-hosted Inngest trên Railway (free tier) — không phải Inngest Cloud paid. SDK serve tại `/api/inngest`, 4 functions (ingest, reembed, review-reminders, daily cron). Fallback in-memory queue với 3 retries nếu Inngest down.”
 
 ### Câu hỏi: “RAG có hallucinate không?”
 
@@ -78,8 +78,8 @@ Full-stack AI engineer — production RAG tutor (Next.js 16, Hono, pgvector) wit
 ### Đừng nói (sẽ lộ khi hỏi sâu)
 
 - ❌ “Millions of users” / “FAANG-scale traffic”
-- ❌ “Full Inngest production” nếu chưa set `INNGEST_EVENT_KEY`
-- ❌ “Full OTEL dashboard” nếu chưa set OTLP endpoint
+- ❌ “Full Inngest Cloud SaaS” — đang **self-hosted** trên Railway
+- ❌ “Separate Honeycomb/Jaeger” — OTLP đi qua Langfuse
 - ❌ “Stripe live payments” — skeleton test mode
 - ❌ “Clerk Production pk_live” — đang pk_test trên vercel.app (đủ cho mẹ + demo)
 
@@ -115,7 +115,7 @@ Full-stack AI engineer — production RAG tutor (Next.js 16, Hono, pgvector) wit
 | RAG eval | 50/50 (100%) | `pnpm eval:rag` |
 | E2E | 7/7 Playwright | `pnpm test:e2e` |
 | Exam bank | 250 Q, 5 sets | `/learning/exam-sets?stateCode=WA` |
-| API version | 0.7.0 | `/health` |
+| API version | 0.7.1 | `/health` |
 | Infra cost | $0/mo | Free tiers |
 | Real users | Family (mom Hạnh) | Honest — portfolio + production |
 

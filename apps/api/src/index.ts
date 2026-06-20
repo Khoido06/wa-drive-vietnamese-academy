@@ -1,6 +1,6 @@
 import "./instrument.js";
 
-import { serve } from "@hono/node-server";
+import { serve as serveHttp } from "@hono/node-server";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { optionalClerkAuth } from "./middleware/clerk-auth.js";
@@ -46,6 +46,11 @@ import {
   inngestWebhook,
   observabilityStatus,
 } from "./routes/notifications.js";
+import { serve as inngestServeHandler } from "inngest/hono";
+import { inngest } from "./jobs/inngest-client.js";
+import { inngestFunctions } from "./jobs/inngest-functions.js";
+
+const inngestServe = inngestServeHandler({ client: inngest, functions: inngestFunctions });
 
 const app = new Hono();
 
@@ -64,7 +69,7 @@ app.use("*", optionalClerkAuth);
 const ragRateLimit = createRateLimit({ windowMs: 60_000, max: 20, keyPrefix: "rag" });
 
 app.get("/health", (c) =>
-  c.json({ status: "ok", system: "wa-drive-vietnamese-academy", version: "0.7.0" }),
+  c.json({ status: "ok", system: "wa-drive-vietnamese-academy", version: "0.7.1" }),
 );
 
 app.get("/health/observability", observabilityStatus);
@@ -116,6 +121,7 @@ app.post("/notifications/subscribe", subscribePush);
 app.post("/jobs/run", triggerJob);
 app.get("/jobs/status", jobStatus);
 app.post("/jobs/inngest", inngestWebhook);
+app.on(["GET", "PUT", "POST"], "/api/inngest", (c) => inngestServe(c));
 
 const port = Number(process.env.PORT ?? process.env.API_PORT ?? 4000);
 
@@ -128,6 +134,7 @@ logger.info("server starting", {
   langfuse: !!process.env.LANGFUSE_PUBLIC_KEY,
   vapid: !!process.env.VAPID_PUBLIC_KEY,
   inngest: !!process.env.INNGEST_EVENT_KEY,
+  inngestServe: !!process.env.INNGEST_SIGNING_KEY,
   tripleCheck: process.env.STREAM_LLM_VALIDATOR !== "false",
   upstash: !!process.env.UPSTASH_REDIS_REST_URL,
 });
@@ -135,6 +142,6 @@ logger.info("server starting", {
 startMutationCron();
 startReviewReminderCron();
 
-serve({ fetch: app.fetch, port });
+serveHttp({ fetch: app.fetch, port });
 
 export default app;

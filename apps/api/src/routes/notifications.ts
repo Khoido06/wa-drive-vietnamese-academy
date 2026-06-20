@@ -1,8 +1,8 @@
 import type { Context } from "hono";
 import { savePushSubscription } from "../jobs/review-reminders.js";
 import { enqueueJob, listJobs, handleInngestEvent, scheduleJob } from "../jobs/queue.js";
-import { isInngestConfigured } from "../jobs/inngest-client.js";
-import { isOtelEnabled } from "../telemetry/tracing.js";
+import { isInngestConfigured, isInngestCloudEmitEnabled, isInngestServeEnabled } from "../jobs/inngest-client.js";
+import { isOtelEnabled, getOtelBackend } from "../telemetry/tracing.js";
 
 export async function subscribePush(c: Context) {
   const body = await c.req.json<{ userId?: string; subscription: PushSubscriptionJSON }>();
@@ -56,12 +56,20 @@ export async function observabilityStatus(c: Context) {
     vapid: { enabled: !!(process.env.VAPID_PUBLIC_KEY && process.env.VAPID_PRIVATE_KEY) },
     inngest: {
       enabled: isInngestConfigured(),
-      endpoint: "/jobs/inngest",
-      mode: isInngestConfigured() ? "cloud+local-fallback" : "in-memory-queue",
+      serve: isInngestServeEnabled(),
+      emit: isInngestCloudEmitEnabled(),
+      endpoint: "/api/inngest",
+      legacyEndpoint: "/jobs/inngest",
+      mode: isInngestConfigured()
+        ? "cloud"
+        : isInngestServeEnabled() || isInngestCloudEmitEnabled()
+          ? "partial"
+          : "in-memory-queue",
     },
     opentelemetry: {
       enabled: isOtelEnabled(),
-      exporter: process.env.OTEL_EXPORTER_OTLP_ENDPOINT ? "otlp" : "off",
+      backend: getOtelBackend(),
+      exporter: isOtelEnabled() ? "otlp" : "off",
     },
     tripleCheck: { streamLlmValidator: process.env.STREAM_LLM_VALIDATOR !== "false" },
     jobs: listJobs(5),

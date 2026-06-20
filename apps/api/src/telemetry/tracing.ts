@@ -1,13 +1,56 @@
 import { trace, SpanStatusCode, type Span } from "@opentelemetry/api";
 
-export const tracer = trace.getTracer("wa-drive-api", "0.7.0");
+export const tracer = trace.getTracer("wa-drive-api", "0.7.1");
 
 let otelEnabled = false;
+let otelBackend: "langfuse" | "custom" | "off" = "off";
 
-/** Call once at startup — loads OTLP exporter when OTEL_EXPORTER_OTLP_ENDPOINT is set. */
+function parseOtlpHeaders(raw: string | undefined): Record<string, string> | undefined {
+  if (!raw?.trim()) return undefined;
+  const headers: Record<string, string> = {};
+  for (const part of raw.split(",")) {
+    const eq = part.indexOf("=");
+    if (eq === -1) continue;
+    headers[part.slice(0, eq).trim()] = part.slice(eq + 1).trim();
+  }
+  return Object.keys(headers).length ? headers : undefined;
+}
+
+function resolveOtelConfig(): {
+  endpoint: string;
+  headers?: Record<string, string>;
+  backend: "langfuse" | "custom";
+} | null {
+  const explicit = process.env.OTEL_EXPORTER_OTLP_ENDPOINT?.trim();
+  if (explicit) {
+    const url = explicit.includes("/v1/traces") ? explicit : `${explicit.replace(/\/$/, "")}/v1/traces`;
+    return {
+      endpoint: url,
+      headers: parseOtlpHeaders(process.env.OTEL_EXPORTER_OTLP_HEADERS),
+      backend: "custom",
+    };
+  }
+
+  const publicKey = process.env.LANGFUSE_PUBLIC_KEY?.trim();
+  const secretKey = process.env.LANGFUSE_SECRET_KEY?.trim();
+  if (!publicKey || !secretKey) return null;
+
+  const base = (process.env.LANGFUSE_BASE_URL ?? "https://cloud.langfuse.com").replace(/\/$/, "");
+  const auth = Buffer.from(`${publicKey}:${secretKey}`).toString("base64");
+  return {
+    endpoint: `${base}/api/public/otel/v1/traces`,
+    headers: {
+      Authorization: `Basic ${auth}`,
+      "x-langfuse-ingestion-version": "4",
+    },
+    backend: "langfuse",
+  };
+}
+
+/** Call once at startup — OTLP via explicit env or Langfuse keys already on Railway. */
 export async function initOtel(): Promise<void> {
-  const endpoint = process.env.OTEL_EXPORTER_OTLP_ENDPOINT?.trim();
-  if (!endpoint) return;
+  const config = resolveOtelConfig();
+  if (!config) return;
 
   const [
     { NodeTracerProvider, BatchSpanProcessor },
@@ -25,13 +68,25 @@ export async function initOtel(): Promise<void> {
   const provider = new NodeTracerProvider({
     resource: new Resource({ [SEMRESATTRS_SERVICE_NAME]: serviceName }),
   });
-  provider.addSpanProcessor(new BatchSpanProcessor(new OTLPTraceExporter({ url: endpoint })));
+  provider.addSpanProcessor(
+    new BatchSpanProcessor(
+      new OTLPTraceExporter({
+        url: config.endpoint,
+        headers: config.headers,
+      }),
+    ),
+  );
   provider.register();
   otelEnabled = true;
+  otelBackend = config.backend;
 }
 
 export function isOtelEnabled(): boolean {
   return otelEnabled;
+}
+
+export function getOtelBackend(): "langfuse" | "custom" | "off" {
+  return otelBackend;
 }
 
 export async function withSpan<T>(
