@@ -53,7 +53,8 @@ railway("service link inngest");
 railway(`variable set 'INNGEST_EVENT_KEY=${eventKey}'`, "inngest");
 railway(`variable set 'INNGEST_SIGNING_KEY=${signingKey}'`, "inngest");
 
-console.log("Deploying from inngest/Dockerfile via CLI…");
+console.log("Deploying from inngest/Dockerfile via CLI (no GitHub)…");
+railway("service source disconnect", "inngest");
 const up = run("npx @railway/cli up -d -y", inngestDir);
 if (up.status !== 0) console.error(up.stderr || up.stdout);
 
@@ -69,17 +70,26 @@ console.log("INNGEST_BASE_URL →", inngestUrl);
 
 console.log("\nWaiting for Inngest server…");
 for (let i = 1; i <= 18; i++) {
+  const logs = run("npx @railway/cli logs --service inngest 2>&1 | tail -8").stdout ?? "";
+  if (logs.includes("inngest start") || logs.includes("service listening")) {
+    console.log("✓ Inngest process detected in logs");
+    break;
+  }
+  if (logs.includes("api@0.0.0")) {
+    console.warn("⚠ Wrong image (API) — redeploying again…");
+    railway("service source disconnect", "inngest");
+    run("npx @railway/cli up -d -y", inngestDir);
+  }
   try {
     const res = await fetch(inngestUrl);
-    const text = await res.text();
-    if (res.status < 500 && !text.includes("wa-drive-api")) {
-      console.log(`✓ Inngest up (${res.status})`);
+    if (res.status < 500) {
+      console.log(`✓ Inngest HTTP ${res.status}`);
       break;
     }
   } catch {
     /* retry */
   }
-  if (i === 18) console.warn("⚠ Check logs: railway logs --service inngest");
+  if (i === 18) console.warn("⚠ Check: railway logs --service inngest");
   else await new Promise((r) => setTimeout(r, 10_000));
 }
 

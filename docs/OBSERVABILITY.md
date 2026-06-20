@@ -161,25 +161,25 @@ NEXT_PUBLIC_VAPID_PUBLIC_KEY=...   # same public key
 
 ## 10. Job queue (Inngest self-hosted on Railway)
 
-Production uses **self-hosted Inngest** (second Railway service) — no Inngest Cloud account needed.
+Production uses **self-hosted Inngest** (second Railway service).
 
 ```bash
-# One-time setup (generates hex keys, creates inngest service, wires API)
-node scripts/setup-tier2-railway.mjs
+# Deploy / redeploy Inngest (isolated Dockerfile — do NOT connect GitHub on inngest service)
+pnpm deploy:inngest
 ```
+
+Dashboard: https://inngest-production-56cc.up.railway.app  
+App sync URL: https://api-production-72db.up.railway.app/api/inngest
+
+> **Monorepo note:** Service `inngest` must deploy via `pnpm deploy:inngest` (temp dir upload). Connecting GitHub without `inngest/railway.github.toml` in dashboard builds the API image by mistake.
 
 Manual trigger:
 
 ```bash
 curl -X POST https://api-production-72db.up.railway.app/jobs/run \
   -H 'Content-Type: application/json' \
-  -d '{"name":"ingest","data":{"stateCode":"WA"}}'
+  -d '{"name":"review-reminders"}'
 ```
-
-Inngest dashboard: `https://inngest-production-56cc.up.railway.app`  
-App sync URL: `https://api-production-72db.up.railway.app/api/inngest`
-
-Recreate if needed: `node scripts/recreate-inngest-railway.mjs`
 
 ---
 
