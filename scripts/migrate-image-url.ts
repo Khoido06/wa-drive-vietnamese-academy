@@ -1,12 +1,9 @@
 #!/usr/bin/env node
-/**
- * Seed 250 curated WA DMV questions (5 sets × 50) into Postgres.
- * Run: pnpm seed:wa-exams
- */
+/** Add image_url column to questions table. */
 import { readFileSync, existsSync } from "node:fs";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import { seedWaExamQuestions, getCuratedQuestionCount } from "@repo/learning-engine";
+import postgres from "postgres";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -33,15 +30,10 @@ function loadDotEnv() {
 loadDotEnv();
 
 async function main() {
-  if (!process.env.DATABASE_URL) {
-    console.error("❌ DATABASE_URL required");
-    process.exit(1);
-  }
-
-  console.log("📋 Seeding WA curated exam questions (5 × 50)...");
-  const { inserted, updated } = await seedWaExamQuestions();
-  const total = await getCuratedQuestionCount("WA");
-  console.log(`✅ Done — inserted: ${inserted}, updated: ${updated}, total WA curated: ${total}`);
+  const sql = postgres(process.env.DATABASE_URL!, { max: 1 });
+  await sql.unsafe(`ALTER TABLE questions ADD COLUMN IF NOT EXISTS image_url text`);
+  console.log("✅ image_url column applied");
+  await sql.end();
 }
 
 main().catch((err) => {

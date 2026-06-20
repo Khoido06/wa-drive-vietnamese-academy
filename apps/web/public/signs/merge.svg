@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="Merge sign">
+  <rect x="60" y="8" width="74" height="74" transform="rotate(45 60 60)" fill="#ffcc00" stroke="#000" stroke-width="3"/>
+  <line x1="40" y1="75" x2="80" y2="75" stroke="#000" stroke-width="5"/>
+  <line x1="60" y1="75" x2="75" y2="45" stroke="#000" stroke-width="5"/>
+  <line x1="60" y1="75" x2="45" y2="45" stroke="#000" stroke-width="5"/>
+  <text x="60" y="95" text-anchor="middle" fill="#000" font-family="Arial,sans-serif" font-size="10" font-weight="bold">MERGE</text>
+</svg>

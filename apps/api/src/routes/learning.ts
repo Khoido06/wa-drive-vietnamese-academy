@@ -151,6 +151,7 @@ export async function startExam(c: Context) {
         topic: q.topic,
         questionTextVi: q.questionTextVi,
         questionTextEn: q.questionTextEn,
+        imageUrl: q.imageUrl,
         options: q.options,
         questionNumber: q.questionNumber,
       })),

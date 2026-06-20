@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="Slow moving vehicle emblem">
+  <polygon points="60,15 105,95 15,95" fill="#ff6600" stroke="#000" stroke-width="3"/>
+  <rect x="35" y="55" width="50" height="22" rx="3" fill="#cc0000"/>
+  <text x="60" y="72" text-anchor="middle" fill="#fff" font-family="Arial,sans-serif" font-size="14" font-weight="bold">SMV</text>
+</svg>

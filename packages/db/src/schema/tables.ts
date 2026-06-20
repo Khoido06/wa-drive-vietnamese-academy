@@ -78,6 +78,7 @@ export const questions = pgTable(
       .notNull(),
     correctOptionId: text("correct_option_id").notNull(),
     explanationVi: text("explanation_vi"),
+    imageUrl: text("image_url"),
     sourceRef: text("source_ref"),
     sourceChunkIds: jsonb("source_chunk_ids").$type<string[]>().notNull().default([]),
     difficultyScore: real("difficulty_score").notNull().default(0.5),

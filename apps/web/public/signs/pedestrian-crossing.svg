@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="Pedestrian crossing sign">
+  <rect x="60" y="8" width="74" height="74" transform="rotate(45 60 60)" fill="#ffcc00" stroke="#000" stroke-width="3"/>
+  <circle cx="52" cy="48" r="6" fill="#000"/>
+  <line x1="52" y1="54" x2="52" y2="72" stroke="#000" stroke-width="4"/>
+  <line x1="52" y1="60" x2="42" y2="68" stroke="#000" stroke-width="3"/>
+  <line x1="52" y1="60" x2="62" y2="68" stroke="#000" stroke-width="3"/>
+  <line x1="52" y1="72" x2="44" y2="84" stroke="#000" stroke-width="3"/>
+  <line x1="52" y1="72" x2="60" y2="84" stroke="#000" stroke-width="3"/>
+</svg>

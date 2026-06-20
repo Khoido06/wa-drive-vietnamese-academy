@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="Railroad crossing sign">
+  <circle cx="60" cy="60" r="52" fill="#ffcc00" stroke="#000" stroke-width="4"/>
+  <text x="60" y="50" text-anchor="middle" fill="#000" font-family="Arial Black,sans-serif" font-size="16" font-weight="900">RR</text>
+  <text x="60" y="68" text-anchor="middle" fill="#000" font-family="Arial,sans-serif" font-size="9">XING</text>
+  <line x1="25" y1="78" x2="95" y2="78" stroke="#000" stroke-width="4"/>
+  <line x1="25" y1="86" x2="95" y2="86" stroke="#000" stroke-width="4"/>
+</svg>

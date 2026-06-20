@@ -14,6 +14,7 @@ export interface CuratedQuestionInput {
   options: Array<{ id: string; textVi: string; textEn?: string }>;
   correctOptionId: string;
   explanationVi: string;
+  imageUrl?: string;
   sourceRef?: string;
 }
 
@@ -49,9 +50,17 @@ export const WA_EXAM_SETS: WaExamSetMeta[] = [
     passCount: WA_DMV_PASS_COUNT,
   },
   {
-    id: "wa-set-03",
-    name: "Bộ đề 3",
-    description: "50 câu nâng cao — ôn sát đề thi",
+    id: "wa-set-04",
+    name: "Bộ đề 4",
+    description: "50 câu mới — nhiều biển báo có hình",
+    questionCount: 50,
+    examLength: WA_DMV_EXAM_LENGTH,
+    passCount: WA_DMV_PASS_COUNT,
+  },
+  {
+    id: "wa-set-05",
+    name: "Bộ đề 5",
+    description: "50 câu tổng hợp — sát đề thi DMV",
     questionCount: 50,
     examLength: WA_DMV_EXAM_LENGTH,
     passCount: WA_DMV_PASS_COUNT,
@@ -62,6 +71,8 @@ const SET_FILES: Record<string, string> = {
   "wa-set-01": "set-01.json",
   "wa-set-02": "set-02.json",
   "wa-set-03": "set-03.json",
+  "wa-set-04": "set-04.json",
+  "wa-set-05": "set-05.json",
 };
 
 function loadSetFile(setId: string): CuratedQuestionInput[] {
@@ -109,6 +120,7 @@ export async function seedWaExamQuestions(): Promise<{ inserted: number; updated
       options: item.options,
       correctOptionId: item.correctOptionId,
       explanationVi: item.explanationVi,
+      imageUrl: item.imageUrl ?? null,
       sourceRef: item.sourceRef ?? null,
       sourceChunkIds: [] as string[],
       isActive: true,

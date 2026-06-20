@@ -62,23 +62,25 @@
   {
     "externalId": "wa-s1-q05",
     "topic": "traffic_signs",
-    "questionTextVi": "Biển báo STOP (DỪNG) có hình gì và màu gì?",
-    "questionTextEn": "What shape and color is a STOP sign?",
+    "questionTextVi": "Biển báo trong hình yêu cầu bạn làm gì?",
+    "questionTextEn": "What does the sign shown require you to do?",
+    "imageUrl": "/signs/stop.svg",
     "options": [
-      {"id": "a", "textVi": "Hình bát giác màu đỏ", "textEn": "Red octagon"},
-      {"id": "b", "textVi": "Hình tam giác ngược màu đỏ", "textEn": "Red inverted triangle"},
-      {"id": "c", "textVi": "Hình tròn màu đỏ", "textEn": "Red circle"},
-      {"id": "d", "textVi": "Hình thoi màu vàng", "textEn": "Yellow diamond"}
+      {"id": "a", "textVi": "Dừng hoàn toàn trước vạch dừng hoặc giao lộ", "textEn": "Come to a complete stop at the stop line or intersection"},
+      {"id": "b", "textVi": "Giảm tốc và nhường đường", "textEn": "Slow down and yield"},
+      {"id": "c", "textVi": "Chỉ dừng khi có xe khác", "textEn": "Stop only when other vehicles are present"},
+      {"id": "d", "textVi": "Tăng tốc để qua nhanh", "textEn": "Speed up to pass quickly"}
     ],
     "correctOptionId": "a",
-    "explanationVi": "Biển STOP luôn là hình bát giác màu đỏ. Bạn phải dừng hoàn toàn tại vạch dừng hoặc trước giao lộ.",
+    "explanationVi": "Biển STOP (hình bát giác đỏ) yêu cầu dừng hoàn toàn tại vạch dừng hoặc trước giao lộ, rồi đi khi an toàn.",
     "sourceRef": "WA Driver Guide — Biển báo giao thông"
   },
   {
     "externalId": "wa-s1-q06",
     "topic": "traffic_signs",
-    "questionTextVi": "Biển YIELD (NHƯỜNG ĐƯỜNG) yêu cầu bạn làm gì?",
-    "questionTextEn": "What does a YIELD sign require you to do?",
+    "questionTextVi": "Biển báo trong hình yêu cầu bạn làm gì?",
+    "questionTextEn": "What does the sign shown require you to do?",
+    "imageUrl": "/signs/yield.svg",
     "options": [
       {"id": "a", "textVi": "Dừng hoàn toàn trong mọi trường hợp", "textEn": "Always come to a complete stop"},
       {"id": "b", "textVi": "Giảm tốc và nhường đường cho xe hoặc người đi bộ có quyền ưu tiên", "textEn": "Slow down and yield to traffic or pedestrians with the right-of-way"},
@@ -92,8 +94,9 @@
   {
     "externalId": "wa-s1-q07",
     "topic": "traffic_signs",
-    "questionTextVi": "Biển báo màu cam thường báo hiệu điều gì?",
-    "questionTextEn": "What do orange traffic signs usually indicate?",
+    "questionTextVi": "Biển báo màu cam trong hình báo hiệu điều gì?",
+    "questionTextEn": "What does the orange sign shown indicate?",
+    "imageUrl": "/signs/work-zone.svg",
     "options": [
       {"id": "a", "textVi": "Khu vực thi công hoặc công trình đường", "textEn": "Construction or work zone"},
       {"id": "b", "textVi": "Khu vực trường học", "textEn": "School zone"},
@@ -107,16 +110,17 @@
   {
     "externalId": "wa-s1-q08",
     "topic": "traffic_signs",
-    "questionTextVi": "Biển báo khu vực trường học (School Zone) thường có hình gì?",
-    "questionTextEn": "What shape is a School Zone sign?",
+    "questionTextVi": "Biển báo trong hình báo hiệu khu vực nào?",
+    "questionTextEn": "What area does the sign shown indicate?",
+    "imageUrl": "/signs/school-zone.svg",
     "options": [
-      {"id": "a", "textVi": "Hình ngũ giác (pentagon) màu vàng", "textEn": "Yellow pentagon"},
-      {"id": "b", "textVi": "Hình bát giác màu đỏ", "textEn": "Red octagon"},
-      {"id": "c", "textVi": "Hình thoi màu xanh", "textEn": "Blue diamond"},
-      {"id": "d", "textVi": "Hình chữ nhật màu trắng", "textEn": "White rectangle"}
+      {"id": "a", "textVi": "Khu vực trường học — có học sinh", "textEn": "School zone — children present"},
+      {"id": "b", "textVi": "Khu vực thi công", "textEn": "Construction zone"},
+      {"id": "c", "textVi": "Bãi đỗ xe", "textEn": "Parking area"},
+      {"id": "d", "textVi": "Đường cao tốc", "textEn": "Freeway"}
     ],
     "correctOptionId": "a",
-    "explanationVi": "Biển khu trường học thường là hình ngũ giác màu vàng, báo hiệu khu vực có học sinh. Hãy giảm tốc và chú ý quan sát.",
+    "explanationVi": "Biển hình ngũ giác vàng là biển khu trường học. Hãy giảm tốc và chú ý quan sát học sinh.",
     "sourceRef": "WA Driver Guide — Biển báo giao thông"
   },
   {

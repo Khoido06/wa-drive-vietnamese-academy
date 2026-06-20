@@ -12,6 +12,7 @@ import { vi } from "@repo/ui/i18n/vi";
 import { apiFetch, ensureUser, useTelemetry } from "../../lib/api";
 import { HeaderAction } from "../../components/header-action";
 import { VoiceButton } from "../../components/voice-button";
+import { QuestionSignImage } from "../../components/question-sign-image";
 
 interface ExamSet {
   id: string;
@@ -25,6 +26,7 @@ interface ExamSet {
 interface Question {
   id: string;
   questionTextVi: string;
+  imageUrl?: string | null;
   options: Array<{ id: string; textVi: string }>;
 }
 
@@ -205,6 +207,7 @@ export default function ExamPage() {
             <div key={a.question.id} className="question-card">
               <p className="question-topic">Câu sai {i + 1}</p>
               <p className="question-text">{a.question.questionTextVi}</p>
+              {a.question.imageUrl && <QuestionSignImage imageUrl={a.question.imageUrl} />}
               <VoiceButton text={a.question.questionTextVi} label="🔊 Đọc câu hỏi" />
               {a.question.options.map((opt, j) => (
                 <OptionCard
@@ -293,6 +296,7 @@ export default function ExamPage() {
         <p style={{ color: "var(--color-error)", textAlign: "center", marginBottom: "var(--space-md)" }}>{error}</p>
       )}
       <div className="question-card">
+        {q.imageUrl && <QuestionSignImage imageUrl={q.imageUrl} />}
         <p className="question-text">{q.questionTextVi}</p>
       </div>
       <VoiceButton text={q.questionTextVi} />

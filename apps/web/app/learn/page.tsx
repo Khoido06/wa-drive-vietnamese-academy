@@ -11,11 +11,13 @@ import { vi } from "@repo/ui/i18n/vi";
 import { apiFetch, ensureUser, useTelemetry } from "../../lib/api";
 import { HeaderAction } from "../../components/header-action";
 import { VoiceButton } from "../../components/voice-button";
+import { QuestionSignImage } from "../../components/question-sign-image";
 
 interface Question {
   id: string;
   topic: string;
   questionTextVi: string;
+  imageUrl?: string | null;
   options: Array<{ id: string; textVi: string }>;
 }
 
@@ -122,6 +124,7 @@ export default function LearnPage() {
           )}
           <div className="question-card">
             <p className="question-topic">{TOPIC_LABELS[question.topic] ?? question.topic}</p>
+            {question.imageUrl && <QuestionSignImage imageUrl={question.imageUrl} />}
             <p className="question-text">{question.questionTextVi}</p>
           </div>
           <VoiceButton text={question.questionTextVi} />

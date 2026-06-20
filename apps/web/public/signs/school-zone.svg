@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="School zone sign">
+  <polygon points="60,8 112,45 112,95 60,112 8,95 8,45" fill="#ffcc00" stroke="#000" stroke-width="3"/>
+  <rect x="38" y="38" width="44" height="30" fill="#fff" stroke="#000" stroke-width="2"/>
+  <polygon points="60,42 72,52 48,52" fill="#000"/>
+  <rect x="46" y="52" width="28" height="14" fill="#000"/>
+  <text x="60" y="88" text-anchor="middle" fill="#000" font-family="Arial,sans-serif" font-size="10" font-weight="bold">SCHOOL</text>
+</svg>

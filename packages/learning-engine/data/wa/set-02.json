@@ -2,8 +2,9 @@
   {
     "externalId": "wa-s2-q01",
     "topic": "traffic_signs",
-    "questionTextVi": "Biển báo hình thoi màu vàng tại Washington thường báo hiệu điều gì?",
-    "questionTextEn": "What do yellow diamond-shaped signs in Washington usually indicate?",
+    "questionTextVi": "Biển báo trong hình có ý nghĩa gì?",
+    "questionTextEn": "What does the sign shown mean?",
+    "imageUrl": "/signs/warning.svg",
     "options": [
       {
         "id": "a",
@@ -33,8 +34,9 @@
   {
     "externalId": "wa-s2-q02",
     "topic": "traffic_signs",
-    "questionTextVi": "Đèn đỏ nhấp nháy tại ngã tư ở Washington có ý nghĩa giống biển báo nào?",
-    "questionTextEn": "What does a flashing red traffic light at an intersection in Washington mean?",
+    "questionTextVi": "Tín hiệu trong hình có ý nghĩa giống biển báo nào?",
+    "questionTextEn": "What sign does the signal shown mean the same as?",
+    "imageUrl": "/signs/flashing-red.svg",
     "options": [
       {
         "id": "a",
@@ -64,8 +66,9 @@
   {
     "externalId": "wa-s2-q03",
     "topic": "traffic_signs",
-    "questionTextVi": "Biển báo hình tam giác ngược màu đỏ-trắng (YIELD) yêu cầu người lái làm gì?",
-    "questionTextEn": "What does an inverted red-and-white triangle (YIELD) sign require?",
+    "questionTextVi": "Biển báo trong hình yêu cầu người lái làm gì?",
+    "questionTextEn": "What does the sign shown require the driver to do?",
+    "imageUrl": "/signs/yield.svg",
     "options": [
       {
         "id": "a",
@@ -95,8 +98,9 @@
   {
     "externalId": "wa-s2-q04",
     "topic": "traffic_signs",
-    "questionTextVi": "Biển tam giác cam phản quang phía sau xe nông nghiệp báo hiệu gì?",
-    "questionTextEn": "What does an orange reflective triangle on the rear of a farm vehicle indicate?",
+    "questionTextVi": "Biển tam giác cam trong hình trên xe báo hiệu gì?",
+    "questionTextEn": "What does the orange triangle emblem shown indicate?",
+    "imageUrl": "/signs/slow-moving.svg",
     "options": [
       {
         "id": "a",

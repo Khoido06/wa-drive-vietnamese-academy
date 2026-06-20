@@ -29,6 +29,7 @@ export interface NextQuestionResult {
     topic: string;
     questionTextVi: string;
     questionTextEn: string | null;
+    imageUrl?: string | null;
     options: Array<{ id: string; textVi: string; textEn?: string }>;
     difficultyScore: number;
   };
@@ -114,6 +115,7 @@ export async function getNextQuestion(userId: string): Promise<NextQuestionResul
           topic: curated.topic,
           questionTextVi: curated.questionTextVi,
           questionTextEn: curated.questionTextEn,
+          imageUrl: curated.imageUrl,
           options: curated.options,
           difficultyScore: curated.difficultyScore,
         },

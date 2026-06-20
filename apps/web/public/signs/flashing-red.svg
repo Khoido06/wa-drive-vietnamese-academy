@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="Flashing red light">
+  <rect x="35" y="15" width="50" height="90" rx="6" fill="#333"/>
+  <circle cx="60" cy="40" r="16" fill="#cc0000" opacity="0.4"/>
+  <circle cx="60" cy="65" r="16" fill="#333"/>
+  <circle cx="60" cy="90" r="16" fill="#333"/>
+  <circle cx="60" cy="40" r="16" fill="none" stroke="#cc0000" stroke-width="3"/>
+  <text x="60" y="44" text-anchor="middle" fill="#fff" font-family="Arial,sans-serif" font-size="8">FLASH</text>
+</svg>

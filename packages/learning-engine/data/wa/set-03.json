@@ -126,8 +126,9 @@
   {
     "externalId": "wa-s3-q05",
     "topic": "traffic_signs",
-    "questionTextVi": "Biển báo hình thoi màu vàng thường có ý nghĩa gì?",
-    "questionTextEn": "What do yellow diamond-shaped signs generally mean?",
+    "questionTextVi": "Biển báo trong hình có ý nghĩa gì?",
+    "questionTextEn": "What does the sign shown mean?",
+    "imageUrl": "/signs/warning.svg",
     "options": [
       {
         "id": "a",
@@ -157,8 +158,9 @@
   {
     "externalId": "wa-s3-q06",
     "topic": "traffic_signs",
-    "questionTextVi": "Biển hình tam giác ngược màu đỏ-trắng (YIELD) yêu cầu bạn làm gì?",
-    "questionTextEn": "What does a red-and-white inverted triangle (YIELD) sign require?",
+    "questionTextVi": "Biển báo trong hình yêu cầu bạn làm gì?",
+    "questionTextEn": "What does the sign shown require you to do?",
+    "imageUrl": "/signs/yield.svg",
     "options": [
       {
         "id": "a",
@@ -188,8 +190,9 @@
   {
     "externalId": "wa-s3-q07",
     "topic": "traffic_signs",
-    "questionTextVi": "Biển tam giác màu cam phản quang trên xe nông nghiệp báo hiệu điều gì?",
-    "questionTextEn": "What does an orange reflective triangle on an agricultural vehicle indicate?",
+    "questionTextVi": "Biển tam giác cam trong hình báo hiệu loại xe nào?",
+    "questionTextEn": "What type of vehicle does the orange triangle shown indicate?",
+    "imageUrl": "/signs/slow-moving.svg",
     "options": [
       {
         "id": "a",
