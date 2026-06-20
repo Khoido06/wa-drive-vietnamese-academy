@@ -16,6 +16,7 @@ import { OfflineExamBanner } from "../../components/offline-exam-banner";
 import { OfflineExamCard } from "../../components/offline-exam-card";
 import { useOfflineExamReady } from "../../hooks/use-offline-exam";
 import { HeaderAction } from "../../components/header-action";
+import { UsageMeter } from "../../components/usage-meter";
 import { VoiceButton } from "../../components/voice-button";
 import { QuestionSignImage } from "../../components/question-sign-image";
 
@@ -261,6 +262,7 @@ export default function ExamPage() {
   if (!started) {
     return (
       <ScreenLayout title={vi.exam.title} subtitle={vi.exam.subtitle} onBack={() => router.push("/")} headerAction={<HeaderAction />}>
+        <UsageMeter show="practice" compact />
         <div className="question-card">
           <p style={{ fontSize: "var(--font-size-lg)", fontWeight: 600, marginBottom: "var(--space-sm)" }}>
             Thi thử chuẩn DMV Washington

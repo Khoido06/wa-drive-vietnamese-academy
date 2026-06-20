@@ -11,6 +11,7 @@ import { vi } from "@repo/ui/i18n/vi";
 import { apiFetch, ensureUser, useTelemetry } from "../../lib/api";
 import { recordPracticeAnswer } from "../../lib/study-stats";
 import { HeaderAction } from "../../components/header-action";
+import { UsageMeter } from "../../components/usage-meter";
 import { VoiceButton } from "../../components/voice-button";
 import { QuestionSignImage } from "../../components/question-sign-image";
 
@@ -120,6 +121,7 @@ export default function LearnPage() {
 
   return (
     <ScreenLayout title={vi.learn.title} subtitle={vi.learn.subtitle} onBack={() => router.push("/")} headerAction={<HeaderAction />}>
+      <UsageMeter show="practice" compact />
       {loading && <LoadingState message={vi.common.loading} />}
       {error && (
         <>

@@ -11,6 +11,8 @@ import { HeaderAction } from "../components/header-action";
 import { StatePicker } from "../components/state-picker";
 import { SyncLoginBanner } from "../components/sync-login-banner";
 import { StudyMotivation } from "../components/study-motivation";
+import { UsageMeter } from "../components/usage-meter";
+import { syncStudyStatsWithServer } from "../lib/study-stats";
 
 export default function HomePage() {
   const router = useRouter();
@@ -20,7 +22,10 @@ export default function HomePage() {
 
   useEffect(() => {
     setName(localStorage.getItem("wa_display_name") ?? "");
-    ensureUser().then(() => setReady(true)).catch(() => setReady(true));
+    ensureUser()
+      .then((id) => syncStudyStatsWithServer(id))
+      .then(() => setReady(true))
+      .catch(() => setReady(true));
   }, []);
 
   const go = (path: string, label: string) => {
@@ -47,6 +52,8 @@ export default function HomePage() {
       <SyncLoginBanner />
 
       <StudyMotivation />
+
+      <UsageMeter />
 
       <StatePicker />
 

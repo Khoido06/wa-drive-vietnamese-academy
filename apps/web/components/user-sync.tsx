@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { useAuth, useUser } from "@clerk/nextjs";
 import { apiFetch, getUserId, setUserId } from "../lib/api";
+import { syncStudyStatsWithServer } from "../lib/study-stats";
 import { isClerkEnabled } from "../lib/clerk-config";
 
 /** Sync Clerk account → API user so progress syncs across devices */
@@ -30,7 +31,10 @@ function UserSync() {
         localUserId: getUserId() ?? undefined,
       }),
     })
-      .then((linked) => setUserId(linked.id))
+      .then((linked) => {
+        setUserId(linked.id);
+        return syncStudyStatsWithServer(linked.id);
+      })
       .catch(() => {
         synced.current = false;
       });

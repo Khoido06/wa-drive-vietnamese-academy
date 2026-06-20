@@ -7,10 +7,14 @@ import {
   getProgress,
   trackTelemetry,
   setUserState as updateUserState,
-  getUserTier,
-  isUserPremium,
   getWaExamSets,
   startWaExamSet,
+  getStudyStats,
+  recordStudyActivity,
+  mergeStudyStats,
+  updateStudyPreferences,
+  isUserPremium,
+  type StudyStatsDto,
 } from "@repo/learning-engine";
 import { checkAndIncrementUsage } from "../services/usage.js";
 
@@ -186,4 +190,47 @@ export async function postTelemetry(c: Context) {
   } catch {
     return c.json({ ok: true });
   }
+}
+
+export async function studyStatsGet(c: Context) {
+  const userId = c.req.param("userId");
+  if (!userId) return c.json({ error: "userId required" }, 400);
+  const stats = await getStudyStats(userId);
+  if (!stats) return c.json({ error: "User not found" }, 404);
+  return c.json(stats);
+}
+
+export async function studyStatsActivity(c: Context) {
+  const userId = c.req.param("userId");
+  const body = await c.req.json<{
+    activityDate: string;
+    isCorrect: boolean;
+    incrementTotal?: number;
+    incrementCorrect?: number;
+  }>();
+  if (!userId || !body.activityDate) {
+    return c.json({ error: "userId and activityDate required" }, 400);
+  }
+  const stats = await recordStudyActivity(userId, body);
+  if (!stats) return c.json({ error: "User not found" }, 404);
+  return c.json(stats);
+}
+
+export async function studyStatsSync(c: Context) {
+  const userId = c.req.param("userId");
+  const body = await c.req.json<
+    StudyStatsDto & { activityDate: string; dailyGoalMinutes?: number; examDate?: string | null }
+  >();
+  if (!userId || !body.activityDate) {
+    return c.json({ error: "userId and activityDate required" }, 400);
+  }
+  const stats = await mergeStudyStats(userId, body);
+  if (!stats) return c.json({ error: "User not found" }, 404);
+  if (body.dailyGoalMinutes || body.examDate !== undefined) {
+    await updateStudyPreferences(userId, {
+      dailyGoalMinutes: body.dailyGoalMinutes,
+      examDate: body.examDate,
+    });
+  }
+  return c.json(stats);
 }

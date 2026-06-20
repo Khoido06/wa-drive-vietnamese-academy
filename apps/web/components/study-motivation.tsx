@@ -7,10 +7,14 @@ export function StudyMotivation() {
   const [stats, setStats] = useState<StudyStats | null>(null);
 
   useEffect(() => {
-    setStats(getStudyStats());
-    const onFocus = () => setStats(getStudyStats());
-    window.addEventListener("focus", onFocus);
-    return () => window.removeEventListener("focus", onFocus);
+    const refresh = () => setStats(getStudyStats());
+    refresh();
+    window.addEventListener("focus", refresh);
+    window.addEventListener("wa-study-stats-updated", refresh);
+    return () => {
+      window.removeEventListener("focus", refresh);
+      window.removeEventListener("wa-study-stats-updated", refresh);
+    };
   }, []);
 
   if (!stats) return null;

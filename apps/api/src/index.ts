@@ -15,6 +15,9 @@ import {
   setUserState,
   examSets,
   startExam,
+  studyStatsGet,
+  studyStatsActivity,
+  studyStatsSync,
 } from "./routes/learning.js";
 import { mutationStatus, runMutations } from "./routes/mutation.js";
 import { queryRagStream } from "./routes/rag-stream.js";
@@ -49,7 +52,7 @@ import {
 import { serve as inngestServeHandler } from "inngest/hono";
 import { inngest } from "./jobs/inngest-client.js";
 import { inngestFunctions } from "./jobs/inngest-functions.js";
-import { ensurePushSubscriptionsTable } from "./db/bootstrap.js";
+import { ensurePushSubscriptionsTable, ensureStudyStatsColumns } from "./db/bootstrap.js";
 
 const inngestServe = inngestServeHandler({ client: inngest, functions: inngestFunctions });
 
@@ -96,6 +99,9 @@ app.get("/learning/:userId/exam/start", startExam);
 app.get("/learning/:userId/next", nextQuestion);
 app.post("/learning/attempt", submitAttempt);
 app.get("/learning/:userId/progress", userProgress);
+app.get("/learning/:userId/study-stats", studyStatsGet);
+app.post("/learning/:userId/study-stats/activity", studyStatsActivity);
+app.post("/learning/:userId/study-stats/sync", studyStatsSync);
 app.post("/telemetry", postTelemetry);
 app.post("/rag/feedback", postRagFeedback);
 
@@ -144,6 +150,7 @@ startMutationCron();
 startReviewReminderCron();
 
 void ensurePushSubscriptionsTable();
+void ensureStudyStatsColumns();
 
 serveHttp({ fetch: app.fetch, port });
 

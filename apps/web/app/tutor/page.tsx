@@ -8,6 +8,7 @@ import { LoadingState } from "@repo/ui/loading-state";
 import { vi } from "@repo/ui/i18n/vi";
 import { streamRagQuery, useTelemetry } from "../../lib/api";
 import { HeaderAction } from "../../components/header-action";
+import { UsageMeter } from "../../components/usage-meter";
 import { VoiceButton } from "../../components/voice-button";
 import { VoiceInputButton } from "../../components/voice-input-button";
 import { TutorFeedback } from "../../components/tutor-feedback";
@@ -65,6 +66,7 @@ export default function TutorPage() {
 
   return (
     <ScreenLayout title={vi.tutor.title} subtitle={vi.tutor.subtitle} onBack={() => router.push("/")} headerAction={<HeaderAction />}>
+      <UsageMeter show="tutor" compact />
       <label htmlFor="tutor-input" className="question-topic">Câu hỏi của bạn</label>
       <textarea id="tutor-input" className="tutor-input" value={query} onChange={(e) => setQuery(e.target.value)} placeholder={vi.tutor.placeholder} rows={3} />
 

@@ -1,4 +1,7 @@
-/** Local study gamification — streak, daily goal, combo (Duolingo-style). */
+/** Local study gamification — streak, daily goal, combo; syncs to DB when signed in. */
+
+import { apiFetch, getUserId } from "./api";
+import { triggerCelebrate } from "./celebration";
 
 export interface StudyStats {
   streak: number;
@@ -76,13 +79,9 @@ function updateStreakForToday(): number {
 
   if (last === today) return streak;
 
-  if (last === yesterdayLocal()) {
-    streak += 1;
-  } else if (!last) {
-    streak = 1;
-  } else {
-    streak = 1;
-  }
+  if (last === yesterdayLocal()) streak += 1;
+  else if (!last) streak = 1;
+  else streak = 1;
 
   writeNum(KEYS.streak, streak);
   localStorage.setItem(KEYS.lastDate, today);
@@ -91,6 +90,96 @@ function updateStreakForToday(): number {
   if (streak > best) writeNum(KEYS.bestStreak, streak);
 
   return streak;
+}
+
+function applyServerDto(dto: {
+  streak: number;
+  bestStreak: number;
+  dailyCorrect: number;
+  dailyTotal: number;
+  dailyGoalMinutes?: number;
+  lastStudyDate?: string | null;
+  dailyActivityDate?: string | null;
+  examDate?: string | null;
+}): void {
+  writeNum(KEYS.streak, dto.streak);
+  writeNum(KEYS.bestStreak, dto.bestStreak);
+  writeNum(KEYS.dailyCorrect, dto.dailyCorrect);
+  writeNum(KEYS.dailyTotal, dto.dailyTotal);
+  if (dto.lastStudyDate) localStorage.setItem(KEYS.lastDate, dto.lastStudyDate);
+  if (dto.dailyActivityDate) localStorage.setItem(KEYS.dailyDate, dto.dailyActivityDate);
+  if (dto.dailyGoalMinutes) localStorage.setItem("wa_daily_goal", String(dto.dailyGoalMinutes));
+  if (dto.examDate) localStorage.setItem("wa_exam_date", dto.examDate);
+}
+
+function localSnapshotForSync() {
+  resetDailyIfNeeded();
+  return {
+    streak: readNum(KEYS.streak),
+    bestStreak: readNum(KEYS.bestStreak),
+    dailyCorrect: readNum(KEYS.dailyCorrect),
+    dailyTotal: readNum(KEYS.dailyTotal),
+    dailyGoalMinutes: getDailyGoalMinutes(),
+    lastStudyDate: localStorage.getItem(KEYS.lastDate),
+    dailyActivityDate: localStorage.getItem(KEYS.dailyDate) ?? todayLocal(),
+    examDate: localStorage.getItem("wa_exam_date"),
+    activityDate: todayLocal(),
+  };
+}
+
+export async function syncStudyStatsWithServer(userId?: string | null): Promise<void> {
+  const id = userId ?? getUserId();
+  if (!id) return;
+
+  try {
+    const merged = await apiFetch<{
+      streak: number;
+      bestStreak: number;
+      dailyCorrect: number;
+      dailyTotal: number;
+      dailyGoalMinutes: number;
+      lastStudyDate: string | null;
+      dailyActivityDate: string | null;
+      examDate: string | null;
+    }>(`/learning/${id}/study-stats/sync`, {
+      method: "POST",
+      body: JSON.stringify(localSnapshotForSync()),
+    });
+    applyServerDto(merged);
+    window.dispatchEvent(new Event("wa-study-stats-updated"));
+  } catch {
+    /* offline — keep local */
+  }
+}
+
+async function pushActivityToServer(isCorrect: boolean, incrementTotal = 1, incrementCorrect = 1): Promise<void> {
+  const userId = getUserId();
+  if (!userId) return;
+
+  try {
+    const dto = await apiFetch<{
+      streak: number;
+      bestStreak: number;
+      dailyCorrect: number;
+      dailyTotal: number;
+      dailyGoalMinutes: number;
+      lastStudyDate: string | null;
+      dailyActivityDate: string | null;
+      examDate: string | null;
+    }>(`/learning/${userId}/study-stats/activity`, {
+      method: "POST",
+      body: JSON.stringify({
+        activityDate: todayLocal(),
+        isCorrect,
+        incrementTotal,
+        incrementCorrect: isCorrect ? incrementCorrect : 0,
+      }),
+    });
+    applyServerDto(dto);
+    window.dispatchEvent(new Event("wa-study-stats-updated"));
+  } catch {
+    /* keep local */
+  }
 }
 
 export function getStudyStats(): StudyStats {
@@ -146,7 +235,7 @@ function praiseForCorrect(combo: number, streak: number): { title: string; subti
   }
   if (streak >= 7) {
     const titles = ["🏆 Tuyệt vời!", "💪 Giỏi quá!", "✨ Chính xác!"];
-    return { title: titles[combo % titles.length]!, subtitle: `${streak} ngày học liên tiếp` };
+    return { title: titles[combo % titles.length]!, subtitle: `${streak} ngày học liên tiếp`, celebrate: combo >= 1 };
   }
   const titles = ["✅ Chính xác!", "👏 Giỏi lắm!", "💚 Đúng rồi!", "🎯 Xuất sắc!", "😊 Tốt lắm!"];
   return { title: titles[combo % titles.length]! };
@@ -172,6 +261,8 @@ export function recordPracticeAnswer(isCorrect: boolean): AnswerRecorded {
     writeNum(KEYS.sessionCombo, 0);
   }
 
+  void pushActivityToServer(isCorrect);
+
   const stats = getStudyStats();
   const goal = stats.dailyGoalQuestions;
   const hitGoal = dailyCorrect >= goal && dailyCorrect === goal;
@@ -180,21 +271,24 @@ export function recordPracticeAnswer(isCorrect: boolean): AnswerRecorded {
     return {
       stats,
       title: "Chưa đúng — xem giải thích nhé",
-      subtitle: combo === 0 && dailyTotal > 1 ? "Không sao, học từ sai là cách nhớ lâu nhất!" : undefined,
+      subtitle: dailyTotal > 1 ? "Không sao, học từ sai là cách nhớ lâu nhất!" : undefined,
     };
   }
 
   const praise = praiseForCorrect(combo, streak);
   if (hitGoal) {
-    return {
+    const result: AnswerRecorded = {
       stats,
       title: "🎉 Hoàn thành mục tiêu hôm nay!",
       subtitle: `Bạn đã làm đủ ${goal} câu đúng — nghỉ ngơi hoặc học thêm nhé!`,
       celebrate: true,
       milestone: "daily_goal",
     };
+    triggerCelebrate();
+    return result;
   }
 
+  if (praise.celebrate) triggerCelebrate();
   return { stats, ...praise };
 }
 
@@ -205,9 +299,12 @@ export function recordExamComplete(passed: boolean, score: number, total: number
   if (passed) {
     writeNum(KEYS.dailyCorrect, readNum(KEYS.dailyCorrect) + Math.min(score, 10));
   }
+  void pushActivityToServer(passed, total, passed ? Math.min(score, 10) : 0);
+
   const stats = getStudyStats();
 
   if (passed) {
+    triggerCelebrate();
     return {
       stats,
       title: "🎉 ĐẬU bài thi thử!",

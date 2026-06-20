@@ -57,3 +57,11 @@ export {
   WA_DMV_PASS_COUNT,
   WA_EXAM_SETS,
 } from "./curated-exam.js";
+
+export {
+  getStudyStats,
+  recordStudyActivity,
+  mergeStudyStats,
+  updateStudyPreferences,
+  type StudyStatsDto,
+} from "./study-stats.js";

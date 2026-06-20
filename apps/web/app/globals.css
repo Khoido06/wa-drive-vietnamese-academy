@@ -854,6 +854,106 @@ a { color: inherit; text-decoration: none; }
   line-height: 1.5;
 }
 
+/* ── Usage meter (Free tier) ── */
+.usage-meter {
+  background: var(--color-surface);
+  border: 2px solid var(--color-primary-light);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+
+.usage-meter--warn {
+  border-color: #fdba74;
+  background: #fffbeb;
+}
+
+.usage-meter--compact {
+  text-align: center;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+}
+
+.usage-meter__title {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-sm);
+}
+
+.usage-meter__grid {
+  display: grid;
+  gap: var(--space-sm);
+}
+
+.usage-meter__item {
+  display: grid;
+  gap: 4px;
+}
+
+.usage-meter__label {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+}
+
+.usage-meter__value {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.usage-meter__bar {
+  height: 8px;
+  background: #e7e5e4;
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.usage-meter__bar-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width 0.3s ease;
+}
+
+.usage-meter__bar-fill--tutor {
+  background: var(--color-primary);
+}
+
+.usage-meter__bar-fill--practice {
+  background: var(--color-accent);
+}
+
+.usage-meter__cta,
+.usage-meter__link {
+  margin-top: var(--space-sm);
+  width: 100%;
+  background: none;
+  border: none;
+  color: var(--color-primary);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+  text-decoration: underline;
+  padding: var(--space-xs) 0;
+}
+
+.usage-meter--compact .usage-meter__link {
+  display: block;
+  margin-top: 4px;
+}
+
+/* ── Confetti ── */
+.confetti-canvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2000;
+}
+
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: translateY(0); }

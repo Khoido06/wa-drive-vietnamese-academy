@@ -29,3 +29,25 @@ export async function ensurePushSubscriptionsTable(): Promise<void> {
     });
   }
 }
+
+/** Ensures study gamification columns on users (Neon-safe). */
+export async function ensureStudyStatsColumns(): Promise<void> {
+  if (!process.env.DATABASE_URL) return;
+
+  try {
+    const db = getDb();
+    await db.execute(sql`ALTER TABLE users ADD COLUMN IF NOT EXISTS study_streak integer NOT NULL DEFAULT 0`);
+    await db.execute(sql`ALTER TABLE users ADD COLUMN IF NOT EXISTS study_best_streak integer NOT NULL DEFAULT 0`);
+    await db.execute(sql`ALTER TABLE users ADD COLUMN IF NOT EXISTS study_last_date text`);
+    await db.execute(sql`ALTER TABLE users ADD COLUMN IF NOT EXISTS study_daily_correct integer NOT NULL DEFAULT 0`);
+    await db.execute(sql`ALTER TABLE users ADD COLUMN IF NOT EXISTS study_daily_total integer NOT NULL DEFAULT 0`);
+    await db.execute(sql`ALTER TABLE users ADD COLUMN IF NOT EXISTS study_daily_date text`);
+    await db.execute(sql`ALTER TABLE users ADD COLUMN IF NOT EXISTS daily_goal_minutes integer DEFAULT 15`);
+    await db.execute(sql`ALTER TABLE users ADD COLUMN IF NOT EXISTS exam_target_date text`);
+    logger.info("study stats columns ready");
+  } catch (err) {
+    logger.warn("study stats bootstrap failed", {
+      error: err instanceof Error ? err.message : String(err),
+    });
+  }
+}

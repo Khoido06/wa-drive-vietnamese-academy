@@ -3,6 +3,7 @@ import { FontSizeProvider } from "../lib/font-size";
 import { MomOnboarding } from "../components/mom-onboarding";
 import { PushPrompt } from "../components/push-prompt";
 import { TtsPreload } from "../components/tts-preload";
+import { ConfettiOverlay } from "../components/confetti-overlay";
 import { ServiceWorkerRegister } from "../components/sw-register";
 import { AppProviders } from "../components/app-providers";
 import { OptionalClerkProvider } from "../components/clerk-provider";
@@ -48,6 +49,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <OptionalUserSync />
               {children}
               <TtsPreload />
+              <ConfettiOverlay />
               <MomOnboarding />
               <PushPrompt />
               <ServiceWorkerRegister />
