@@ -187,7 +187,7 @@ See `.env.example` at repo root.
 | 2 | Triple-check RAG API + learning loop | ✅ |
 | 3 | Mutation engine + telemetry pipeline | ✅ |
 | 4 | Elderly PWA product layer | ✅ |
-| 5 | Voice tutor + offline PWA | 🔜 |
+| 5 | Voice tutor + offline PWA | ✅ |
 | 6 | Production deployment + continuous loop | ✅ |
 | 7 | Scale: B+C balanced roadmap | 📋 [SCALE_ROADMAP.md](./SCALE_ROADMAP.md) |
 | 8 | Phase 3: B2B + validator + caregiver | ✅ |

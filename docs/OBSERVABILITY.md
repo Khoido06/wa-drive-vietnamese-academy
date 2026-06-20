@@ -107,17 +107,68 @@ CI runs smoke tests on every push to `main`.
 ## Verify integrations
 
 ```bash
+curl https://YOUR-API/health/observability
 curl https://YOUR-API/rag/status
 ```
 
-Look for `ai` object:
-```json
-{
-  "ai": {
-    "embedProvider": "keyword",
-    "langfuse": true,
-    "sentry": true,
-    "upstash": true
-  }
-}
+`/health/observability` reports Sentry, PostHog, Langfuse, VAPID, Inngest, triple-check validator status.
+
+---
+
+## 8. OpenAI embed + HNSW re-index
+
+After setting `OPENAI_API_KEY` and `EMBED_PROVIDER=openai`:
+
+```bash
+pnpm db:reindex:hnsw
+```
+
+Creates pgvector HNSW index and re-embeds all `rag_chunks`.
+
+---
+
+## 9. Web Push (SM-2 review reminders)
+
+Generate VAPID keys: `npx web-push generate-vapid-keys`
+
+```env
+# Railway API
+VAPID_PUBLIC_KEY=...
+VAPID_PRIVATE_KEY=...
+REVIEW_REMINDER_ENABLED=true
+
+# Vercel Web
+NEXT_PUBLIC_VAPID_PUBLIC_KEY=...   # same public key
+```
+
+---
+
+## 10. Job queue (Inngest-compatible)
+
+```bash
+# Trigger background ingest
+curl -X POST https://YOUR-API/jobs/run -H 'Content-Type: application/json' \
+  -d '{"name":"ingest","data":{"stateCode":"WA"}}'
+
+# Inngest webhook (same shape)
+curl -X POST https://YOUR-API/jobs/inngest -d '{"name":"review-reminders"}'
+```
+
+Set `INNGEST_EVENT_KEY` when wiring Inngest Cloud.
+
+---
+
+## 11. RAG eval (50 golden queries + RAGAS-style metrics)
+
+```bash
+pnpm eval:generate   # regenerate from WA exam bank
+pnpm eval:rag        # CI gate — 85% pass + RAGAS thresholds
+```
+
+---
+
+## 12. k6 load test
+
+```bash
+API_URL=https://YOUR-API pnpm load:k6
 ```

@@ -37,6 +37,14 @@ import {
 import { createRateLimit } from "./middleware/rate-limit-upstash.js";
 import { logger, requestLogger } from "./middleware/logger.js";
 import { startMutationCron } from "./jobs/mutation-cron.js";
+import { startReviewReminderCron } from "./jobs/review-reminders.js";
+import {
+  subscribePush,
+  triggerJob,
+  jobStatus,
+  inngestWebhook,
+  observabilityStatus,
+} from "./routes/notifications.js";
 
 const app = new Hono();
 
@@ -54,8 +62,10 @@ app.use("*", requestLogger());
 const ragRateLimit = createRateLimit({ windowMs: 60_000, max: 20, keyPrefix: "rag" });
 
 app.get("/health", (c) =>
-  c.json({ status: "ok", system: "wa-drive-vietnamese-academy", version: "0.4.0" }),
+  c.json({ status: "ok", system: "wa-drive-vietnamese-academy", version: "0.5.0" }),
 );
+
+app.get("/health/observability", observabilityStatus);
 
 app.get("/openapi.json", openApiJson);
 app.get("/docs", openApiDocs);
@@ -100,17 +110,28 @@ app.get("/admin/mutations", admin, adminMutations);
 app.get("/admin/organizations", admin, adminOrganizations);
 app.post("/admin/organizations", admin, adminCreateOrganization);
 
+app.post("/notifications/subscribe", subscribePush);
+app.post("/jobs/run", triggerJob);
+app.get("/jobs/status", jobStatus);
+app.post("/jobs/inngest", inngestWebhook);
+
 const port = Number(process.env.PORT ?? process.env.API_PORT ?? 4000);
 
 logger.info("server starting", {
   port,
   mutation: process.env.MUTATION_ENABLED ?? "false",
+  reviewReminders: process.env.REVIEW_REMINDER_ENABLED ?? "false",
   sentry: !!process.env.SENTRY_DSN,
-  upstash: !!process.env.UPSTASH_REDIS_REST_URL,
+  posthog: !!process.env.NEXT_PUBLIC_POSTHOG_KEY,
   langfuse: !!process.env.LANGFUSE_PUBLIC_KEY,
+  vapid: !!process.env.VAPID_PUBLIC_KEY,
+  inngest: !!process.env.INNGEST_EVENT_KEY,
+  tripleCheck: process.env.STREAM_LLM_VALIDATOR !== "false",
+  upstash: !!process.env.UPSTASH_REDIS_REST_URL,
 });
 
 startMutationCron();
+startReviewReminderCron();
 
 serve({ fetch: app.fetch, port });
 

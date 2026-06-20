@@ -25,7 +25,11 @@
     "db:migrate:image-url": "node --import tsx scripts/migrate-image-url.ts",
     "db:migrate:users-auth": "node --import tsx scripts/migrate-users-auth.ts",
     "grant:premium": "node --import tsx scripts/grant-premium.ts",
-    "seed:wa-exams": "node --import tsx scripts/seed-wa-exams.ts"
+    "seed:wa-exams": "node --import tsx scripts/seed-wa-exams.ts",
+    "eval:generate": "node --import tsx scripts/generate-golden-eval.ts",
+    "build:offline": "node --import tsx scripts/build-offline-bundle.ts",
+    "db:reindex:hnsw": "node --import tsx scripts/reindex-hnsw.ts",
+    "load:k6": "k6 run scripts/load/k6-rag-stream.js"
   },
   "devDependencies": {
     "prettier": "^3.7.4",

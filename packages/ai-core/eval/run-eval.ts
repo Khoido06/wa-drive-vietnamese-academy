@@ -6,6 +6,14 @@ import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { keywordScore, rankByKeywords } from "../src/rag/keyword-search.js";
+import {
+  contextPrecision,
+  contextRecall,
+  faithfulness,
+  answerRelevancy,
+  aggregateRagas,
+  type RagasMetrics,
+} from "./ragas-metrics.js";
 
 const __dir = dirname(fileURLToPath(import.meta.url));
 
@@ -29,6 +37,7 @@ interface EvalResult {
   topScore: number;
   topContent: string;
   missingTerms: string[];
+  ragas: RagasMetrics;
 }
 
 const MIN_PASS_RATE = Number(process.env.RAG_EVAL_MIN_PASS_RATE ?? 0.85);
@@ -43,6 +52,8 @@ function normalize(text: string): string {
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "");
 }
+
+export { normalize };
 
 function evalQuery(corpus: CorpusChunk[], golden: GoldenQuery): EvalResult {
   const rows = corpus.map((c) => ({
@@ -67,6 +78,15 @@ function evalQuery(corpus: CorpusChunk[], golden: GoldenQuery): EvalResult {
     missingTerms.length === 0 &&
     ranked.length > 0;
 
+  const referenceChunk = corpus.find((c) => c.id === `c${golden.id.replace("q", "")}`)?.content ?? topContent;
+
+  const ragas: RagasMetrics = {
+    contextPrecision: contextPrecision(topContent, golden.expectedInTopChunk),
+    contextRecall: contextRecall(topContent, referenceChunk),
+    faithfulness: faithfulness(topContent.slice(0, 200), topContent),
+    answerRelevancy: answerRelevancy(golden.query, topContent),
+  };
+
   return {
     id: golden.id,
     query: golden.query,
@@ -74,6 +94,7 @@ function evalQuery(corpus: CorpusChunk[], golden: GoldenQuery): EvalResult {
     topScore,
     topContent: topContent.slice(0, 120),
     missingTerms,
+    ragas,
   };
 }
 
@@ -82,6 +103,7 @@ export function runRagEval(): {
   passed: number;
   total: number;
   results: EvalResult[];
+  ragas: RagasMetrics;
   ok: boolean;
 } {
   const corpus = loadJson<CorpusChunk[]>("golden-corpus.json");
@@ -90,13 +112,20 @@ export function runRagEval(): {
   const passed = results.filter((r) => r.passed).length;
   const total = results.length;
   const passRate = total === 0 ? 0 : passed / total;
+  const ragas = aggregateRagas(results.map((r) => r.ragas));
+
+  const ragasOk =
+    ragas.contextPrecision >= 0.75 &&
+    ragas.contextRecall >= 0.6 &&
+    ragas.faithfulness >= 0.5;
 
   return {
     passRate,
     passed,
     total,
     results,
-    ok: passRate >= MIN_PASS_RATE,
+    ragas,
+    ok: passRate >= MIN_PASS_RATE && ragasOk,
   };
 }
 
@@ -118,6 +147,11 @@ if (isMain) {
 
   const report = runRagEval();
   console.log(`\nRAG Eval — ${report.passed}/${report.total} passed (${(report.passRate * 100).toFixed(1)}%)`);
+  console.log(`RAGAS-style metrics:`);
+  console.log(`  context_precision: ${(report.ragas.contextPrecision * 100).toFixed(1)}%`);
+  console.log(`  context_recall:    ${(report.ragas.contextRecall * 100).toFixed(1)}%`);
+  console.log(`  faithfulness:      ${(report.ragas.faithfulness * 100).toFixed(1)}%`);
+  console.log(`  answer_relevancy:  ${(report.ragas.answerRelevancy * 100).toFixed(1)}%`);
   console.log(`Threshold: ${(MIN_PASS_RATE * 100).toFixed(0)}%\n`);
 
   for (const r of report.results.filter((x) => !x.passed)) {

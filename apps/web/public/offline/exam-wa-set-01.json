@@ -1,0 +1,1050 @@
+{
+  "version": 1,
+  "setId": "wa-set-01",
+  "setName": "Bộ đề 1 (offline)",
+  "examLength": 40,
+  "passCount": 32,
+  "generatedAt": "2026-06-20T09:04:36.374Z",
+  "questions": [
+    {
+      "id": "wa-s1-q01",
+      "topic": "speed_limits",
+      "questionTextVi": "Theo luật Washington, tốc độ tối đa mặc định trên đường phố trong thành phố hoặc thị trấn (khi không có biển báo khác) là bao nhiêu?",
+      "imageUrl": null,
+      "options": [
+        {
+          "id": "a",
+          "textVi": "25 dặm/giờ (mph)"
+        },
+        {
+          "id": "b",
+          "textVi": "30 dặm/giờ (mph)"
+        },
+        {
+          "id": "c",
+          "textVi": "35 dặm/giờ (mph)"
+        },
+        {
+          "id": "d",
+          "textVi": "20 dặm/giờ (mph)"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanationVi": "Luật Washington (RCW 46.61.400) quy định tốc độ tối đa 25 mph trên đường phố trong thành phố hoặc thị trấn, trừ khi có biển báo khác."
+    },
+    {
+      "id": "wa-s1-q02",
+      "topic": "speed_limits",
+      "questionTextVi": "Tốc độ tối đa mặc định trên đường quận (county road) ở Washington là bao nhiêu?",
+      "imageUrl": null,
+      "options": [
+        {
+          "id": "a",
+          "textVi": "45 dặm/giờ (mph)"
+        },
+        {
+          "id": "b",
+          "textVi": "50 dặm/giờ (mph)"
+        },
+        {
+          "id": "c",
+          "textVi": "55 dặm/giờ (mph)"
+        },
+        {
+          "id": "d",
+          "textVi": "60 dặm/giờ (mph)"
+        }
+      ],
+      "correctOptionId": "b",
+      "explanationVi": "Theo RCW 46.61.400, tốc độ tối đa trên đường quận là 50 mph, trừ khi có biển báo hoặc quy định khác."
+    },
+    {
+      "id": "wa-s1-q03",
+      "topic": "speed_limits",
+      "questionTextVi": "Khi trời mưa hoặc đường trơn, bạn nên làm gì với tốc độ xe?",
+      "imageUrl": null,
+      "options": [
+        {
+          "id": "a",
+          "textVi": "Giữ nguyên tốc độ trên biển báo vì đó là giới hạn pháp luật"
+        },
+        {
+          "id": "b",
+          "textVi": "Giảm tốc độ cho phù hợp điều kiện thực tế, dù thấp hơn biển báo"
+        },
+        {
+          "id": "c",
+          "textVi": "Tăng tốc để rời khỏi vùng nguy hiểm nhanh hơn"
+        },
+        {
+          "id": "d",
+          "textVi": "Chỉ giảm tốc khi thấy xe cảnh sát"
+        }
+      ],
+      "correctOptionId": "b",
+      "explanationVi": "Biển báo chỉ là giới hạn tối đa trong điều kiện lý tưởng. Luật Washington yêu cầu bạn luôn lái ở tốc độ an toàn cho điều kiện hiện tại."
+    },
+    {
+      "id": "wa-s1-q04",
+      "topic": "speed_limits",
+      "questionTextVi": "Tốc độ tối đa mặc định trên xa lộ tiểu bang (state highway) ngoài thành phố ở Washington là bao nhiêu?",
+      "imageUrl": null,
+      "options": [
+        {
+          "id": "a",
+          "textVi": "55 dặm/giờ (mph)"
+        },
+        {
+          "id": "b",
+          "textVi": "60 dặm/giờ (mph)"
+        },
+        {
+          "id": "c",
+          "textVi": "65 dặm/giờ (mph)"
+        },
+        {
+          "id": "d",
+          "textVi": "70 dặm/giờ (mph)"
+        }
+      ],
+      "correctOptionId": "b",
+      "explanationVi": "RCW 46.61.400 quy định tốc độ tối đa 60 mph trên xa lộ tiểu bang, trừ khi có biển báo cho phép cao hơn (tối đa 75 mph ở một số đoạn)."
+    },
+    {
+      "id": "wa-s1-q05",
+      "topic": "traffic_signs",
+      "questionTextVi": "Biển báo trong hình yêu cầu bạn làm gì?",
+      "imageUrl": "/signs/stop.svg",
+      "options": [
+        {
+          "id": "a",
+          "textVi": "Dừng hoàn toàn trước vạch dừng hoặc giao lộ"
+        },
+        {
+          "id": "b",
+          "textVi": "Giảm tốc và nhường đường"
+        },
+        {
+          "id": "c",
+          "textVi": "Chỉ dừng khi có xe khác"
+        },
+        {
+          "id": "d",
+          "textVi": "Tăng tốc để qua nhanh"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanationVi": "Biển STOP (hình bát giác đỏ) yêu cầu dừng hoàn toàn tại vạch dừng hoặc trước giao lộ, rồi đi khi an toàn."
+    },
+    {
+      "id": "wa-s1-q06",
+      "topic": "traffic_signs",
+      "questionTextVi": "Biển báo trong hình yêu cầu bạn làm gì?",
+      "imageUrl": "/signs/yield.svg",
+      "options": [
+        {
+          "id": "a",
+          "textVi": "Dừng hoàn toàn trong mọi trường hợp"
+        },
+        {
+          "id": "b",
+          "textVi": "Giảm tốc và nhường đường cho xe hoặc người đi bộ có quyền ưu tiên"
+        },
+        {
+          "id": "c",
+          "textVi": "Tăng tốc để hòa nhập giao thông"
+        },
+        {
+          "id": "d",
+          "textVi": "Bấm còi liên tục khi đi qua"
+        }
+      ],
+      "correctOptionId": "b",
+      "explanationVi": "Biển YIELD (tam giác ngược đỏ-trắng) yêu cầu giảm tốc và nhường đường. Chỉ dừng hoàn toàn khi cần thiết để tránh va chạm."
+    },
+    {
+      "id": "wa-s1-q07",
+      "topic": "traffic_signs",
+      "questionTextVi": "Biển báo màu cam trong hình báo hiệu điều gì?",
+      "imageUrl": "/signs/work-zone.svg",
+      "options": [
+        {
+          "id": "a",
+          "textVi": "Khu vực thi công hoặc công trình đường"
+        },
+        {
+          "id": "b",
+          "textVi": "Khu vực trường học"
+        },
+        {
+          "id": "c",
+          "textVi": "Bãi đỗ xe công cộng"
+        },
+        {
+          "id": "d",
+          "textVi": "Đường cao tốc liên bang"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanationVi": "Biển màu cam cảnh báo khu vực thi công (work zone). Bạn phải giảm tốc và cẩn thận với công nhân và thiết bị."
+    },
+    {
+      "id": "wa-s1-q08",
+      "topic": "traffic_signs",
+      "questionTextVi": "Biển báo trong hình báo hiệu khu vực nào?",
+      "imageUrl": "/signs/school-zone.svg",
+      "options": [
+        {
+          "id": "a",
+          "textVi": "Khu vực trường học — có học sinh"
+        },
+        {
+          "id": "b",
+          "textVi": "Khu vực thi công"
+        },
+        {
+          "id": "c",
+          "textVi": "Bãi đỗ xe"
+        },
+        {
+          "id": "d",
+          "textVi": "Đường cao tốc"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanationVi": "Biển hình ngũ giác vàng là biển khu trường học. Hãy giảm tốc và chú ý quan sát học sinh."
+    },
+    {
+      "id": "wa-s1-q09",
+      "topic": "right_of_way",
+      "questionTextVi": "Khi vào vòng xoay (roundabout), ai có quyền ưu tiên?",
+      "imageUrl": null,
+      "options": [
+        {
+          "id": "a",
+          "textVi": "Xe đang đi trong vòng xoay"
+        },
+        {
+          "id": "b",
+          "textVi": "Xe mới vào từ bên phải"
+        },
+        {
+          "id": "c",
+          "textVi": "Xe lớn hơn luôn được ưu tiên"
+        },
+        {
+          "id": "d",
+          "textVi": "Xe rẽ trái được ưu tiên trước"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanationVi": "Xe đang lưu thông trong vòng xoay có quyền ưu tiên. Bạn phải nhường đường trước khi vào."
+    },
+    {
+      "id": "wa-s1-q10",
+      "topic": "right_of_way",
+      "questionTextVi": "Người đi bộ đang ở trên vạch sang đường (crosswalk), bạn phải làm gì?",
+      "imageUrl": null,
+      "options": [
+        {
+          "id": "a",
+          "textVi": "Bấm còi để họ đi nhanh hơn"
+        },
+        {
+          "id": "b",
+          "textVi": "Dừng lại và nhường đường cho họ"
+        },
+        {
+          "id": "c",
+          "textVi": "Đi chậm lại nhưng không cần dừng"
+        },
+        {
+          "id": "d",
+          "textVi": "Chỉ nhường đường khi đèn xanh"
+        }
+      ],
+      "correctOptionId": "b",
+      "explanationVi": "Người đi bộ trong vạch sang đường có quyền ưu tiên. Bạn phải dừng và để họ qua an toàn."
+    },
+    {
+      "id": "wa-s1-q11",
+      "topic": "right_of_way",
+      "questionTextVi": "Khi đèn đỏ, bạn có được rẽ phải không?",
+      "imageUrl": null,
+      "options": [
+        {
+          "id": "a",
+          "textVi": "Không bao giờ được rẽ phải khi đèn đỏ"
+        },
+        {
+          "id": "b",
+          "textVi": "Được rẽ phải sau khi dừng hoàn toàn, nếu không có biển cấm và an toàn"
+        },
+        {
+          "id": "c",
+          "textVi": "Được rẽ phải mà không cần dừng"
+        },
+        {
+          "id": "d",
+          "textVi": "Chỉ được rẽ trái khi đèn đỏ"
+        }
+      ],
+      "correctOptionId": "b",
+      "explanationVi": "Ở Washington, bạn có thể rẽ phải khi đèn đỏ sau khi dừng hoàn toàn, trừ khi có biển cấm rẽ phải và phải nhường đường."
+    },
+    {
+      "id": "wa-s1-q12",
+      "topic": "right_of_way",
+      "questionTextVi": "Khi nhập làn vào xa lộ (freeway), ai có quyền ưu tiên?",
+      "imageUrl": null,
+      "options": [
+        {
+          "id": "a",
+          "textVi": "Xe đang đi trên xa lộ"
+        },
+        {
+          "id": "b",
+          "textVi": "Xe mới nhập làn luôn được ưu tiên"
+        },
+        {
+          "id": "c",
+          "textVi": "Xe đi nhanh hơn"
+        },
+        {
+          "id": "d",
+          "textVi": "Xe ở làn trái"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanationVi": "Xe đang lưu thông trên xa lộ có quyền ưu tiên. Bạn phải điều chỉnh tốc độ và tìm khoảng trống an toàn để nhập làn."
+    },
+    {
+      "id": "wa-s1-q13",
+      "topic": "parking",
+      "questionTextVi": "Khi đậu xe song song (parallel parking), xe phải cách lề đường tối đa bao nhiêu?",
+      "imageUrl": null,
+      "options": [
+        {
+          "id": "a",
+          "textVi": "12 inch (khoảng 30 cm)"
+        },
+        {
+          "id": "b",
+          "textVi": "18 inch (khoảng 45 cm)"
+        },
+        {
+          "id": "c",
+          "textVi": "24 inch (khoảng 60 cm)"
+        },
+        {
+          "id": "d",
+          "textVi": "6 inch (khoảng 15 cm)"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanationVi": "Luật Washington quy định khi đậu song song, xe không được cách lề quá 12 inch."
+    },
+    {
+      "id": "wa-s1-q14",
+      "topic": "parking",
+      "questionTextVi": "Bạn không được đậu xe trong vòng bao nhiêu feet từ trụ cứu hỏa (fire hydrant)?",
+      "imageUrl": null,
+      "options": [
+        {
+          "id": "a",
+          "textVi": "10 feet (khoảng 3 m)"
+        },
+        {
+          "id": "b",
+          "textVi": "15 feet (khoảng 4,5 m)"
+        },
+        {
+          "id": "c",
+          "textVi": "20 feet (khoảng 6 m)"
+        },
+        {
+          "id": "d",
+          "textVi": "30 feet (khoảng 9 m)"
+        }
+      ],
+      "correctOptionId": "b",
+      "explanationVi": "Không được đậu trong vòng 15 feet từ trụ cứu hỏa để xe cứu hỏa có thể tiếp cận khi cần."
+    },
+    {
+      "id": "wa-s1-q15",
+      "topic": "parking",
+      "questionTextVi": "Bạn không được đậu xe trong vòng bao nhiêu feet từ biển STOP hoặc biển YIELD?",
+      "imageUrl": null,
+      "options": [
+        {
+          "id": "a",
+          "textVi": "15 feet (khoảng 4,5 m)"
+        },
+        {
+          "id": "b",
+          "textVi": "20 feet (khoảng 6 m)"
+        },
+        {
+          "id": "c",
+          "textVi": "30 feet (khoảng 9 m)"
+        },
+        {
+          "id": "d",
+          "textVi": "50 feet (khoảng 15 m)"
+        }
+      ],
+      "correctOptionId": "c",
+      "explanationVi": "Luật Washington cấm đậu trong vòng 30 feet từ biển tín hiệu giao thông, biển STOP hoặc biển YIELD."
+    },
+    {
+      "id": "wa-s1-q16",
+      "topic": "dui_laws",
+      "questionTextVi": "Nồng độ cồn trong máu (BAC) hợp pháp tối đa cho người lái xe từ 21 tuổi trở lên ở Washington là bao nhiêu?",
+      "imageUrl": null,
+      "options": [
+        {
+          "id": "a",
+          "textVi": "Dưới 0,08%"
+        },
+        {
+          "id": "b",
+          "textVi": "Dưới 0,10%"
+        },
+        {
+          "id": "c",
+          "textVi": "Dưới 0,05%"
+        },
+        {
+          "id": "d",
+          "textVi": "Dưới 0,15%"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanationVi": "BAC từ 0,08% trở lên là vi phạm luật DUI (lái xe khi uống rượu) ở Washington đối với người từ 21 tuổi trở lên."
+    },
+    {
+      "id": "wa-s1-q17",
+      "topic": "dui_laws",
+      "questionTextVi": "Giới hạn BAC cho người lái xe dưới 21 tuổi ở Washington là bao nhiêu?",
+      "imageUrl": null,
+      "options": [
+        {
+          "id": "a",
+          "textVi": "0,08%"
+        },
+        {
+          "id": "b",
+          "textVi": "0,04%"
+        },
+        {
+          "id": "c",
+          "textVi": "0,02%"
+        },
+        {
+          "id": "d",
+          "textVi": "0,10%"
+        }
+      ],
+      "correctOptionId": "c",
+      "explanationVi": "Người dưới 21 tuổi vi phạm khi BAC từ 0,02% trở lên. Washington áp dụng luật nghiêm khắt cho thanh thiếu niên."
+    },
+    {
+      "id": "wa-s1-q18",
+      "topic": "dui_laws",
+      "questionTextVi": "Tài xế thương mại (CDL) khi lái xe thương mại, giới hạn BAC là bao nhiêu?",
+      "imageUrl": null,
+      "options": [
+        {
+          "id": "a",
+          "textVi": "0,08%"
+        },
+        {
+          "id": "b",
+          "textVi": "0,04%"
+        },
+        {
+          "id": "c",
+          "textVi": "0,02%"
+        },
+        {
+          "id": "d",
+          "textVi": "0,10%"
+        }
+      ],
+      "correctOptionId": "b",
+      "explanationVi": "Tài xế thương mại vi phạm khi BAC từ 0,04% trở lên khi đang lái xe thương mại."
+    },
+    {
+      "id": "wa-s1-q19",
+      "topic": "seat_belts",
+      "questionTextVi": "Ai phải thắt dây an toàn khi xe đang chạy ở Washington?",
+      "imageUrl": null,
+      "options": [
+        {
+          "id": "a",
+          "textVi": "Chỉ người lái và hành khách ghế trước"
+        },
+        {
+          "id": "b",
+          "textVi": "Tất cả người trên xe ở mọi ghế ngồi"
+        },
+        {
+          "id": "c",
+          "textVi": "Chỉ người lái xe"
+        },
+        {
+          "id": "d",
+          "textVi": "Chỉ hành khách trên 18 tuổi"
+        }
+      ],
+      "correctOptionId": "b",
+      "explanationVi": "Luật Washington yêu cầu tất cả hành khách và người lái phải thắt dây an toàn đúng cách ở mọi ghế ngồi."
+    },
+    {
+      "id": "wa-s1-q20",
+      "topic": "seat_belts",
+      "questionTextVi": "Trẻ em dưới 4 feet 9 inches (khoảng 145 cm) hoặc dưới 8 tuổi phải ngồi ghế gì?",
+      "imageUrl": null,
+      "options": [
+        {
+          "id": "a",
+          "textVi": "Ghế booster hoặc ghế an toàn trẻ em phù hợp"
+        },
+        {
+          "id": "b",
+          "textVi": "Chỉ cần thắt dây an toàn thông thường"
+        },
+        {
+          "id": "c",
+          "textVi": "Được ngồi ghế trước với dây an toàn"
+        },
+        {
+          "id": "d",
+          "textVi": "Không cần ghế đặc biệt nếu ngồi ghế sau"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanationVi": "Trẻ dưới 4'9\" hoặc dưới 8 tuổi phải dùng ghế booster hoặc ghế an toàn trẻ em phù hợp kích thước."
+    },
+    {
+      "id": "wa-s1-q21",
+      "topic": "seat_belts",
+      "questionTextVi": "Thắt dây an toàn sai cách (ví dụ: đặt dây chéo dưới cánh tay) có được không?",
+      "imageUrl": null,
+      "options": [
+        {
+          "id": "a",
+          "textVi": "Không — dây phải qua vai và ngực, dây ngang qua hông"
+        },
+        {
+          "id": "b",
+          "textVi": "Được, miễn là có thắt dây"
+        },
+        {
+          "id": "c",
+          "textVi": "Chỉ không được khi có cảnh sát"
+        },
+        {
+          "id": "d",
+          "textVi": "Được nếu dây quá chật"
+        }
+      ],
+      "correctOptionId": "a",
+      "explanationVi": "Dây an toàn phải được thắt đúng: dây chéo qua vai ngực, dây ngang qua hông. Thắt sai làm giảm hiệu quả bảo vệ."
+    },
+    {
+      "id": "wa-s1-q22",
+      "topic": "school_zones",
+      "questionTextVi": "Giới hạn tốc độ trong khu vực trường học (school zone) ở Washington là bao nhiêu?",
+      "imageUrl": null,
+      "options": [
+        {
+          "id": "a",
+          "textVi": "15 dặm/giờ (mph)"
+        },
+        {
+          "id": "b",
+          "textVi": "20 dặm/giờ (mph)"
+        },
+        {
+          "id": "c",
+          "textVi": "25 dặm/giờ (mph)"
+        },
+        {
+          "id": "d",
+          "textVi": "30 dặm/giờ (mph)"
+        }
+      ],
+      "correctOptionId": "b",
+      "explanationVi": "Tốc độ tối đa trong khu trường học là 20 mph theo RCW 46.61.440, vì tốc độ cao hơn làm tăng nguy cơ tai nạn nghiêm trọng với trẻ em."
+    },
+    {
+      "id": "wa-s1-q23",
+      "topic": "school_zones",
+      "questionTextVi": "Vi phạm tốc độ trong khu trường học ở Washington bị phạt như thế nào?",
+      "imageUrl": null,
+      "options": [
+        {
+          "id": "a",
+          "textVi": "Mức phạt bình thường, không khác biệt"
+        },
+        {
+          "id": "b",
+          "textVi": "Mức phạt gấp đôi so với vi phạm thông thường"
+        },
+        {
+          "id": "c",
+          "textVi": "Chỉ cảnh cáo, không phạt tiền"
+        },
+        {
+          "id": "d",
+          "textVi": "Tước bằng ngay lập tức"
+        }
+      ],
+      "correctOptionId": "b",
+      "explanationVi": "RCW 46.61.440 quy định mức phạt gấp đôi cho vi phạm tốc độ trong khu trường học và không được miễn giảm."
+    },
+    {
+      "id": "wa-s1-q24",
+      "topic": "school_zones",
+      "questionTextVi": "Khi lái gần trường học sau giờ học chính thức, bạn nên làm gì?",
+      "imageUrl": null,
+      "options": [
+        {
+          "id": "a",
+          "textVi": "Không cần chú ý vì đã hết giờ học"
+        },
+        {
+          "id": "b",
+          "textVi": "Vẫn giảm tốc và cẩn thận vì học sinh có thể ở sân chơi hoặc hoạt động ngoại khóa"
+        },
+        {
+          "id": "c",
+          "textVi": "Tăng tốc để rời khỏi khu vực nhanh"
+        },
+        {
+          "id": "d",
+          "textVi": "Chỉ cẩn thận vào buổi sáng"
+        }
+      ],
+      "correctOptionId": "b",
+      "explanationVi": "Học sinh có thể tham gia hoạt động sau giờ học hoặc chơi ở sân trường. Luôn chú ý khi lái gần trường."
+    },
+    {
+      "id": "wa-s1-q25",
+      "topic": "highway_driving",
+      "questionTextVi": "Trước khi đổi làn trên xa lộ, bạn nên bật xi-nhan trước bao nhiêu feet?",
+      "imageUrl": null,
+      "options": [
+        {
+          "id": "a",
+          "textVi": "50 feet (khoảng 15 m)"
+        },
+        {
+          "id": "b",
+          "textVi": "100 feet (khoảng 30 m)"
+        },
+        {
+          "id": "c",
+          "textVi": "200 feet (khoảng 60 m)"
+        },
+        {
+          "id": "d",
+          "textVi": "500 feet (khoảng 150 m)"
+        }
+      ],
+      "correctOptionId": "b",
+      "explanationVi": "Luật Washington yêu cầu bật xi-nhan ít nhất 100 feet trước khi đổi hướng hoặc đổi làn."
+    },
+    {
+      "id": "wa-s1-q26",
+      "topic": "highway_driving",
+      "questionTextVi": "Trên xa lộ nhiều làn, làn nào bạn nên dùng khi không vượt xe?",
+      "imageUrl": null,
+      "options": [
+        {
+          "id": "a",
+          "textVi": "Làn trái nhất"
+        },
+        {
+          "id": "b",
+          "textVi": "Làn phải (trừ khi vượt xe hoặc có biển báo khác)"
+        },
+        {
+          "id": "c",
+          "textVi": "Làn giữa luôn an toàn nhất"
+        },
+        {
+          "id": "d",
+          "textVi": "Bất kỳ làn nào miễn đi đủ nhanh"
+        }
+      ],
+      "correctOptionId": "b",
+      "explanationVi": "Giữ làn phải khi không vượt xe giúp giao thông lưu thông mượt mà. Làn trái dành cho vượt xe."
+    },
+    {
+      "id": "wa-s1-q27",
+      "topic": "highway_driving",
+      "questionTextVi": "Khoảng cách an toàn tối thiểu phía sau xe phía trước trên xa lộ nên là bao nhiêu giây?",
+      "imageUrl": null,
+      "options": [
+        {
+          "id": "a",
+          "textVi": "1 giây"
+        },
+        {
+          "id": "b",
+          "textVi": "2 giây"
+        },
+        {
+          "id": "c",
+          "textVi": "3 giây"
+        },
+        {
+          "id": "d",
+          "textVi": "5 giây"
+        }
+      ],
+      "correctOptionId": "c",
+      "explanationVi": "Quy tắc 3 giây: đếm \"một nghìn một, một nghìn hai, một nghìn ba\" sau khi xe trước đi qua điểm cố định. Nếu bạn đến trước khi đếm xong, bạn đi quá gần."
+    },
+    {
+      "id": "wa-s1-q28",
+      "topic": "pedestrians",
+      "questionTextVi": "Người mù cầm gậy trắng hoặc có chó dẫn đường đang sang đường, bạn phải làm gì?",
+      "imageUrl": null,
+      "options": [
+        {
+          "id": "a",
+          "textVi": "Bấm còi nhẹ để báo hiệu"
+        },
+        {
+          "id": "b",
+          "textVi": "Dừng hoàn toàn và nhường đường"
+        },
+        {
+          "id": "c",
+          "textVi": "Đi chậm và lách qua"
+        },
+        {
+          "id": "d",
+          "textVi": "Chỉ nhường khi đèn đỏ"
+        }
+      ],
+      "correctOptionId": "b",
+      "explanationVi": "Người mù có quyền ưu tiên tuyệt đối. Bạn phải dừng và đợi họ sang đường an toàn."
+    },
+    {
+      "id": "wa-s1-q29",
+      "topic": "pedestrians",
+      "questionTextVi": "Khi rẽ phải tại giao lộ có người đi bộ đang chờ sang đường, bạn phải làm gì?",
+      "imageUrl": null,
+      "options": [
+        {
+          "id": "a",
+          "textVi": "Rẽ nhanh trước khi họ bước ra"
+        },
+        {
+          "id": "b",
+          "textVi": "Nhường đường cho người đi bộ trước khi rẽ"
+        },
+        {
+          "id": "c",
+          "textVi": "Bấm còi để họ nhường"
+        },
+        {
+          "id": "d",
+          "textVi": "Chỉ nhường khi họ đã ở giữa đường"
+        }
+      ],
+      "correctOptionId": "b",
+      "explanationVi": "Khi rẽ, bạn phải nhường đường cho người đi bộ đang sang đường hoặc sắp sang đường hợp pháp."
+    },
+    {
+      "id": "wa-s1-q30",
+      "topic": "pedestrians",
+      "questionTextVi": "Người đi bộ đang chờ tại vạch sang đường không có đèn tín hiệu, bạn phải làm gì?",
+      "imageUrl": null,
+      "options": [
+        {
+          "id": "a",
+          "textVi": "Tiếp tục đi nếu không có biển báo dừng"
+        },
+        {
+          "id": "b",
+          "textVi": "Dừng và nhường đường cho họ sang"
+        },
+        {
+          "id": "c",
+          "textVi": "Chỉ dừng khi họ bước ra giữa đường"
+        },
+        {
+          "id": "d",
+          "textVi": "Bấm còi để họ đợi"
+        }
+      ],
+      "correctOptionId": "b",
+      "explanationVi": "Người đi bộ tại vạch sang đường có quyền ưu tiên. Bạn phải dừng và để họ qua an toàn."
+    },
+    {
+      "id": "wa-s1-q31",
+      "topic": "emergency_vehicles",
+      "questionTextVi": "Khi thấy xe cứu thương, cứu hỏa hoặc cảnh sát có còi và đèn nhấp nháy, bạn phải làm gì?",
+      "imageUrl": null,
+      "options": [
+        {
+          "id": "a",
+          "textVi": "Tiếp tục đi bình thường"
+        },
+        {
+          "id": "b",
+          "textVi": "Di chuyển sang phải và dừng lại nếu cần để nhường đường"
+        },
+        {
+          "id": "c",
+          "textVi": "Tăng tốc để tránh bị kẹt"
+        },
+        {
+          "id": "d",
+          "textVi": "Dừng giữa làn đường"
+        }
+      ],
+      "correctOptionId": "b",
+      "explanationVi": "Khi xe ưu tiên có còi và đèn, bạn phải nhường đường ngay: sang phải và dừng nếu cần thiết."
+    },
+    {
+      "id": "wa-s1-q32",
+      "topic": "emergency_vehicles",
+      "questionTextVi": "Trong vùng khẩn cấp (emergency zone) bên đường, nếu không thể đổi làn, bạn phải giảm tốc xuống bao nhiêu?",
+      "imageUrl": null,
+      "options": [
+        {
+          "id": "a",
+          "textVi": "Giảm 5 mph dưới giới hạn tốc độ"
+        },
+        {
+          "id": "b",
+          "textVi": "Giảm ít nhất 10 mph dưới giới hạn tốc độ"
+        },
+        {
+          "id": "c",
+          "textVi": "Giảm 20 mph dưới giới hạn tốc độ"
+        },
+        {
+          "id": "d",
+          "textVi": "Không cần giảm tốc nếu không thấy công nhân"
+        }
+      ],
+      "correctOptionId": "b",
+      "explanationVi": "Luật Move Over của Washington yêu cầu đổi làn hoặc giảm tốc ít nhất 10 mph dưới giới hạn. Không được chạy quá 50 mph trong vùng khẩn cấp."
+    },
+    {
+      "id": "wa-s1-q33",
+      "topic": "emergency_vehicles",
+      "questionTextVi": "Tốc độ tối đa được phép trong vùng khẩn cấp (emergency zone) ở Washington là bao nhiêu?",
+      "imageUrl": null,
+      "options": [
+        {
+          "id": "a",
+          "textVi": "40 dặm/giờ (mph)"
+        },
+        {
+          "id": "b",
+          "textVi": "45 dặm/giờ (mph)"
+        },
+        {
+          "id": "c",
+          "textVi": "50 dặm/giờ (mph)"
+        },
+        {
+          "id": "d",
+          "textVi": "55 dặm/giờ (mph)"
+        }
+      ],
+      "correctOptionId": "c",
+      "explanationVi": "Trong vùng khẩn cấp, bạn không được chạy nhanh hơn 50 mph, kể cả khi giới hạn tốc độ cao hơn."
+    },
+    {
+      "id": "wa-s1-q34",
+      "topic": "intersections",
+      "questionTextVi": "Khi đèn giao thông chuyển sang màu vàng (yellow), bạn nên làm gì?",
+      "imageUrl": null,
+      "options": [
+        {
+          "id": "a",
+          "textVi": "Tăng tốc để kịp qua"
+        },
+        {
+          "id": "b",
+          "textVi": "Dừng lại nếu có thể an toàn"
+        },
+        {
+          "id": "c",
+          "textVi": "Bấm còi và tiếp tục"
+        },
+        {
+          "id": "d",
+          "textVi": "Luôn dừng ngay lập tức dù gần vạch"
+        }
+      ],
+      "correctOptionId": "b",
+      "explanationVi": "Đèn vàng báo hiệu sắp đỏ. Dừng lại nếu an toàn; không tăng tốc để vượt đèn vàng."
+    },
+    {
+      "id": "wa-s1-q35",
+      "topic": "intersections",
+      "questionTextVi": "Tại giao lộ có biển STOP ở cả bốn hướng, xe nào được đi trước?",
+      "imageUrl": null,
+      "options": [
+        {
+          "id": "a",
+          "textVi": "Xe lớn nhất"
+        },
+        {
+          "id": "b",
+          "textVi": "Xe đến trước và dừng trước"
+        },
+        {
+          "id": "c",
+          "textVi": "Xe rẽ trái luôn trước"
+        },
+        {
+          "id": "d",
+          "textVi": "Xe đi thẳng luôn trước xe rẽ"
+        }
+      ],
+      "correctOptionId": "b",
+      "explanationVi": "Tại giao lộ bốn hướng STOP, xe đến và dừng trước được đi trước. Nếu cùng lúc, xe bên phải được ưu tiên."
+    },
+    {
+      "id": "wa-s1-q36",
+      "topic": "intersections",
+      "questionTextVi": "Khi đèn xanh (green), bạn có được đi ngay không?",
+      "imageUrl": null,
+      "options": [
+        {
+          "id": "a",
+          "textVi": "Có — đèn xanh nghĩa là luôn an toàn để đi"
+        },
+        {
+          "id": "b",
+          "textVi": "Chỉ đi sau khi kiểm tra giao lộ và nhường người đi bộ còn trong vạch"
+        },
+        {
+          "id": "c",
+          "textVi": "Không — phải dừng lại trước"
+        },
+        {
+          "id": "d",
+          "textVi": "Chỉ đi khi không có xe nào trong tầm nhìn 1 dặm"
+        }
+      ],
+      "correctOptionId": "b",
+      "explanationVi": "Đèn xanh cho phép đi, nhưng bạn vẫn phải nhường người đi bộ trong vạch và kiểm tra an toàn trước khi vào giao lộ."
+    },
+    {
+      "id": "wa-s1-q37",
+      "topic": "intersections",
+      "questionTextVi": "Khi đèn đỏ (red light), bạn phải làm gì?",
+      "imageUrl": null,
+      "options": [
+        {
+          "id": "a",
+          "textVi": "Giảm tốc và đi qua nếu không có xe"
+        },
+        {
+          "id": "b",
+          "textVi": "Dừng hoàn toàn trước vạch dừng hoặc giao lộ"
+        },
+        {
+          "id": "c",
+          "textVi": "Dừng chỉ khi có xe cắt ngang"
+        },
+        {
+          "id": "d",
+          "textVi": "Bấm còi rồi đi qua"
+        }
+      ],
+      "correctOptionId": "b",
+      "explanationVi": "Đèn đỏ yêu cầu dừng hoàn toàn trước vạch dừng hoặc giao lộ. Chỉ đi khi đèn chuyển xanh hoặc rẽ được phép."
+    },
+    {
+      "id": "wa-s1-q38",
+      "topic": "lane_changes",
+      "questionTextVi": "Trước khi đổi làn, bạn cần làm gì?",
+      "imageUrl": null,
+      "options": [
+        {
+          "id": "a",
+          "textVi": "Chỉ nhìn gương chiếu hậu"
+        },
+        {
+          "id": "b",
+          "textVi": "Bật xi-nhan, kiểm tra gương và nhìn qua vai (blind spot)"
+        },
+        {
+          "id": "c",
+          "textVi": "Đổi làn nhanh không cần xi-nhan"
+        },
+        {
+          "id": "d",
+          "textVi": "Chỉ bật xi-nhan là đủ"
+        }
+      ],
+      "correctOptionId": "b",
+      "explanationVi": "Đổi làn an toàn cần: bật xi-nhan, kiểm tra gương, nhìn qua vai để thấy vùng mù, rồi mới đổi làn mượt mà."
+    },
+    {
+      "id": "wa-s1-q39",
+      "topic": "lane_changes",
+      "questionTextVi": "Vùng mù (blind spot) là gì?",
+      "imageUrl": null,
+      "options": [
+        {
+          "id": "a",
+          "textVi": "Khu vực phía trước xe không nhìn thấy"
+        },
+        {
+          "id": "b",
+          "textVi": "Khu vực bên cạnh xe không thấy qua gương, cần nhìn qua vai"
+        },
+        {
+          "id": "c",
+          "textVi": "Khu vực phía sau xe khi lùi"
+        },
+        {
+          "id": "d",
+          "textVi": "Khu vực dưới gầm xe"
+        }
+      ],
+      "correctOptionId": "b",
+      "explanationVi": "Vùng mù là khoảng không gian bên xe không hiện trong gương. Luôn nhìn qua vai trước khi đổi làn."
+    },
+    {
+      "id": "wa-s1-q40",
+      "topic": "lane_changes",
+      "questionTextVi": "Bạn có được dùng làn rẽ giữa (center turn lane) để vượt xe buýt trường học không?",
+      "imageUrl": null,
+      "options": [
+        {
+          "id": "a",
+          "textVi": "Có, nếu không có xe ngược chiều"
+        },
+        {
+          "id": "b",
+          "textVi": "Không — mọi làn phải dừng khi xe buýt bật đèn đỏ"
+        },
+        {
+          "id": "c",
+          "textVi": "Chỉ được khi vội"
+        },
+        {
+          "id": "d",
+          "textVi": "Có, nếu bấm còi trước"
+        }
+      ],
+      "correctOptionId": "b",
+      "explanationVi": "Không được dùng làn rẽ giữa để vượt xe buýt trường học. Tất cả làn, kể cả làn rẽ, phải dừng khi đèn đỏ nhấp nháy."
+    }
+  ]
+}

@@ -1,62 +1,252 @@
 [
   {
     "id": "c1",
-    "content": "Tốc độ tối đa trong khu dân cư (residential area) thường là 25 mph trừ khi có biển báo khác. Luôn điều chỉnh tốc độ phù hợp với điều kiện thời tiết và giao thông.",
-    "sectionTitle": "Tốc độ"
+    "content": "Theo luật Washington, tốc độ tối đa mặc định trên đường phố trong thành phố hoặc thị trấn (khi không có biển báo khác) là bao nhiêu? Luật Washington (RCW 46.61.400) quy định tốc độ tối đa 25 mph trên đường phố trong thành phố hoặc thị trấn, trừ khi có biển báo khác.",
+    "sectionTitle": "speed_limits"
   },
   {
     "id": "c2",
-    "content": "Thắt dây an toàn (seat belt) là bắt buộc cho tài xế và hành khách ở ghế trước. Trẻ em phải ngồi ghế an toàn phù hợp với tuổi và cân nặng.",
-    "sectionTitle": "An toàn"
+    "content": "Biển báo trong hình yêu cầu bạn làm gì? Biển STOP (hình bát giác đỏ) yêu cầu dừng hoàn toàn tại vạch dừng hoặc trước giao lộ, rồi đi khi an toàn.",
+    "sectionTitle": "traffic_signs"
   },
   {
     "id": "c3",
-    "content": "Khi gặp xe cứu thương, xe cứu hỏa hoặc xe cảnh sát có còi và đèn nhấp nháy, bạn phải nhường đường ngay lập tức. Di chuyển sang phải và dừng lại nếu cần.",
-    "sectionTitle": "Xe ưu tiên"
+    "content": "Khi vào vòng xoay (roundabout), ai có quyền ưu tiên? Xe đang lưu thông trong vòng xoay có quyền ưu tiên. Bạn phải nhường đường trước khi vào.",
+    "sectionTitle": "right_of_way"
   },
   {
     "id": "c4",
-    "content": "Đèn vàng (yellow light) có nghĩa là tín hiệu sắp chuyển sang đỏ. Bạn nên dừng lại nếu có thể an toàn. Không tăng tốc để vượt đèn vàng.",
-    "sectionTitle": "Tín hiệu giao thông"
+    "content": "Khi đậu xe song song (parallel parking), xe phải cách lề đường tối đa bao nhiêu? Luật Washington quy định khi đậu song song, xe không được cách lề quá 12 inch.",
+    "sectionTitle": "parking"
   },
   {
     "id": "c5",
-    "content": "Đèn đỏ (red light) bắt buộc phải dừng hoàn toàn trước vạch dừng hoặc giao lộ. Chỉ được rẽ phải khi đèn đỏ nếu không có biển cấm và đã dừng an toàn.",
-    "sectionTitle": "Tín hiệu giao thông"
+    "content": "Nồng độ cồn trong máu (BAC) hợp pháp tối đa cho người lái xe từ 21 tuổi trở lên ở Washington là bao nhiêu? BAC từ 0,08% trở lên là vi phạm luật DUI (lái xe khi uống rượu) ở Washington đối với người từ 21 tuổi trở lên.",
+    "sectionTitle": "dui_laws"
   },
   {
     "id": "c6",
-    "content": "Khoảng cách an toàn (following distance) nên duy trì ít nhất 3 giây phía sau xe phía trước. Trong điều kiện mưa hoặc sương mù, tăng lên 4-6 giây.",
-    "sectionTitle": "Khoảng cách"
+    "content": "Ai phải thắt dây an toàn khi xe đang chạy ở Washington? Luật Washington yêu cầu tất cả hành khách và người lái phải thắt dây an toàn đúng cách ở mọi ghế ngồi.",
+    "sectionTitle": "seat_belts"
   },
   {
     "id": "c7",
-    "content": "Biển báo STOP yêu cầu dừng hoàn toàn. Dừng tại vạch dừng, nhìn trái phải, chỉ đi khi an toàn. STOP sign là biển bắt buộc dừng.",
-    "sectionTitle": "Biển báo"
+    "content": "Giới hạn tốc độ trong khu vực trường học (school zone) ở Washington là bao nhiêu? Tốc độ tối đa trong khu trường học là 20 mph theo RCW 46.61.440, vì tốc độ cao hơn làm tăng nguy cơ tai nạn nghiêm trọng với trẻ em.",
+    "sectionTitle": "school_zones"
   },
   {
     "id": "c8",
-    "content": "Uống rượu bia (DUI) khi lái xe bị cấm nghiêm. BAC từ 0.08% trở lên là vi phạm luật. Tài xế dưới 21 tuổi không được uống rượu bia khi lái xe.",
-    "sectionTitle": "Rượu bia"
+    "content": "Trước khi đổi làn trên xa lộ, bạn nên bật xi-nhan trước bao nhiêu feet? Luật Washington yêu cầu bật xi-nhan ít nhất 100 feet trước khi đổi hướng hoặc đổi làn.",
+    "sectionTitle": "highway_driving"
   },
   {
     "id": "c9",
-    "content": "Người đi bộ (pedestrian) có quyền ưu tiên tại vạch sang đường và giao lộ. Luôn nhường đường cho người đi bộ, đặc biệt ở khu học đường.",
-    "sectionTitle": "Người đi bộ"
+    "content": "Người mù cầm gậy trắng hoặc có chó dẫn đường đang sang đường, bạn phải làm gì? Người mù có quyền ưu tiên tuyệt đối. Bạn phải dừng và đợi họ sang đường an toàn.",
+    "sectionTitle": "pedestrians"
   },
   {
     "id": "c10",
-    "content": "Khi đỗ xe song song (parallel parking), bạn phải cách lề đường không quá 12 inch. Bật đèn tín hiệu khi đỗ xe hoặc rời khỏi vị trí đỗ.",
-    "sectionTitle": "Đỗ xe"
+    "content": "Khi thấy xe cứu thương, cứu hỏa hoặc cảnh sát có còi và đèn nhấp nháy, bạn phải làm gì? Khi xe ưu tiên có còi và đèn, bạn phải nhường đường ngay: sang phải và dừng nếu cần thiết.",
+    "sectionTitle": "emergency_vehicles"
   },
   {
     "id": "c11",
-    "content": "Biển báo yield (nhường đường) yêu cầu giảm tốc và nhường quyền đi trước cho xe khác. Không cần dừng hoàn toàn nếu không có xe đang tới.",
-    "sectionTitle": "Biển báo"
+    "content": "Khi đèn giao thông chuyển sang màu vàng (yellow), bạn nên làm gì? Đèn vàng báo hiệu sắp đỏ. Dừng lại nếu an toàn; không tăng tốc để vượt đèn vàng.",
+    "sectionTitle": "intersections"
   },
   {
     "id": "c12",
-    "content": "Trên đường cao tốc (freeway), tốc độ tối đa thường là 60-70 mph tùy khu vực. Luôn đi làn phải trừ khi vượt xe.",
-    "sectionTitle": "Tốc độ"
+    "content": "Trước khi đổi làn, bạn cần làm gì? Đổi làn an toàn cần: bật xi-nhan, kiểm tra gương, nhìn qua vai để thấy vùng mù, rồi mới đổi làn mượt mà.",
+    "sectionTitle": "lane_changes"
+  },
+  {
+    "id": "c13",
+    "content": "Theo luật Washington, đèn pha (headlights) phải bật từ lúc nào đến lúc nào? Luật Washington yêu cầu bật đèn pha từ 30 phút sau hoàng hôn đến 30 phút trước bình minh, và khi trời tối, mưa, sương mù.",
+    "sectionTitle": "night_driving"
+  },
+  {
+    "id": "c14",
+    "content": "Khi trời mưa, bạn nên làm gì? Mưa làm đường trơn và tầm nhìn kém. Giảm tốc và tăng khoảng cách (4–6 giây thay vì 3 giây).",
+    "sectionTitle": "weather_conditions"
+  },
+  {
+    "id": "c15",
+    "content": "Xe buýt trường học bật đèn đỏ nhấp nháy và mở biển STOP, bạn phải làm gì? Khi xe buýt bật đèn đỏ và mở biển STOP, mọi xe cùng chiều phải dừng. Vi phạm bị phạt gấp đôi.",
+    "sectionTitle": "sharing_the_road"
+  },
+  {
+    "id": "c16",
+    "content": "Tốc độ tối đa mặc định trên đường quận (county road) ở Washington là bao nhiêu? Theo RCW 46.61.400, tốc độ tối đa trên đường quận là 50 mph, trừ khi có biển báo hoặc quy định khác.",
+    "sectionTitle": "speed_limits"
+  },
+  {
+    "id": "c17",
+    "content": "Biển báo trong hình yêu cầu bạn làm gì? Biển YIELD (tam giác ngược đỏ-trắng) yêu cầu giảm tốc và nhường đường. Chỉ dừng hoàn toàn khi cần thiết để tránh va chạm.",
+    "sectionTitle": "traffic_signs"
+  },
+  {
+    "id": "c18",
+    "content": "Người đi bộ đang ở trên vạch sang đường (crosswalk), bạn phải làm gì? Người đi bộ trong vạch sang đường có quyền ưu tiên. Bạn phải dừng và để họ qua an toàn.",
+    "sectionTitle": "right_of_way"
+  },
+  {
+    "id": "c19",
+    "content": "Bạn không được đậu xe trong vòng bao nhiêu feet từ trụ cứu hỏa (fire hydrant)? Không được đậu trong vòng 15 feet từ trụ cứu hỏa để xe cứu hỏa có thể tiếp cận khi cần.",
+    "sectionTitle": "parking"
+  },
+  {
+    "id": "c20",
+    "content": "Giới hạn BAC cho người lái xe dưới 21 tuổi ở Washington là bao nhiêu? Người dưới 21 tuổi vi phạm khi BAC từ 0,02% trở lên. Washington áp dụng luật nghiêm khắt cho thanh thiếu niên.",
+    "sectionTitle": "dui_laws"
+  },
+  {
+    "id": "c21",
+    "content": "Trẻ em dưới 4 feet 9 inches (khoảng 145 cm) hoặc dưới 8 tuổi phải ngồi ghế gì? Trẻ dưới 4'9\" hoặc dưới 8 tuổi phải dùng ghế booster hoặc ghế an toàn trẻ em phù hợp kích thước.",
+    "sectionTitle": "seat_belts"
+  },
+  {
+    "id": "c22",
+    "content": "Vi phạm tốc độ trong khu trường học ở Washington bị phạt như thế nào? RCW 46.61.440 quy định mức phạt gấp đôi cho vi phạm tốc độ trong khu trường học và không được miễn giảm.",
+    "sectionTitle": "school_zones"
+  },
+  {
+    "id": "c23",
+    "content": "Trên xa lộ nhiều làn, làn nào bạn nên dùng khi không vượt xe? Giữ làn phải khi không vượt xe giúp giao thông lưu thông mượt mà. Làn trái dành cho vượt xe.",
+    "sectionTitle": "highway_driving"
+  },
+  {
+    "id": "c24",
+    "content": "Khi rẽ phải tại giao lộ có người đi bộ đang chờ sang đường, bạn phải làm gì? Khi rẽ, bạn phải nhường đường cho người đi bộ đang sang đường hoặc sắp sang đường hợp pháp.",
+    "sectionTitle": "pedestrians"
+  },
+  {
+    "id": "c25",
+    "content": "Trong vùng khẩn cấp (emergency zone) bên đường, nếu không thể đổi làn, bạn phải giảm tốc xuống bao nhiêu? Luật Move Over của Washington yêu cầu đổi làn hoặc giảm tốc ít nhất 10 mph dưới giới hạn. Không được chạy quá 50 mph trong vùng khẩn cấp.",
+    "sectionTitle": "emergency_vehicles"
+  },
+  {
+    "id": "c26",
+    "content": "Tại giao lộ có biển STOP ở cả bốn hướng, xe nào được đi trước? Tại giao lộ bốn hướng STOP, xe đến và dừng trước được đi trước. Nếu cùng lúc, xe bên phải được ưu tiên.",
+    "sectionTitle": "intersections"
+  },
+  {
+    "id": "c27",
+    "content": "Vùng mù (blind spot) là gì? Vùng mù là khoảng không gian bên xe không hiện trong gương. Luôn nhìn qua vai trước khi đổi làn.",
+    "sectionTitle": "lane_changes"
+  },
+  {
+    "id": "c28",
+    "content": "Khi có xe đi ngược chiều, bạn phải tắt đèn pha (high beam) ở khoảng cách bao nhiêu? Phải chuyển sang đèn thường khi cách xe ngược chiều 500 feet. Khi đi theo sau xe khác, tắt đèn pha trong vòng 300 feet.",
+    "sectionTitle": "night_driving"
+  },
+  {
+    "id": "c29",
+    "content": "Khi xe bị trượt nước (hydroplaning), bạn nên làm gì? Khi trượt nước, nhả ga từ từ, giữ lái thẳng. Phanh gấp hoặc xoay vô-lăng mạnh có thể gây mất kiểm soát.",
+    "sectionTitle": "weather_conditions"
+  },
+  {
+    "id": "c30",
+    "content": "Khi vượt qua người đi xe đạp trên đường có sharrow, bạn phải chừa khoảng cách tối thiểu bao nhiêu? Luật Washington yêu cầu chừa ít nhất 3 feet khoảng cách an toàn khi vượt người đi xe đạp.",
+    "sectionTitle": "sharing_the_road"
+  },
+  {
+    "id": "c31",
+    "content": "Khi trời mưa hoặc đường trơn, bạn nên làm gì với tốc độ xe? Biển báo chỉ là giới hạn tối đa trong điều kiện lý tưởng. Luật Washington yêu cầu bạn luôn lái ở tốc độ an toàn cho điều kiện hiện tại.",
+    "sectionTitle": "speed_limits"
+  },
+  {
+    "id": "c32",
+    "content": "Biển báo màu cam trong hình báo hiệu điều gì? Biển màu cam cảnh báo khu vực thi công (work zone). Bạn phải giảm tốc và cẩn thận với công nhân và thiết bị.",
+    "sectionTitle": "traffic_signs"
+  },
+  {
+    "id": "c33",
+    "content": "Khi đèn đỏ, bạn có được rẽ phải không? Ở Washington, bạn có thể rẽ phải khi đèn đỏ sau khi dừng hoàn toàn, trừ khi có biển cấm rẽ phải và phải nhường đường.",
+    "sectionTitle": "right_of_way"
+  },
+  {
+    "id": "c34",
+    "content": "Bạn không được đậu xe trong vòng bao nhiêu feet từ biển STOP hoặc biển YIELD? Luật Washington cấm đậu trong vòng 30 feet từ biển tín hiệu giao thông, biển STOP hoặc biển YIELD.",
+    "sectionTitle": "parking"
+  },
+  {
+    "id": "c35",
+    "content": "Tài xế thương mại (CDL) khi lái xe thương mại, giới hạn BAC là bao nhiêu? Tài xế thương mại vi phạm khi BAC từ 0,04% trở lên khi đang lái xe thương mại.",
+    "sectionTitle": "dui_laws"
+  },
+  {
+    "id": "c36",
+    "content": "Thắt dây an toàn sai cách (ví dụ: đặt dây chéo dưới cánh tay) có được không? Dây an toàn phải được thắt đúng: dây chéo qua vai ngực, dây ngang qua hông. Thắt sai làm giảm hiệu quả bảo vệ.",
+    "sectionTitle": "seat_belts"
+  },
+  {
+    "id": "c37",
+    "content": "Khi lái gần trường học sau giờ học chính thức, bạn nên làm gì? Học sinh có thể tham gia hoạt động sau giờ học hoặc chơi ở sân trường. Luôn chú ý khi lái gần trường.",
+    "sectionTitle": "school_zones"
+  },
+  {
+    "id": "c38",
+    "content": "Khoảng cách an toàn tối thiểu phía sau xe phía trước trên xa lộ nên là bao nhiêu giây? Quy tắc 3 giây: đếm \"một nghìn một, một nghìn hai, một nghìn ba\" sau khi xe trước đi qua điểm cố định. Nếu bạn đến trước khi đếm xong, bạn đi quá gần.",
+    "sectionTitle": "highway_driving"
+  },
+  {
+    "id": "c39",
+    "content": "Người đi bộ đang chờ tại vạch sang đường không có đèn tín hiệu, bạn phải làm gì? Người đi bộ tại vạch sang đường có quyền ưu tiên. Bạn phải dừng và để họ qua an toàn.",
+    "sectionTitle": "pedestrians"
+  },
+  {
+    "id": "c40",
+    "content": "Tốc độ tối đa được phép trong vùng khẩn cấp (emergency zone) ở Washington là bao nhiêu? Trong vùng khẩn cấp, bạn không được chạy nhanh hơn 50 mph, kể cả khi giới hạn tốc độ cao hơn.",
+    "sectionTitle": "emergency_vehicles"
+  },
+  {
+    "id": "c41",
+    "content": "Khi đèn xanh (green), bạn có được đi ngay không? Đèn xanh cho phép đi, nhưng bạn vẫn phải nhường người đi bộ trong vạch và kiểm tra an toàn trước khi vào giao lộ.",
+    "sectionTitle": "intersections"
+  },
+  {
+    "id": "c42",
+    "content": "Bạn có được dùng làn rẽ giữa (center turn lane) để vượt xe buýt trường học không? Không được dùng làn rẽ giữa để vượt xe buýt trường học. Tất cả làn, kể cả làn rẽ, phải dừng khi đèn đỏ nhấp nháy.",
+    "sectionTitle": "lane_changes"
+  },
+  {
+    "id": "c43",
+    "content": "Lái xe ban đêm, bạn nên làm gì với khoảng cách phía trước? Ban đêm tầm nhìn giảm, thời gian phản ứng chậm hơn. Tăng khoảng cách an toàn phía trước.",
+    "sectionTitle": "night_driving"
+  },
+  {
+    "id": "c44",
+    "content": "Trong sương mù dày, bạn nên dùng loại đèn nào? Đèn pha chiếu xa phản xạ trong sương làm mù thêm. Dùng đèn thường hoặc đèn sương mù và giảm tốc.",
+    "sectionTitle": "weather_conditions"
+  },
+  {
+    "id": "c45",
+    "content": "Khi đi gần xe tải lớn, làm sao biết tài xế xe tải có thấy bạn không? Nếu bạn không thấy gương chiếu hậu của tài xế xe tải, họ cũng không thấy bạn — đó là vùng mù (blind spot).",
+    "sectionTitle": "sharing_the_road"
+  },
+  {
+    "id": "c46",
+    "content": "Tốc độ tối đa mặc định trên xa lộ tiểu bang (state highway) ngoài thành phố ở Washington là bao nhiêu? RCW 46.61.400 quy định tốc độ tối đa 60 mph trên xa lộ tiểu bang, trừ khi có biển báo cho phép cao hơn (tối đa 75 mph ở một số đoạn).",
+    "sectionTitle": "speed_limits"
+  },
+  {
+    "id": "c47",
+    "content": "Biển báo trong hình báo hiệu khu vực nào? Biển hình ngũ giác vàng là biển khu trường học. Hãy giảm tốc và chú ý quan sát học sinh.",
+    "sectionTitle": "traffic_signs"
+  },
+  {
+    "id": "c48",
+    "content": "Khi nhập làn vào xa lộ (freeway), ai có quyền ưu tiên? Xe đang lưu thông trên xa lộ có quyền ưu tiên. Bạn phải điều chỉnh tốc độ và tìm khoảng trống an toàn để nhập làn.",
+    "sectionTitle": "right_of_way"
+  },
+  {
+    "id": "c49",
+    "content": "Khi đỗ xe song song (parallel parking) tại Washington, xe phải cách lề đường tối đa bao nhiêu? Không được đỗ xe cách lề quá 12 inch khi đỗ song song.",
+    "sectionTitle": "parking"
+  },
+  {
+    "id": "c50",
+    "content": "Nồng độ cồn trong máu (BAC) hợp pháp tối đa cho tài xế từ 21 tuổi trở lên tại Washington là bao nhiêu? Tài xế từ 21 tuổi trở lên vi phạm DUI khi BAC từ 0.08% trở lên.",
+    "sectionTitle": "dui_laws"
   }
 ]

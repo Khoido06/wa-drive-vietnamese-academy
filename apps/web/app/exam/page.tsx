@@ -10,6 +10,7 @@ import { LoadingState } from "@repo/ui/loading-state";
 import { FeedbackBanner } from "@repo/ui/feedback-banner";
 import { vi } from "@repo/ui/i18n/vi";
 import { apiFetch, ensureUser, useTelemetry } from "../../lib/api";
+import { loadOfflineExamBundle } from "../../lib/offline";
 import { HeaderAction } from "../../components/header-action";
 import { VoiceButton } from "../../components/voice-button";
 import { QuestionSignImage } from "../../components/question-sign-image";
@@ -56,6 +57,10 @@ export default function ExamPage() {
   const [setsLoading, setSetsLoading] = useState(true);
   const [started, setStarted] = useState(false);
   const [startTime, setStartTime] = useState(Date.now());
+  const [offlineMode, setOfflineMode] = useState(false);
+  const [offlineAnswers, setOfflineAnswers] = useState<
+    Map<string, { correctOptionId: string; explanationVi: string }>
+  >(new Map());
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -90,6 +95,36 @@ export default function ExamPage() {
       setCurrent(0);
       setStartTime(Date.now());
     } catch (err) {
+      if (selectedSet === "wa-set-01") {
+        const bundle = await loadOfflineExamBundle();
+        if (bundle) {
+          const answerMap = new Map(
+            bundle.questions.map((q) => [
+              q.id,
+              { correctOptionId: q.correctOptionId, explanationVi: q.explanationVi },
+            ]),
+          );
+          setOfflineAnswers(answerMap);
+          setQuestions(
+            bundle.questions.map((q) => ({
+              id: q.id,
+              questionTextVi: q.questionTextVi,
+              imageUrl: q.imageUrl,
+              options: q.options,
+            })),
+          );
+          setSetName(`${bundle.setName} (offline)`);
+          setPassCount(bundle.passCount);
+          setStarted(true);
+          setOfflineMode(true);
+          setAttempts([]);
+          setScore(0);
+          setCurrent(0);
+          setStartTime(Date.now());
+          setLoading(false);
+          return;
+        }
+      }
       setError(err instanceof Error ? err.message : "Không bắt đầu được bài thi. Thử lại.");
     } finally {
       setLoading(false);
@@ -100,6 +135,19 @@ export default function ExamPage() {
     if (!selected || !questions[current]) return;
     const q = questions[current];
     try {
+      if (offlineMode) {
+        const meta = offlineAnswers.get(q.id);
+        if (!meta) throw new Error("Offline data missing");
+        const isCorrect = selected === meta.correctOptionId;
+        const result = {
+          isCorrect,
+          correctOptionId: meta.correctOptionId,
+          explanationVi: meta.explanationVi,
+        };
+        applyAttemptResult(q, result);
+        return;
+      }
+
       const userId = await ensureUser();
       const result = await apiFetch<{
         isCorrect: boolean;
@@ -115,14 +163,23 @@ export default function ExamPage() {
           context: "exam",
         }),
       });
+      applyAttemptResult(q, result);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Lỗi khi nộp câu trả lời.");
+    }
+  };
 
+  const applyAttemptResult = (
+    q: Question,
+    result: { isCorrect: boolean; correctOptionId: string; explanationVi: string | null },
+  ) => {
       const newScore = score + (result.isCorrect ? 1 : 0);
       setScore(newScore);
       setAttempts((prev) => [
         ...prev,
         {
           question: q,
-          selectedOptionId: selected,
+          selectedOptionId: selected!,
           isCorrect: result.isCorrect,
           correctOptionId: result.correctOptionId,
           explanationVi: result.explanationVi,
@@ -131,15 +188,12 @@ export default function ExamPage() {
 
       if (current + 1 >= questions.length) {
         setFinished(true);
-        track("exam_finish", { score: newScore, total: questions.length, setId: selectedSet });
+        track("exam_finish", { score: newScore, total: questions.length, setId: selectedSet, offline: offlineMode });
       } else {
         setCurrent((c) => c + 1);
         setSelected(null);
         setStartTime(Date.now());
       }
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Lỗi khi nộp câu trả lời.");
-    }
   };
 
   const resetExam = () => {
@@ -152,6 +206,8 @@ export default function ExamPage() {
     setAttempts([]);
     setSelected(null);
     setError(null);
+    setOfflineMode(false);
+    setOfflineAnswers(new Map());
   };
 
   const wrongAttempts = attempts.filter((a) => !a.isCorrect);

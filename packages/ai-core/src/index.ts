@@ -11,4 +11,4 @@ export { resolveStateDocumentPath, STATE_CODES, type StateCode } from "./ingest/
 export { getAvailableStates } from "./rag/retriever.js";
 export { DEFAULT_RAG_CONFIG } from "./types.js";
 export { streamRagAnswer } from "./rag/stream.js";
-export { getProviderStatus } from "./llm/client.js";
+export { getProviderStatus, embedText } from "./llm/client.js";

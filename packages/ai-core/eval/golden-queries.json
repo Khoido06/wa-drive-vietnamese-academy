@@ -1,74 +1,552 @@
 [
   {
     "id": "q1",
-    "query": "Tốc độ tối đa trong khu dân cư?",
-    "expectedInTopChunk": ["25", "mph", "dân cư"],
-    "minRetrievalScore": 0.25
+    "query": "Theo luật Washington, tốc độ tối đa mặc định trên đường phố trong thành phố hoặc thị trấn (khi không có biển báo khác) l?",
+    "expectedInTopChunk": [
+      "25",
+      "luật",
+      "washington"
+    ],
+    "minRetrievalScore": 0.15,
+    "topic": "speed_limits"
   },
   {
     "id": "q2",
-    "query": "Thắt dây an toàn có bắt buộc không?",
-    "expectedInTopChunk": ["dây an toàn", "bắt buộc"],
-    "minRetrievalScore": 0.25
+    "query": "Biển báo trong hình yêu cầu bạn làm gì?",
+    "expectedInTopChunk": [
+      "dừng",
+      "hoàn",
+      "biển"
+    ],
+    "minRetrievalScore": 0.15,
+    "topic": "traffic_signs"
   },
   {
     "id": "q3",
-    "query": "Gặp xe cứu thương phải làm gì?",
-    "expectedInTopChunk": ["cứu thương", "nhường"],
-    "minRetrievalScore": 0.25
+    "query": "Khi vào vòng xoay (roundabout), ai có quyền ưu tiên?",
+    "expectedInTopChunk": [
+      "đang",
+      "trong",
+      "thông"
+    ],
+    "minRetrievalScore": 0.15,
+    "topic": "right_of_way"
   },
   {
     "id": "q4",
-    "query": "Đèn vàng có nghĩa là gì?",
-    "expectedInTopChunk": ["vàng", "đỏ"],
-    "minRetrievalScore": 0.25
+    "query": "Khi đậu xe song song (parallel parking), xe phải cách lề đường tối đa bao nhiêu?",
+    "expectedInTopChunk": [
+      "12",
+      "inch",
+      "luật"
+    ],
+    "minRetrievalScore": 0.15,
+    "topic": "parking"
   },
   {
     "id": "q5",
-    "query": "Đèn đỏ phải làm gì?",
-    "expectedInTopChunk": ["đèn đỏ", "dừng"],
-    "minRetrievalScore": 0.25
+    "query": "Nồng độ cồn trong máu (BAC) hợp pháp tối đa cho người lái xe từ 21 tuổi trở lên ở Washington là bao nhiêu?",
+    "expectedInTopChunk": [
+      "0",
+      "08%",
+      "phạm"
+    ],
+    "minRetrievalScore": 0.15,
+    "topic": "dui_laws"
   },
   {
     "id": "q6",
-    "query": "Khoảng cách an toàn phía sau xe?",
-    "expectedInTopChunk": ["3 giây", "khoảng cách"],
-    "minRetrievalScore": 0.2
+    "query": "Ai phải thắt dây an toàn khi xe đang chạy ở Washington?",
+    "expectedInTopChunk": [
+      "tất",
+      "người",
+      "luật"
+    ],
+    "minRetrievalScore": 0.15,
+    "topic": "seat_belts"
   },
   {
     "id": "q7",
-    "query": "Biển STOP nghĩa là gì?",
-    "expectedInTopChunk": ["STOP", "dừng"],
-    "minRetrievalScore": 0.2
+    "query": "Giới hạn tốc độ trong khu vực trường học (school zone) ở Washington là bao nhiêu?",
+    "expectedInTopChunk": [
+      "20",
+      "giờ",
+      "trong"
+    ],
+    "minRetrievalScore": 0.15,
+    "topic": "school_zones"
   },
   {
     "id": "q8",
-    "query": "Uống rượu bia khi lái xe có được không?",
-    "expectedInTopChunk": ["rượu", "0.08"],
-    "minRetrievalScore": 0.2
+    "query": "Trước khi đổi làn trên xa lộ, bạn nên bật xi-nhan trước bao nhiêu feet?",
+    "expectedInTopChunk": [
+      "100",
+      "feet",
+      "luật"
+    ],
+    "minRetrievalScore": 0.15,
+    "topic": "highway_driving"
   },
   {
     "id": "q9",
-    "query": "Người đi bộ có quyền ưu tiên không?",
-    "expectedInTopChunk": ["đi bộ", "ưu tiên"],
-    "minRetrievalScore": 0.2
+    "query": "Người mù cầm gậy trắng hoặc có chó dẫn đường đang sang đường, bạn phải làm gì?",
+    "expectedInTopChunk": [
+      "dừng",
+      "người",
+      "quyền"
+    ],
+    "minRetrievalScore": 0.15,
+    "topic": "pedestrians"
   },
   {
     "id": "q10",
-    "query": "Đỗ xe song song cách lề bao nhiêu?",
-    "expectedInTopChunk": ["12 inch", "đỗ xe"],
-    "minRetrievalScore": 0.2
+    "query": "Khi thấy xe cứu thương, cứu hỏa hoặc cảnh sát có còi và đèn nhấp nháy, bạn phải làm gì?",
+    "expectedInTopChunk": [
+      "sang",
+      "tiên",
+      "phải"
+    ],
+    "minRetrievalScore": 0.15,
+    "topic": "emergency_vehicles"
   },
   {
     "id": "q11",
-    "query": "Biển yield là gì?",
-    "expectedInTopChunk": ["yield", "nhường"],
-    "minRetrievalScore": 0.2
+    "query": "Khi đèn giao thông chuyển sang màu vàng (yellow), bạn nên làm gì?",
+    "expectedInTopChunk": [
+      "dừng",
+      "lại",
+      "vàng"
+    ],
+    "minRetrievalScore": 0.15,
+    "topic": "intersections"
   },
   {
     "id": "q12",
-    "query": "Tốc độ trên đường cao tốc?",
-    "expectedInTopChunk": ["cao tốc", "60", "70"],
-    "minRetrievalScore": 0.2
+    "query": "Trước khi đổi làn, bạn cần làm gì?",
+    "expectedInTopChunk": [
+      "bật",
+      "nhan",
+      "toàn"
+    ],
+    "minRetrievalScore": 0.15,
+    "topic": "lane_changes"
+  },
+  {
+    "id": "q13",
+    "query": "Theo luật Washington, đèn pha (headlights) phải bật từ lúc nào đến lúc nào?",
+    "expectedInTopChunk": [
+      "luật",
+      "washington",
+      "30"
+    ],
+    "minRetrievalScore": 0.15,
+    "topic": "night_driving"
+  },
+  {
+    "id": "q14",
+    "query": "Khi trời mưa, bạn nên làm gì?",
+    "expectedInTopChunk": [
+      "giảm",
+      "tốc",
+      "đường"
+    ],
+    "minRetrievalScore": 0.15,
+    "topic": "weather_conditions"
+  },
+  {
+    "id": "q15",
+    "query": "Xe buýt trường học bật đèn đỏ nhấp nháy và mở biển STOP, bạn phải làm gì?",
+    "expectedInTopChunk": [
+      "dừng",
+      "buýt",
+      "biển"
+    ],
+    "minRetrievalScore": 0.15,
+    "topic": "sharing_the_road"
+  },
+  {
+    "id": "q16",
+    "query": "Tốc độ tối đa mặc định trên đường quận (county road) ở Washington là bao nhiêu?",
+    "expectedInTopChunk": [
+      "50",
+      "theo",
+      "46.61"
+    ],
+    "minRetrievalScore": 0.15,
+    "topic": "speed_limits"
+  },
+  {
+    "id": "q17",
+    "query": "Biển báo trong hình yêu cầu bạn làm gì?",
+    "expectedInTopChunk": [
+      "giảm",
+      "tốc",
+      "biển"
+    ],
+    "minRetrievalScore": 0.15,
+    "topic": "traffic_signs"
+  },
+  {
+    "id": "q18",
+    "query": "Người đi bộ đang ở trên vạch sang đường (crosswalk), bạn phải làm gì?",
+    "expectedInTopChunk": [
+      "dừng",
+      "người",
+      "trong"
+    ],
+    "minRetrievalScore": 0.15,
+    "topic": "right_of_way"
+  },
+  {
+    "id": "q19",
+    "query": "Bạn không được đậu xe trong vòng bao nhiêu feet từ trụ cứu hỏa (fire hydrant)?",
+    "expectedInTopChunk": [
+      "15",
+      "5",
+      "feet"
+    ],
+    "minRetrievalScore": 0.15,
+    "topic": "parking"
+  },
+  {
+    "id": "q20",
+    "query": "Giới hạn BAC cho người lái xe dưới 21 tuổi ở Washington là bao nhiêu?",
+    "expectedInTopChunk": [
+      "0",
+      "02%",
+      "người"
+    ],
+    "minRetrievalScore": 0.15,
+    "topic": "dui_laws"
+  },
+  {
+    "id": "q21",
+    "query": "Trẻ em dưới 4 feet 9 inches (khoảng 145 cm) hoặc dưới 8 tuổi phải ngồi ghế gì?",
+    "expectedInTopChunk": [
+      "ghế",
+      "booster",
+      "dưới"
+    ],
+    "minRetrievalScore": 0.15,
+    "topic": "seat_belts"
+  },
+  {
+    "id": "q22",
+    "query": "Vi phạm tốc độ trong khu trường học ở Washington bị phạt như thế nào?",
+    "expectedInTopChunk": [
+      "mức",
+      "phạt",
+      "46.61"
+    ],
+    "minRetrievalScore": 0.15,
+    "topic": "school_zones"
+  },
+  {
+    "id": "q23",
+    "query": "Trên xa lộ nhiều làn, làn nào bạn nên dùng khi không vượt xe?",
+    "expectedInTopChunk": [
+      "làn",
+      "phải",
+      "không"
+    ],
+    "minRetrievalScore": 0.15,
+    "topic": "highway_driving"
+  },
+  {
+    "id": "q24",
+    "query": "Khi rẽ phải tại giao lộ có người đi bộ đang chờ sang đường, bạn phải làm gì?",
+    "expectedInTopChunk": [
+      "nhường",
+      "đường",
+      "phải"
+    ],
+    "minRetrievalScore": 0.15,
+    "topic": "pedestrians"
+  },
+  {
+    "id": "q25",
+    "query": "Trong vùng khẩn cấp (emergency zone) bên đường, nếu không thể đổi làn, bạn phải giảm tốc xuống bao nhiêu?",
+    "expectedInTopChunk": [
+      "10",
+      "giảm",
+      "nhất"
+    ],
+    "minRetrievalScore": 0.15,
+    "topic": "emergency_vehicles"
+  },
+  {
+    "id": "q26",
+    "query": "Tại giao lộ có biển STOP ở cả bốn hướng, xe nào được đi trước?",
+    "expectedInTopChunk": [
+      "đến",
+      "trước",
+      "giao"
+    ],
+    "minRetrievalScore": 0.15,
+    "topic": "intersections"
+  },
+  {
+    "id": "q27",
+    "query": "Vùng mù (blind spot) là gì?",
+    "expectedInTopChunk": [
+      "vùng",
+      "khoảng",
+      "không"
+    ],
+    "minRetrievalScore": 0.15,
+    "topic": "lane_changes"
+  },
+  {
+    "id": "q28",
+    "query": "Khi có xe đi ngược chiều, bạn phải tắt đèn pha (high beam) ở khoảng cách bao nhiêu?",
+    "expectedInTopChunk": [
+      "500",
+      "feet",
+      "khoảng"
+    ],
+    "minRetrievalScore": 0.15,
+    "topic": "night_driving"
+  },
+  {
+    "id": "q29",
+    "query": "Khi xe bị trượt nước (hydroplaning), bạn nên làm gì?",
+    "expectedInTopChunk": [
+      "nhả",
+      "trượt",
+      "nước"
+    ],
+    "minRetrievalScore": 0.15,
+    "topic": "weather_conditions"
+  },
+  {
+    "id": "q30",
+    "query": "Khi vượt qua người đi xe đạp trên đường có sharrow, bạn phải chừa khoảng cách tối thiểu bao nhiêu?",
+    "expectedInTopChunk": [
+      "3",
+      "feet",
+      "khoảng"
+    ],
+    "minRetrievalScore": 0.15,
+    "topic": "sharing_the_road"
+  },
+  {
+    "id": "q31",
+    "query": "Khi trời mưa hoặc đường trơn, bạn nên làm gì với tốc độ xe?",
+    "expectedInTopChunk": [
+      "tốc",
+      "biển",
+      "giới"
+    ],
+    "minRetrievalScore": 0.15,
+    "topic": "speed_limits"
+  },
+  {
+    "id": "q32",
+    "query": "Biển báo màu cam trong hình báo hiệu điều gì?",
+    "expectedInTopChunk": [
+      "khu",
+      "vực",
+      "biển"
+    ],
+    "minRetrievalScore": 0.15,
+    "topic": "traffic_signs"
+  },
+  {
+    "id": "q33",
+    "query": "Khi đèn đỏ, bạn có được rẽ phải không?",
+    "expectedInTopChunk": [
+      "được",
+      "phải",
+      "washington"
+    ],
+    "minRetrievalScore": 0.15,
+    "topic": "right_of_way"
+  },
+  {
+    "id": "q34",
+    "query": "Bạn không được đậu xe trong vòng bao nhiêu feet từ biển STOP hoặc biển YIELD?",
+    "expectedInTopChunk": [
+      "30",
+      "feet",
+      "luật"
+    ],
+    "minRetrievalScore": 0.15,
+    "topic": "parking"
+  },
+  {
+    "id": "q35",
+    "query": "Tài xế thương mại (CDL) khi lái xe thương mại, giới hạn BAC là bao nhiêu?",
+    "expectedInTopChunk": [
+      "0",
+      "04%",
+      "thương"
+    ],
+    "minRetrievalScore": 0.15,
+    "topic": "dui_laws"
+  },
+  {
+    "id": "q36",
+    "query": "Thắt dây an toàn sai cách (ví dụ: đặt dây chéo dưới cánh tay) có được không?",
+    "expectedInTopChunk": [
+      "không",
+      "dây",
+      "toàn"
+    ],
+    "minRetrievalScore": 0.15,
+    "topic": "seat_belts"
+  },
+  {
+    "id": "q37",
+    "query": "Khi lái gần trường học sau giờ học chính thức, bạn nên làm gì?",
+    "expectedInTopChunk": [
+      "sinh",
+      "tham",
+      "hoạt"
+    ],
+    "minRetrievalScore": 0.15,
+    "topic": "school_zones"
+  },
+  {
+    "id": "q38",
+    "query": "Khoảng cách an toàn tối thiểu phía sau xe phía trước trên xa lộ nên là bao nhiêu giây?",
+    "expectedInTopChunk": [
+      "3",
+      "giây",
+      "nghìn"
+    ],
+    "minRetrievalScore": 0.15,
+    "topic": "highway_driving"
+  },
+  {
+    "id": "q39",
+    "query": "Người đi bộ đang chờ tại vạch sang đường không có đèn tín hiệu, bạn phải làm gì?",
+    "expectedInTopChunk": [
+      "dừng",
+      "người",
+      "vạch"
+    ],
+    "minRetrievalScore": 0.15,
+    "topic": "pedestrians"
+  },
+  {
+    "id": "q40",
+    "query": "Tốc độ tối đa được phép trong vùng khẩn cấp (emergency zone) ở Washington là bao nhiêu?",
+    "expectedInTopChunk": [
+      "50",
+      "giờ",
+      "trong"
+    ],
+    "minRetrievalScore": 0.15,
+    "topic": "emergency_vehicles"
+  },
+  {
+    "id": "q41",
+    "query": "Khi đèn xanh (green), bạn có được đi ngay không?",
+    "expectedInTopChunk": [
+      "xanh",
+      "phép",
+      "nhưng"
+    ],
+    "minRetrievalScore": 0.15,
+    "topic": "intersections"
+  },
+  {
+    "id": "q42",
+    "query": "Bạn có được dùng làn rẽ giữa (center turn lane) để vượt xe buýt trường học không?",
+    "expectedInTopChunk": [
+      "không",
+      "được",
+      "dùng"
+    ],
+    "minRetrievalScore": 0.15,
+    "topic": "lane_changes"
+  },
+  {
+    "id": "q43",
+    "query": "Lái xe ban đêm, bạn nên làm gì với khoảng cách phía trước?",
+    "expectedInTopChunk": [
+      "tăng",
+      "khoảng",
+      "nhìn"
+    ],
+    "minRetrievalScore": 0.15,
+    "topic": "night_driving"
+  },
+  {
+    "id": "q44",
+    "query": "Trong sương mù dày, bạn nên dùng loại đèn nào?",
+    "expectedInTopChunk": [
+      "đèn",
+      "pha",
+      "chiếu"
+    ],
+    "minRetrievalScore": 0.15,
+    "topic": "weather_conditions"
+  },
+  {
+    "id": "q45",
+    "query": "Khi đi gần xe tải lớn, làm sao biết tài xế xe tải có thấy bạn không?",
+    "expectedInTopChunk": [
+      "nếu",
+      "bạn",
+      "không"
+    ],
+    "minRetrievalScore": 0.15,
+    "topic": "sharing_the_road"
+  },
+  {
+    "id": "q46",
+    "query": "Tốc độ tối đa mặc định trên xa lộ tiểu bang (state highway) ngoài thành phố ở Washington là bao nhiêu?",
+    "expectedInTopChunk": [
+      "60",
+      "46.61",
+      "400"
+    ],
+    "minRetrievalScore": 0.15,
+    "topic": "speed_limits"
+  },
+  {
+    "id": "q47",
+    "query": "Biển báo trong hình báo hiệu khu vực nào?",
+    "expectedInTopChunk": [
+      "khu",
+      "vực",
+      "biển"
+    ],
+    "minRetrievalScore": 0.15,
+    "topic": "traffic_signs"
+  },
+  {
+    "id": "q48",
+    "query": "Khi nhập làn vào xa lộ (freeway), ai có quyền ưu tiên?",
+    "expectedInTopChunk": [
+      "đang",
+      "trên",
+      "thông"
+    ],
+    "minRetrievalScore": 0.15,
+    "topic": "right_of_way"
+  },
+  {
+    "id": "q49",
+    "query": "Khi đỗ xe song song (parallel parking) tại Washington, xe phải cách lề đường tối đa bao nhiêu?",
+    "expectedInTopChunk": [
+      "12",
+      "inch",
+      "không"
+    ],
+    "minRetrievalScore": 0.15,
+    "topic": "parking"
+  },
+  {
+    "id": "q50",
+    "query": "Nồng độ cồn trong máu (BAC) hợp pháp tối đa cho tài xế từ 21 tuổi trở lên tại Washington là bao nhiêu?",
+    "expectedInTopChunk": [
+      "0.08%",
+      "21",
+      "tuổi"
+    ],
+    "minRetrievalScore": 0.15,
+    "topic": "dui_laws"
   }
 ]
