@@ -80,15 +80,15 @@ Do **not** set `FAMILY_UNLIMITED=true` unless you want everyone unlimited.
 
 ## 6. Clerk auth (optional — mom does NOT need login)
 
-**Mẹ:** mở app, nhập tên **Cô Lan** / **Mẹ** → học/thi/AI — **không cần đăng nhập**.
+**Mẹ:** mở app, nhập tên **Cô Lan** / **Mẹ** → học/thi/AI — **không cần đăng nhập**. Unlimited qua `PREMIUM_DISPLAY_NAMES`.
 
 Clerk chỉ cho:
-- Sync tiến độ khi **đổi điện thoại**
-- **Con** xem tiến độ qua account (kết hợp Family tier)
+- Con thử đăng nhập / xem tiến độ (Family)
+- Sync tiến độ giữa thiết bị (Pro)
 
-**Production khuyên dùng:** không set Clerk keys (app chạy không warning).
+**Hiện tại (vercel.app):** `pk_test_` trên Vercel — Mức 2 → **[docs/CLERK.md](./CLERK.md)**
 
-**Bật sau:** `pk_live_` + `sk_live_` trên Vercel — chi tiết → **[docs/CLERK.md](./CLERK.md)**
+**Sau này (portfolio / trả phí):** domain riêng + `pk_live_` — Mức 3 trong CLERK.md
 
 ---
 
