@@ -12,6 +12,7 @@ interface Props {
   signalLeft: boolean;
   signalRight: boolean;
   steer: number;
+  hideInCockpit?: boolean;
 }
 
 function Wheel({ x, z }: { x: number; z: number }) {
@@ -23,7 +24,7 @@ function Wheel({ x, z }: { x: number; z: number }) {
   );
 }
 
-export function CarModel({ carRef, signalLeft, signalRight, steer }: Props) {
+export function CarModel({ carRef, signalLeft, signalRight, steer, hideInCockpit }: Props) {
   const group = useRef<THREE.Group>(null);
   const bodyMat = useMemo(
     () => new THREE.MeshStandardMaterial({ color: "#2563eb", metalness: 0.55, roughness: 0.35 }),
@@ -64,10 +65,10 @@ export function CarModel({ carRef, signalLeft, signalRight, steer }: Props) {
     signalR.emissiveIntensity = signalRight && blink ? 2.5 : 0;
   });
 
-  const steerRad = steer * 0.45;
+  const steerRad = (carRef.current?.steerAngle ?? steer) * 0.55;
 
   return (
-    <group ref={group}>
+    <group ref={group} visible={!hideInCockpit}>
       <mesh position={[0, 0.55, 0]} castShadow receiveShadow material={bodyMat}>
         <boxGeometry args={[1.85, 0.55, 4.2]} />
       </mesh>

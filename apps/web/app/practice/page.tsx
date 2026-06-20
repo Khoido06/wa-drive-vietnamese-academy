@@ -240,7 +240,7 @@ export default function PracticePage() {
       {tab === "simulator" && (
         <section className="practice-section">
           <p className="practice-section__lead">
-            Lái xe 3D — camera góc thứ 3, vô-lăng + ga + phanh + xi-nhan. Chấm điểm theo tiêu chí DOL.
+            Lái 3D trong xe — gương chiếu hật thật, vô-lăng xoay, ga/phanh, điểm mù. Gần cảm giác thi thật nhất trên web.
           </p>
           <div className="sim-picker">
             {SIM_SCENARIOS.map((s) => (

@@ -10,6 +10,10 @@ import {
   getScenario,
   type SimResult,
 } from "../lib/drive-sim/scenarios";
+import { useEngineSound, useBlinkerSound, vibrateShort } from "../lib/drive-sim/engine-sound";
+import { SteeringWheel } from "./steering-wheel";
+import { MirrorHud } from "./mirror-hud";
+import type { CameraMode } from "./drive-sim-3d/drive-canvas-3d";
 
 const DriveCanvas3D = dynamic(
   () => import("./drive-sim-3d/drive-canvas-3d").then((m) => m.DriveCanvas3D),
@@ -40,6 +44,7 @@ const WORLD_H = 600;
 
 export function DrivingSimulator({ scenarioId, onExit }: Props) {
   const scenario = getScenario(scenarioId);
+  const isHill = scenario?.id === "hill_parking";
   const carRef = useRef<CarState>(scenario?.init() ?? createCar(200, 300));
   const controlsRef = useRef<Controls>({ throttle: 0, brake: 0, steer: 0, reverse: false });
   const rafRef = useRef<number>(0);
@@ -54,10 +59,26 @@ export function DrivingSimulator({ scenarioId, onExit }: Props) {
   const [inPark, setInPark] = useState(false);
   const [result, setResult] = useState<SimResult | null>(null);
   const [steerHeld, setSteerHeld] = useState<"left" | "right" | null>(null);
+  const [steerWheel, setSteerWheel] = useState(0);
+  const [cameraMode, setCameraMode] = useState<CameraMode>("cockpit");
+  const [throttleHeld, setThrottleHeld] = useState(0);
+  const rearMirrorRef = useRef<HTMLCanvasElement>(null);
+  const leftMirrorRef = useRef<HTMLCanvasElement>(null);
+  const rightMirrorRef = useRef<HTMLCanvasElement>(null);
   const [hillMode, setHillMode] = useState<"down-curb" | "up-curb" | "no-curb">("down-curb");
   const [speedDisplay, setSpeedDisplay] = useState(0);
 
-  const steerValue = steerHeld === "left" ? -1 : steerHeld === "right" ? 1 : 0;
+  const steerValue =
+    Math.abs(steerWheel) > 0.04
+      ? steerWheel
+      : steerHeld === "left"
+        ? -1
+        : steerHeld === "right"
+          ? 1
+          : 0;
+
+  useEngineSound(throttleHeld, speedDisplay / 8, !isHill);
+  useBlinkerSound(signalLeft || signalRight);
 
   const reset = useCallback(() => {
     if (!scenario) return;
@@ -72,6 +93,7 @@ export function DrivingSimulator({ scenarioId, onExit }: Props) {
     setInPark(false);
     setResult(null);
     setSpeedDisplay(0);
+    setSteerWheel(0);
     controlsRef.current = { throttle: 0, brake: 0, steer: 0, reverse: false };
   }, [scenario]);
 
@@ -81,6 +103,7 @@ export function DrivingSimulator({ scenarioId, onExit }: Props) {
 
   const doHeadCheck = useCallback(() => {
     setHeadCheckRecent(true);
+    vibrateShort();
     window.setTimeout(() => setHeadCheckRecent(false), 5000);
   }, []);
 
@@ -118,6 +141,7 @@ export function DrivingSimulator({ scenarioId, onExit }: Props) {
       const ctrl = controlsRef.current;
       ctrl.reverse = reverse;
       ctrl.steer = steerValue;
+      setThrottleHeld(ctrl.throttle);
 
       updateCar(car, ctrl);
       car.x = Math.max(40, Math.min(WORLD_W - 40, car.x));
@@ -164,15 +188,33 @@ export function DrivingSimulator({ scenarioId, onExit }: Props) {
     return <p>Không tìm thấy bài luyện tập.</p>;
   }
 
-  const isHill = scenario.id === "hill_parking";
-
   return (
     <div className="drive-sim">
       <div className="drive-sim__header">
         <h3>{scenario.titleVi}</h3>
         <p>{scenario.briefVi}</p>
         {!isHill ? (
-          <p className="drive-sim__tagline">Mô phỏng 3D · Camera góc thứ 3 · Lái như thi thật</p>
+          <p className="drive-sim__tagline">
+            Mô phỏng 3D · Gương chiếu hật · Vô-lăng · {cameraMode === "cockpit" ? "Ngồi trong xe" : "Nhìn từ sau"}
+          </p>
+        ) : null}
+        {!isHill ? (
+          <div className="drive-sim__cam-toggle">
+            <button
+              type="button"
+              className={`drive-sim__cam-btn${cameraMode === "cockpit" ? " drive-sim__cam-btn--on" : ""}`}
+              onClick={() => setCameraMode("cockpit")}
+            >
+              🪑 Trong xe
+            </button>
+            <button
+              type="button"
+              className={`drive-sim__cam-btn${cameraMode === "chase" ? " drive-sim__cam-btn--on" : ""}`}
+              onClick={() => setCameraMode("chase")}
+            >
+              🎥 Góc ngoài
+            </button>
+          </div>
         ) : null}
       </div>
 
@@ -245,12 +287,24 @@ export function DrivingSimulator({ scenarioId, onExit }: Props) {
         </div>
       ) : (
         <>
+          <MirrorHud
+            rearRef={rearMirrorRef}
+            leftRef={leftMirrorRef}
+            rightRef={rightMirrorRef}
+            headCheckActive={headCheckRecent}
+          />
           <DriveCanvas3D
             carRef={carRef}
             scenario={scenario}
             signalLeft={signalLeft}
             signalRight={signalRight}
             steer={steerValue}
+            cameraMode={cameraMode}
+            mirrors={{
+              rear: rearMirrorRef,
+              left: leftMirrorRef,
+              right: rightMirrorRef,
+            }}
           />
           <div className="drive-sim__hud">
             <span>{Math.round(speedDisplay)} mph</span>
@@ -296,31 +350,13 @@ export function DrivingSimulator({ scenarioId, onExit }: Props) {
           </div>
 
           <div className="drive-sim__row drive-sim__row--steer">
-            <button
-              type="button"
-              className="drive-sim__steer"
-              onTouchStart={() => setSteerHeld("left")}
-              onTouchEnd={() => setSteerHeld(null)}
-              onMouseDown={() => setSteerHeld("left")}
-              onMouseUp={() => setSteerHeld(null)}
-              onMouseLeave={() => setSteerHeld(null)}
-            >
-              ◀
-            </button>
-            <div className="drive-sim__wheel" aria-hidden>
-              🎮
-            </div>
-            <button
-              type="button"
-              className="drive-sim__steer"
-              onTouchStart={() => setSteerHeld("right")}
-              onTouchEnd={() => setSteerHeld(null)}
-              onMouseDown={() => setSteerHeld("right")}
-              onMouseUp={() => setSteerHeld(null)}
-              onMouseLeave={() => setSteerHeld(null)}
-            >
-              ▶
-            </button>
+            <SteeringWheel onSteer={setSteerWheel} />
+          </div>
+
+          <div className="drive-sim__row drive-sim__row--keys">
+            <button type="button" className="drive-sim__steer" onTouchStart={() => setSteerHeld("left")} onTouchEnd={() => setSteerHeld(null)} onMouseDown={() => setSteerHeld("left")} onMouseUp={() => setSteerHeld(null)} onMouseLeave={() => setSteerHeld(null)}>◀</button>
+            <span className="drive-sim__keys-hint">hoặc phím ← →</span>
+            <button type="button" className="drive-sim__steer" onTouchStart={() => setSteerHeld("right")} onTouchEnd={() => setSteerHeld(null)} onMouseDown={() => setSteerHeld("right")} onMouseUp={() => setSteerHeld(null)} onMouseLeave={() => setSteerHeld(null)}>▶</button>
           </div>
 
           <div className="drive-sim__row">
@@ -329,6 +365,7 @@ export function DrivingSimulator({ scenarioId, onExit }: Props) {
               className="drive-sim__pedal drive-sim__pedal--brake"
               onTouchStart={() => {
                 controlsRef.current.brake = 1;
+                vibrateShort();
               }}
               onTouchEnd={() => {
                 controlsRef.current.brake = 0;

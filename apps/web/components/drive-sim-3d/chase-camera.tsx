@@ -9,13 +9,15 @@ import { simToWorldX, simToWorldZ } from "../../lib/drive-sim/coords";
 
 interface Props {
   carRef: RefObject<CarState>;
+  active?: boolean;
 }
 
-export function ChaseCamera({ carRef }: Props) {
+export function ChaseCamera({ carRef, active = true }: Props) {
   const { camera } = useThree();
   const lookAt = useRef(new THREE.Vector3());
 
   useFrame((_, delta) => {
+    if (!active) return;
     const car = carRef.current;
     if (!car) return;
 
