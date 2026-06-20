@@ -59,7 +59,7 @@ Full-stack AI engineer — shipped production RAG tutor (Next.js 16, Hono, pgvec
 | Production uptime | Vercel + Railway deployed, `/health` 200 |
 | RAG corpus | ~158 chunks indexed (WA), 191-page source PDF |
 | Exam bank | 250 questions, 5 sets × 50, 40-question exam (32 to pass) |
-| CI eval set | 50 golden queries |
+| CI eval set | 50 golden queries (100% pass in CI) |
 | E2E tests | Playwright smoke (home, learn, tutor, exam, sign-in) |
 | Monorepo packages | 11 (Turborepo) |
 | Monthly infra cost | $0 (free tiers) |

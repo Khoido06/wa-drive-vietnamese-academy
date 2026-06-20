@@ -177,11 +177,11 @@
   },
   {
     "id": "q17",
-    "query": "Biển báo trong hình yêu cầu bạn làm gì?",
+    "query": "Biển YIELD tam giác ngược yêu cầu bạn làm gì?",
     "expectedInTopChunk": [
       "giảm",
       "tốc",
-      "biển"
+      "nhường"
     ],
     "minRetrievalScore": 0.15,
     "topic": "traffic_signs"

@@ -33,7 +33,7 @@ test.describe("WA Drive — smoke tests", () => {
 
   test("exam page loads", async ({ page }) => {
     await page.goto("/exam");
-    await expect(page.getByRole("heading", { name: /Thi thử/i })).toBeVisible({
+    await expect(page.locator("h1.app-header__title")).toHaveText(/Thi thử/i, {
       timeout: 20_000,
     });
   });
