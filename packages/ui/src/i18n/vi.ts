@@ -6,6 +6,7 @@ export const vi = {
     continueLearning: "Tiếp tục học",
     startLearning: "Bắt đầu học",
     practiceExam: "Thi thử",
+    practicalTest: "Thi thực hành",
     askQuestion: "Hỏi thầy giáo AI",
     viewProgress: "Xem tiến độ",
   },

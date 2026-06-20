@@ -44,6 +44,7 @@ export async function ensureStudyStatsColumns(): Promise<void> {
     await db.execute(sql`ALTER TABLE users ADD COLUMN IF NOT EXISTS study_daily_date text`);
     await db.execute(sql`ALTER TABLE users ADD COLUMN IF NOT EXISTS daily_goal_minutes integer DEFAULT 15`);
     await db.execute(sql`ALTER TABLE users ADD COLUMN IF NOT EXISTS exam_target_date text`);
+    await db.execute(sql`ALTER TABLE users ADD COLUMN IF NOT EXISTS practical_progress jsonb`);
     logger.info("study stats columns ready");
   } catch (err) {
     logger.warn("study stats bootstrap failed", {

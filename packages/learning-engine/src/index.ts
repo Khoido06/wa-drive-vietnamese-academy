@@ -65,3 +65,22 @@ export {
   updateStudyPreferences,
   type StudyStatsDto,
 } from "./study-stats.js";
+
+export {
+  getPracticalProgress,
+  mergePracticalProgress,
+  type PracticalProgressDto,
+} from "./practical-progress.js";
+
+export {
+  WA_DRIVE_TEST_INFO,
+  WA_PRACTICAL_MANEUVERS,
+  WA_VEHICLE_CHECKLIST,
+  WA_DAY_OF_TEST_CHECKLIST,
+  WA_SCORING_CATEGORIES,
+  WA_DOL_DRIVE_VIDEOS,
+  type PracticalManeuver,
+  type PracticalStep,
+  type PracticalQuiz,
+  type ChecklistItem,
+} from "./wa-practical.js";

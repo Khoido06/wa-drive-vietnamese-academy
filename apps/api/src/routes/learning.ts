@@ -13,8 +13,11 @@ import {
   recordStudyActivity,
   mergeStudyStats,
   updateStudyPreferences,
+  getPracticalProgress,
+  mergePracticalProgress,
   isUserPremium,
   type StudyStatsDto,
+  type PracticalProgressDto,
 } from "@repo/learning-engine";
 import { checkAndIncrementUsage } from "../services/usage.js";
 
@@ -226,11 +229,22 @@ export async function studyStatsSync(c: Context) {
   }
   const stats = await mergeStudyStats(userId, body);
   if (!stats) return c.json({ error: "User not found" }, 404);
-  if (body.dailyGoalMinutes || body.examDate !== undefined) {
-    await updateStudyPreferences(userId, {
-      dailyGoalMinutes: body.dailyGoalMinutes,
-      examDate: body.examDate,
-    });
-  }
   return c.json(stats);
+}
+
+export async function practicalProgressGet(c: Context) {
+  const userId = c.req.param("userId");
+  if (!userId) return c.json({ error: "userId required" }, 400);
+  const progress = await getPracticalProgress(userId);
+  if (!progress) return c.json({ error: "User not found" }, 404);
+  return c.json(progress);
+}
+
+export async function practicalProgressSync(c: Context) {
+  const userId = c.req.param("userId");
+  const body = await c.req.json<PracticalProgressDto>();
+  if (!userId) return c.json({ error: "userId required" }, 400);
+  const progress = await mergePracticalProgress(userId, body);
+  if (!progress) return c.json({ error: "User not found" }, 404);
+  return c.json(progress);
 }

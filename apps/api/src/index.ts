@@ -18,6 +18,8 @@ import {
   studyStatsGet,
   studyStatsActivity,
   studyStatsSync,
+  practicalProgressGet,
+  practicalProgressSync,
 } from "./routes/learning.js";
 import { mutationStatus, runMutations } from "./routes/mutation.js";
 import { queryRagStream } from "./routes/rag-stream.js";
@@ -102,6 +104,8 @@ app.get("/learning/:userId/progress", userProgress);
 app.get("/learning/:userId/study-stats", studyStatsGet);
 app.post("/learning/:userId/study-stats/activity", studyStatsActivity);
 app.post("/learning/:userId/study-stats/sync", studyStatsSync);
+app.get("/learning/:userId/practical", practicalProgressGet);
+app.post("/learning/:userId/practical/sync", practicalProgressSync);
 app.post("/telemetry", postTelemetry);
 app.post("/rag/feedback", postRagFeedback);
 

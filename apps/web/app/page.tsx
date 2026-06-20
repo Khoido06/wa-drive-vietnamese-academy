@@ -47,7 +47,7 @@ export default function HomePage() {
       <p className="hero-greeting">
         {name ? `Chào ${name}!` : vi.home.welcome}
       </p>
-      <p className="hero-sub">Chọn hoạt động — học từng câu có giải thích, thi thử 40 câu giống DMV</p>
+      <p className="hero-sub">Lý thuyết 40 câu · Thi thực hành 5 thao tác · Học có giải thích tiếng Việt</p>
 
       <SyncLoginBanner />
 
@@ -60,6 +60,7 @@ export default function HomePage() {
       <nav className="nav-grid" aria-label="Menu chính">
         <NavCard icon="📖" label={vi.home.continueLearning} description="Ôn chủ đề yếu · Có giải thích" primary onClick={() => go("/learn", vi.home.continueLearning)} />
         <NavCard icon="📝" label={vi.home.practiceExam} description="40 câu · cần 32/40 (80%) để đậu" onClick={() => go("/exam", vi.home.practiceExam)} />
+        <NavCard icon="🚗" label={vi.home.practicalTest} description="5 thao tác · checklist xe · quiz" onClick={() => go("/practice", vi.home.practicalTest)} />
         <NavCard icon="🎓" label={vi.home.askQuestion} description="Hỏi AI · Trả lời tức thì" onClick={() => go("/tutor", vi.home.askQuestion)} />
         <NavCard icon="📊" label={vi.home.viewProgress} description="Theo dõi tiến độ học" onClick={() => go("/progress", vi.home.viewProgress)} />
         <NavCard icon="⭐" label="Gói Pro" description="Không giới hạn · Thêm bang" onClick={() => go("/pricing", "pricing")} />

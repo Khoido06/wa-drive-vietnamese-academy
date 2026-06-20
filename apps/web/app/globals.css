@@ -1549,3 +1549,693 @@ a { color: inherit; text-decoration: none; }
   font-size: var(--font-size-sm);
   color: var(--color-text-muted);
 }
+
+/* ── Practical driving test ── */
+.back-link {
+  background: none;
+  border: none;
+  color: var(--color-primary);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-base);
+  cursor: pointer;
+  padding: 0 0 var(--space-md);
+  text-align: left;
+}
+
+.practice-hero {
+  margin-bottom: var(--space-lg);
+}
+
+.practice-hero__badge {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-primary);
+  margin-bottom: var(--space-md);
+}
+
+.practice-hero__stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+
+.practice-hero__note {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+
+.practice-tabs {
+  display: flex;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-lg);
+  flex-wrap: wrap;
+}
+
+.practice-tab {
+  flex: 1;
+  min-width: 90px;
+  min-height: 48px;
+  border: 2px solid #d6d3d1;
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+}
+
+.practice-tab--active {
+  border-color: var(--color-primary);
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+}
+
+.practice-section h2 {
+  font-size: var(--font-size-lg);
+  margin-bottom: var(--space-md);
+}
+
+.practice-section__lead {
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-md);
+}
+
+.practice-info-list {
+  margin-bottom: var(--space-lg);
+  padding-left: var(--space-lg);
+  line-height: 1.6;
+}
+
+.practice-scoring {
+  margin-bottom: var(--space-lg);
+}
+
+.practice-scoring__group {
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  padding: var(--space-sm) var(--space-md);
+  margin-bottom: var(--space-sm);
+}
+
+.practice-scoring__group summary {
+  font-weight: var(--font-weight-bold);
+  cursor: pointer;
+}
+
+.practice-scoring__group ul {
+  margin-top: var(--space-sm);
+  padding-left: var(--space-lg);
+}
+
+.practice-disclaimer {
+  background: #fef3c7;
+  border: 2px solid #f59e0b;
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  margin-bottom: var(--space-lg);
+  line-height: 1.5;
+}
+
+.maneuver-grid {
+  display: grid;
+  gap: var(--space-md);
+}
+
+.maneuver-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  width: 100%;
+  padding: var(--space-lg);
+  border: 2px solid #d6d3d1;
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+}
+
+.maneuver-card--done {
+  border-color: var(--color-success);
+  background: #ecfdf5;
+}
+
+.maneuver-card__icon {
+  font-size: 2rem;
+  margin-bottom: var(--space-xs);
+}
+
+.maneuver-card__title {
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-base);
+}
+
+.maneuver-card__meta {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  margin-top: var(--space-xs);
+}
+
+.checklist {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--space-xl);
+}
+
+.checklist__item {
+  display: flex;
+  gap: var(--space-md);
+  align-items: flex-start;
+  padding: var(--space-md);
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-sm);
+  cursor: pointer;
+}
+
+.checklist__item input {
+  width: 22px;
+  height: 22px;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.checklist__item strong {
+  display: block;
+}
+
+.checklist__item small {
+  display: block;
+  color: var(--color-text-muted);
+  margin-top: 2px;
+}
+
+.maneuver-walkthrough__header {
+  display: flex;
+  gap: var(--space-md);
+  align-items: flex-start;
+  margin-bottom: var(--space-lg);
+}
+
+.maneuver-walkthrough__icon {
+  font-size: 2.5rem;
+}
+
+.maneuver-walkthrough__title {
+  font-size: var(--font-size-lg);
+  margin: 0;
+}
+
+.maneuver-walkthrough__subtitle {
+  color: var(--color-text-muted);
+  margin: var(--space-xs) 0 0;
+}
+
+.maneuver-step-card {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  margin-bottom: var(--space-lg);
+  line-height: 1.6;
+}
+
+.maneuver-step-card__title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-sm);
+}
+
+.maneuver-step-card__tip {
+  margin-top: var(--space-md);
+  padding: var(--space-sm) var(--space-md);
+  background: #fef3c7;
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+}
+
+.maneuver-walkthrough__nav {
+  display: flex;
+  gap: var(--space-md);
+  margin-bottom: var(--space-xl);
+}
+
+.maneuver-walkthrough__nav > * {
+  flex: 1;
+}
+
+.maneuver-quiz {
+  margin-bottom: var(--space-xl);
+}
+
+.maneuver-quiz__question {
+  font-weight: var(--font-weight-medium);
+  margin-bottom: var(--space-md);
+}
+
+.maneuver-examiner,
+.maneuver-mistakes {
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+
+.maneuver-examiner h3,
+.maneuver-mistakes h3 {
+  font-size: var(--font-size-base);
+  margin: 0 0 var(--space-sm);
+}
+
+.maneuver-examiner ul,
+.maneuver-mistakes ul {
+  margin: 0;
+  padding-left: var(--space-lg);
+  line-height: 1.5;
+}
+
+.maneuver-practiced {
+  display: flex;
+  gap: var(--space-md);
+  align-items: center;
+  padding: var(--space-lg);
+  background: var(--color-primary-light);
+  border-radius: var(--radius-lg);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+}
+
+.maneuver-practiced input {
+  width: 24px;
+  height: 24px;
+}
+
+/* ── Maneuver simulation & video ── */
+.maneuver-sim {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+  margin-bottom: var(--space-lg);
+  box-shadow: var(--shadow-sm);
+  border: 2px solid var(--color-primary-light);
+}
+
+.maneuver-sim--compact {
+  padding: var(--space-xs);
+  margin-bottom: var(--space-sm);
+  border-width: 1px;
+}
+
+.maneuver-sim__viewport {
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: #fafaf9;
+}
+
+.maneuver-sim__svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.sim-car {
+  transition: transform 0.9s ease-in-out;
+}
+
+.maneuver-sim__caption {
+  margin: var(--space-sm) 0 0;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  text-align: center;
+  color: var(--color-primary);
+}
+
+.maneuver-sim__controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-top: var(--space-md);
+}
+
+.maneuver-sim__controls > button {
+  flex: 1;
+}
+
+.maneuver-sim__step {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+.maneuver-video {
+  margin-bottom: var(--space-md);
+}
+
+.maneuver-video__toggle {
+  width: 100%;
+  text-align: left;
+  background: #fef3c7;
+  border: 2px solid #f59e0b;
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
+  cursor: pointer;
+  color: var(--color-text);
+}
+
+.maneuver-video__title {
+  display: block;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-muted);
+  margin-top: 4px;
+}
+
+.maneuver-video__embed {
+  margin-top: var(--space-sm);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  background: #000;
+}
+
+.maneuver-video__embed iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.practice-videos {
+  margin-bottom: var(--space-xl);
+}
+
+.maneuver-card__preview {
+  width: 100%;
+  margin-bottom: var(--space-sm);
+  pointer-events: none;
+}
+
+/* ── Interactive driving simulator ── */
+.walkthrough-mode {
+  display: flex;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-lg);
+}
+
+.walkthrough-mode__btn {
+  flex: 1;
+  min-height: 52px;
+  border: 2px solid #d6d3d1;
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+}
+
+.walkthrough-mode__btn--active {
+  border-color: var(--color-primary);
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+}
+
+.drive-sim__header h3 {
+  margin: 0 0 var(--space-xs);
+}
+
+.drive-sim__header p {
+  color: var(--color-text-muted);
+  margin: 0 0 var(--space-md);
+}
+
+.drive-sim__viewport--3d {
+  height: min(52vh, 420px);
+  min-height: 280px;
+  position: relative;
+}
+
+.drive-sim__viewport--3d canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.drive-sim__3d-badge {
+  position: absolute;
+  top: var(--space-sm);
+  right: var(--space-sm);
+  background: rgba(37, 99, 235, 0.9);
+  color: #fff;
+  font-weight: 800;
+  font-size: var(--font-size-sm);
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  pointer-events: none;
+}
+
+.drive-sim__loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 280px;
+  background: #1c1917;
+  color: #fafafa;
+}
+
+.drive-sim__tagline {
+  font-size: var(--font-size-sm);
+  color: var(--color-primary);
+  font-weight: var(--font-weight-bold);
+  margin: 0 0 var(--space-md);
+}
+
+.drive-sim__hud {
+  display: flex;
+  gap: var(--space-md);
+  align-items: center;
+  justify-content: center;
+  margin: calc(-1 * var(--space-lg)) 0 var(--space-md);
+  padding: var(--space-xs) var(--space-md);
+  background: rgba(28, 25, 23, 0.85);
+  color: #fff;
+  border-radius: var(--radius-md);
+  font-weight: var(--font-weight-bold);
+  font-variant-numeric: tabular-nums;
+}
+
+.drive-sim__hud-rev {
+  color: #fbbf24;
+}
+
+.drive-sim__hud-blink {
+  color: #f59e0b;
+  animation: blink 0.8s infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0.3; }
+}
+
+.drive-sim__canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  touch-action: none;
+}
+
+.drive-sim__hint,
+.drive-sim__keyboard-hint {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  text-align: center;
+  margin: var(--space-sm) 0;
+}
+
+.drive-sim__tips {
+  margin: 0 0 var(--space-md);
+  padding-left: var(--space-lg);
+  font-size: var(--font-size-sm);
+  line-height: 1.5;
+}
+
+.drive-sim__controls {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+.drive-sim__row {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.drive-sim__row--steer {
+  align-items: center;
+  justify-content: center;
+}
+
+.drive-sim__pedal,
+.drive-sim__steer {
+  flex: 1;
+  min-height: 56px;
+  border: 2px solid #d6d3d1;
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-base);
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.drive-sim__steer {
+  flex: 0 0 72px;
+  font-size: var(--font-size-xl);
+}
+
+.drive-sim__wheel {
+  flex: 0 0 48px;
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+.drive-sim__pedal--gas {
+  background: #dcfce7;
+  border-color: #16a34a;
+}
+
+.drive-sim__pedal--brake {
+  background: #fee2e2;
+  border-color: #dc2626;
+}
+
+.drive-sim__pedal--rev.drive-sim__pedal--active,
+.drive-sim__pedal--signal.drive-sim__pedal--active {
+  background: #fef3c7;
+  border-color: #f59e0b;
+}
+
+.drive-sim__pedal--look {
+  background: #ede9fe;
+  border-color: #7c3aed;
+}
+
+.drive-sim__actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+.drive-sim__hill {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  margin-bottom: var(--space-md);
+}
+
+.drive-sim__hill-modes {
+  display: flex;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-md);
+  flex-wrap: wrap;
+}
+
+.drive-sim__hill-mode {
+  flex: 1;
+  min-width: 100px;
+  min-height: 44px;
+  border: 2px solid #d6d3d1;
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.drive-sim__hill-mode--on {
+  border-color: var(--color-primary);
+  background: var(--color-primary-light);
+}
+
+.drive-sim__hill-visual {
+  text-align: center;
+  padding: var(--space-xl);
+  background: #ecfdf5;
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-md);
+}
+
+.drive-sim__hill-car {
+  font-size: 4rem;
+}
+
+.drive-sim__hill-options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+.drive-sim__hill-btn {
+  min-height: 52px;
+  border: 2px solid #d6d3d1;
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  font-weight: var(--font-weight-bold);
+  cursor: pointer;
+  text-align: left;
+  padding: var(--space-md);
+}
+
+.drive-sim__hill-btn--on {
+  border-color: var(--color-success);
+  background: #ecfdf5;
+}
+
+.drive-sim__toggle {
+  display: flex;
+  gap: var(--space-md);
+  align-items: center;
+  padding: var(--space-sm) 0;
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+}
+
+.sim-picker {
+  display: grid;
+  gap: var(--space-md);
+}
+
+.sim-picker__card {
+  text-align: left;
+  padding: var(--space-lg);
+  border: 2px solid var(--color-primary);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, #eff6ff 0%, var(--color-surface) 100%);
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+}
+
+.sim-picker__title {
+  display: block;
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-lg);
+  margin-bottom: var(--space-xs);
+}
+
+.sim-picker__brief {
+  display: block;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  margin-bottom: var(--space-sm);
+}
+
+.sim-picker__cta {
+  display: block;
+  color: var(--color-primary);
+  font-weight: var(--font-weight-bold);
+}

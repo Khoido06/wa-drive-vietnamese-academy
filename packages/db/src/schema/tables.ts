@@ -44,6 +44,7 @@ export const users = pgTable("users", {
   studyDailyDate: text("study_daily_date"),
   dailyGoalMinutes: integer("daily_goal_minutes").default(15),
   examTargetDate: text("exam_target_date"),
+  practicalProgress: jsonb("practical_progress").$type<Record<string, unknown>>(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
