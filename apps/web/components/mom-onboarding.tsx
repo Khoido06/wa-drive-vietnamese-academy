@@ -107,8 +107,9 @@ export function MomOnboarding() {
             </div>
             <ul className="onboarding-tips">
               <li>🔊 Bấm <strong>Đọc to</strong> để nghe câu hỏi và giải thích</li>
-              <li>🔤 Bấm <strong>A+</strong> góc màn hình để phóng to chữ</li>
-              <li>📖 <strong>Tiếp tục học</strong> — ôn chủ đề yếu tự động</li>
+          <li>🔤 Bấm <strong>A+</strong> góc màn hình để phóng to chữ</li>
+          <li>👤 <strong>Không cần đăng nhập</strong> — bỏ qua nút Đăng nhập nếu thấy</li>
+          <li>📖 <strong>Tiếp tục học</strong> — ôn chủ đề yếu tự động</li>
               <li>📝 <strong>Thi thử</strong> — 40 câu, cần 32 câu đúng để đậu</li>
               <li>📴 <strong>Thi không cần WiFi</strong> — Bộ đề 1 tải sẵn trên máy</li>
             </ul>

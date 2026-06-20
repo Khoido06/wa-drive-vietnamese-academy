@@ -93,7 +93,7 @@ Scale roadmap (A + B + C): [docs/SCALE_ROADMAP.md](docs/SCALE_ROADMAP.md)
 - **Playwright E2E** — smoke tests in CI
 - **RAG eval (CI gate)** — 12 golden queries, 85% retrieval pass rate
 - **Admin dashboard** — `/admin` (RAG traces, mutations, system health)
-- **Clerk auth** — optional login, sync progress across devices
+- **Clerk auth** — optional; **mom does not need login** (sync when changing phone)
 - **Voice input (STT)** — 🎤 nói câu hỏi trên tutor page
 - **Stripe tiers** — Free / Pro / Family (mom WA stays free)
 - **Multi-state RAG** — `state_code` filter (WA default, Pro unlocks more)
@@ -105,7 +105,7 @@ Scale roadmap (A + B + C): [docs/SCALE_ROADMAP.md](docs/SCALE_ROADMAP.md)
 - **Caregiver sharing** — Family tier read-only progress links
 - **Elderly UX** — TTS 🔊, font scaling, one task per screen
 
-Billing: [docs/BILLING.md](docs/BILLING.md) · B2B: [docs/B2B.md](docs/B2B.md)
+Billing: [docs/BILLING.md](docs/BILLING.md) · Clerk: [docs/CLERK.md](docs/CLERK.md) · B2B: [docs/B2B.md](docs/B2B.md)
 
 ---
 
