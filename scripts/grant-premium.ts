@@ -42,7 +42,7 @@ async function main() {
     process.exit(1);
   }
 
-  const args = process.argv.slice(2);
+  const args = process.argv.slice(2).filter((a) => a !== "--");
   const tier = (process.env.GRANT_TIER ?? "family") as "pro" | "family";
   const db = getDb();
 

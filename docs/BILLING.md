@@ -58,26 +58,23 @@ Override: `FREE_TUTOR_DAILY`, `FREE_PRACTICE_DAILY`
 
 ## 5b. Unlimited for mom (no Stripe)
 
-**Option A — whole family app (simplest):** Railway API env:
+**Option A — by display name only (recommended for mom):** Railway API env:
 
 ```env
-FAMILY_UNLIMITED=true
-```
-
-**Option B — by display name** (mom's onboarding name):
-
-```env
+FAMILY_UNLIMITED=false
 PREMIUM_DISPLAY_NAMES=Mẹ,Cô Lan,Lan
 ```
 
-**Option C — grant Pro in database:**
+Mom must enter one of these names at onboarding. Other users stay on Free limits.
+
+**Option B — grant Pro in database** (after mom opens app once):
 
 ```bash
 pnpm grant:premium -- "Cô Lan"
 pnpm grant:premium -- --all-matching "Mẹ"
 ```
 
-All 5 exam sets are already available on Free — limits only apply to tutor (10/day) and practice (20/day).
+Do **not** set `FAMILY_UNLIMITED=true` unless you want everyone unlimited.
 
 ```env
 RAG_AB_ENABLED=true
