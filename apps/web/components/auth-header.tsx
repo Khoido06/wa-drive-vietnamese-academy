@@ -1,10 +1,9 @@
 "use client";
 
 import { useAuth, SignInButton, UserButton } from "@clerk/nextjs";
+import { isClerkEnabled } from "../lib/clerk-config";
 
-export function AuthHeader() {
-  if (!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY) return null;
-
+function ClerkAuthHeader() {
   const { isSignedIn } = useAuth();
 
   return (
@@ -20,4 +19,9 @@ export function AuthHeader() {
       )}
     </div>
   );
+}
+
+export function AuthHeader() {
+  if (!isClerkEnabled()) return null;
+  return <ClerkAuthHeader />;
 }

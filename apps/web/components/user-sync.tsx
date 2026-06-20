@@ -3,9 +3,10 @@
 import { useEffect, useRef } from "react";
 import { useAuth, useUser } from "@clerk/nextjs";
 import { apiFetch, getUserId, setUserId } from "../lib/api";
+import { isClerkEnabled } from "../lib/clerk-config";
 
-/** Sync Clerk account → API user so mom keeps progress across devices */
-export function UserSync() {
+/** Sync Clerk account → API user so progress syncs across devices */
+function UserSync() {
   const { isSignedIn } = useAuth();
   const { user } = useUser();
   const synced = useRef(false);
@@ -38,6 +39,6 @@ export function UserSync() {
 }
 
 export function OptionalUserSync() {
-  if (!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY) return null;
+  if (!isClerkEnabled()) return null;
   return <UserSync />;
 }
