@@ -1,7 +1,7 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { ScreenLayout } from "@repo/ui/screen-layout";
 import { NavCard } from "@repo/ui/nav-card";
 import { LoadingState } from "@repo/ui/loading-state";
@@ -10,6 +10,7 @@ import { useTelemetry, ensureUser } from "../lib/api";
 import { HeaderAction } from "../components/header-action";
 import { StatePicker } from "../components/state-picker";
 import { SyncLoginBanner } from "../components/sync-login-banner";
+import { StudyMotivation } from "../components/study-motivation";
 
 export default function HomePage() {
   const router = useRouter();
@@ -44,6 +45,8 @@ export default function HomePage() {
       <p className="hero-sub">Chọn hoạt động — học từng câu có giải thích, thi thử 40 câu giống DMV</p>
 
       <SyncLoginBanner />
+
+      <StudyMotivation />
 
       <StatePicker />
 

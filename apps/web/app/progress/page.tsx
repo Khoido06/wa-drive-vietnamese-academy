@@ -8,6 +8,7 @@ import { LoadingState } from "@repo/ui/loading-state";
 import { vi } from "@repo/ui/i18n/vi";
 import { apiFetch, ensureUser, useTelemetry } from "../../lib/api";
 import { HeaderAction } from "../../components/header-action";
+import { StudyMotivation } from "../../components/study-motivation";
 
 interface Progress {
   totalAttempts: number;
@@ -59,6 +60,7 @@ export default function ProgressPage() {
       {loading && <LoadingState />}
       {progress && (
         <>
+          <StudyMotivation />
           <div className="progress-grid">
             <div className="stat-card">
               <p className="stat-card__value">{Math.round(progress.overallMastery * 100)}%</p>

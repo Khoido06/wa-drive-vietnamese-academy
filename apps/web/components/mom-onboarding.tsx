@@ -12,6 +12,16 @@ const DAILY_GOALS = [
   { value: 30, label: "30 phút / ngày" },
 ];
 
+const ONBOARD_TIPS = (
+  <>
+    <li>🔊 Bấm <strong>Đọc to</strong> để nghe câu hỏi và giải thích</li>
+    <li>🔤 Bấm <strong>A+</strong> góc màn hình để phóng to chữ</li>
+    <li>📖 <strong>Tiếp tục học</strong> — ôn chủ đề yếu tự động</li>
+    <li>📝 <strong>Thi thử</strong> — 40 câu, cần 32 câu đúng để đậu</li>
+    <li>📴 <strong>Thi không cần WiFi</strong> — Bộ đề 1 tải sẵn trên máy</li>
+  </>
+);
+
 export function MomOnboarding() {
   const router = useRouter();
   const [step, setStep] = useState(0);
@@ -46,12 +56,12 @@ export function MomOnboarding() {
     }
   };
 
+  const emoji = step === 0 ? "👋" : step === 1 ? "📅" : step === 2 ? "🎯" : "💾";
+
   return (
     <div className="onboarding-overlay" role="dialog" aria-modal="true" aria-labelledby="onboard-title">
       <div className="onboarding-card">
-        <p style={{ fontSize: "48px", marginBottom: "16px" }}>
-          {step === 0 ? "👋" : step === 1 ? "📅" : step === 2 ? "🎯" : "💾"}
-        </p>
+        <p className="onboarding-emoji" aria-hidden="true">{emoji}</p>
 
         {step === 0 && (
           <>
@@ -69,9 +79,11 @@ export function MomOnboarding() {
               placeholder="Ví dụ: Hạnh"
               autoFocus
             />
-            <ElderButton variant="success" onClick={() => setStep(1)}>
-              Tiếp theo →
-            </ElderButton>
+            <div className="onboarding-actions">
+              <ElderButton variant="success" onClick={() => setStep(1)}>
+                Tiếp theo →
+              </ElderButton>
+            </div>
           </>
         )}
 
@@ -89,7 +101,7 @@ export function MomOnboarding() {
               value={examDate}
               onChange={(e) => setExamDate(e.target.value)}
             />
-            <div style={{ display: "flex", gap: "8px", marginTop: "16px" }}>
+            <div className="onboarding-actions">
               <ElderButton variant="secondary" onClick={() => setStep(0)}>← Quay lại</ElderButton>
               <ElderButton variant="success" onClick={() => setStep(2)}>Tiếp theo →</ElderButton>
             </div>
@@ -112,14 +124,11 @@ export function MomOnboarding() {
                 </button>
               ))}
             </div>
-            <ul className="onboarding-tips">
-              <li>🔊 Bấm <strong>Đọc to</strong> để nghe câu hỏi và giải thích</li>
-              <li>🔤 Bấm <strong>A+</strong> góc màn hình để phóng to chữ</li>
-              <li>📖 <strong>Tiếp tục học</strong> — ôn chủ đề yếu tự động</li>
-              <li>📝 <strong>Thi thử</strong> — 40 câu, cần 32 câu đúng để đậu</li>
-              <li>📴 <strong>Thi không cần WiFi</strong> — Bộ đề 1 tải sẵn trên máy</li>
-            </ul>
-            <div style={{ display: "flex", gap: "8px", marginTop: "16px", flexWrap: "wrap" }}>
+            <details className="onboarding-tips-panel">
+              <summary>💡 Xem mẹo sử dụng app</summary>
+              <ul className="onboarding-tips">{ONBOARD_TIPS}</ul>
+            </details>
+            <div className="onboarding-actions">
               <ElderButton variant="secondary" onClick={() => setStep(1)}>← Quay lại</ElderButton>
               {isClerkEnabled() ? (
                 <ElderButton variant="success" onClick={() => setStep(3)}>Tiếp theo →</ElderButton>
@@ -141,7 +150,7 @@ export function MomOnboarding() {
               <li>✅ Nên đăng nhập nếu sắp đổi máy hoặc muốn backup tiến độ</li>
               <li>⏭️ Có thể bỏ qua — đăng nhập sau qua nút góc màn hình</li>
             </ul>
-            <div style={{ display: "flex", gap: "8px", marginTop: "16px", flexWrap: "wrap" }}>
+            <div className="onboarding-actions">
               <ElderButton variant="secondary" onClick={() => setStep(2)}>← Quay lại</ElderButton>
               <ElderButton variant="secondary" onClick={() => finish(false)}>Bỏ qua, học luôn</ElderButton>
               <ElderButton variant="success" onClick={() => finish(true)}>Đăng nhập →</ElderButton>

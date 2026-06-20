@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { FontSizeProvider } from "../lib/font-size";
 import { MomOnboarding } from "../components/mom-onboarding";
 import { PushPrompt } from "../components/push-prompt";
+import { TtsPreload } from "../components/tts-preload";
 import { ServiceWorkerRegister } from "../components/sw-register";
 import { AppProviders } from "../components/app-providers";
 import { OptionalClerkProvider } from "../components/clerk-provider";
@@ -29,6 +30,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 5,
   themeColor: "#0b5cad",
+  viewportFit: "cover",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -45,6 +47,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <ClerkTokenBridge />
               <OptionalUserSync />
               {children}
+              <TtsPreload />
               <MomOnboarding />
               <PushPrompt />
               <ServiceWorkerRegister />

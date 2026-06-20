@@ -10,6 +10,7 @@ import { LoadingState } from "@repo/ui/loading-state";
 import { FeedbackBanner } from "@repo/ui/feedback-banner";
 import { vi } from "@repo/ui/i18n/vi";
 import { apiFetch, ensureUser, useTelemetry } from "../../lib/api";
+import { recordExamComplete } from "../../lib/study-stats";
 import { loadOfflineExamBundle } from "../../lib/offline";
 import { OfflineExamBanner } from "../../components/offline-exam-banner";
 import { OfflineExamCard } from "../../components/offline-exam-card";
@@ -65,6 +66,7 @@ export default function ExamPage() {
     Map<string, { correctOptionId: string; explanationVi: string }>
   >(new Map());
   const [error, setError] = useState<string | null>(null);
+  const [examCelebration, setExamCelebration] = useState<{ title: string; subtitle?: string } | null>(null);
   const { ready: offlineReady, isOnline, bundle: offlineBundle } = useOfflineExamReady();
 
   const applyOfflineBundle = (bundle: NonNullable<typeof offlineBundle>) => {
@@ -228,7 +230,10 @@ export default function ExamPage() {
 
       if (current + 1 >= questions.length) {
         setFinished(true);
-        track("exam_finish", { score: newScore, total: questions.length, setId: selectedSet, offline: offlineMode });
+        const passed = newScore >= passCount;
+        const recorded = recordExamComplete(passed, newScore, questions.length);
+        setExamCelebration({ title: recorded.title, subtitle: recorded.subtitle });
+        track("exam_finish", { score: newScore, total: questions.length, setId: selectedSet, offline: offlineMode, passed });
       } else {
         setCurrent((c) => c + 1);
         setSelected(null);
@@ -247,6 +252,7 @@ export default function ExamPage() {
     setSelected(null);
     setError(null);
     setOfflineMode(false);
+    setExamCelebration(null);
     setOfflineAnswers(new Map());
   };
 
@@ -316,7 +322,7 @@ export default function ExamPage() {
       <ScreenLayout title="Ôn câu sai" onBack={() => setShowReview(false)} headerAction={<HeaderAction />}>
         <p style={{ color: "var(--color-text-muted)", marginBottom: "var(--space-md)", lineHeight: 1.6 }}>
           {wrongAttempts.length === 0
-            ? "🎉 Không có câu sai — mẹ làm hoàn hảo!"
+            ? "🎉 Không có câu sai — làm hoàn hảo!"
             : `${wrongAttempts.length} câu sai — đọc giải thích và nhớ kỹ nhé:`}
         </p>
         <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-lg)" }}>
@@ -374,12 +380,13 @@ export default function ExamPage() {
             {score}/{total}
           </p>
           <p style={{ fontSize: "var(--font-size-xl)", fontWeight: 600 }}>
-            {passed ? "🎉 ĐẬU — Sẵn sàng thi DMV!" : `💪 Chưa đủ — cần ${passCount} câu đúng`}
+            {examCelebration?.title ?? (passed ? "🎉 ĐẬU — Sẵn sàng thi DMV!" : `💪 Chưa đủ — cần ${passCount} câu đúng`)}
           </p>
           <p className="exam-result__msg">
-            {passed
-              ? "Mẹ làm tốt lắm! Ôn thêm bộ đề khác để chắc chắn hơn."
-              : `Còn ${passCount - score} câu nữa là đậu. Xem lại ${wrongAttempts.length} câu sai bên dưới.`}
+            {examCelebration?.subtitle ??
+              (passed
+                ? "Làm tốt lắm! Ôn thêm bộ đề khác để chắc chắn hơn."
+                : `Còn ${passCount - score} câu nữa là đậu. Xem lại ${wrongAttempts.length} câu sai bên dưới.`)}
           </p>
           {wrongAttempts.length > 0 && (
             <ElderButton variant="success" onClick={() => setShowReview(true)}>

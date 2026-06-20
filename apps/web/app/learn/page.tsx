@@ -9,6 +9,7 @@ import { LoadingState } from "@repo/ui/loading-state";
 import { FeedbackBanner } from "@repo/ui/feedback-banner";
 import { vi } from "@repo/ui/i18n/vi";
 import { apiFetch, ensureUser, useTelemetry } from "../../lib/api";
+import { recordPracticeAnswer } from "../../lib/study-stats";
 import { HeaderAction } from "../../components/header-action";
 import { VoiceButton } from "../../components/voice-button";
 import { QuestionSignImage } from "../../components/question-sign-image";
@@ -56,12 +57,14 @@ export default function LearnPage() {
   const [submitting, setSubmitting] = useState(false);
   const [startTime, setStartTime] = useState(Date.now());
   const [error, setError] = useState<string | null>(null);
+  const [encouragement, setEncouragement] = useState<{ title: string; subtitle?: string; celebrate?: boolean } | null>(null);
 
   const loadQuestion = useCallback(async () => {
     setLoading(true);
     setError(null);
     setSelected(null);
     setResult(null);
+    setEncouragement(null);
     setStartTime(Date.now());
     try {
       const userId = await ensureUser();
@@ -93,7 +96,16 @@ export default function LearnPage() {
         }),
       });
       setResult(attempt);
-      track(attempt.isCorrect ? "answer_correct" : "answer_incorrect");
+      const recorded = recordPracticeAnswer(attempt.isCorrect);
+      setEncouragement({
+        title: recorded.title,
+        subtitle: recorded.subtitle,
+        celebrate: recorded.celebrate,
+      });
+      track(attempt.isCorrect ? "answer_correct" : "answer_incorrect", {
+        combo: recorded.stats.sessionCombo,
+        streak: recorded.stats.streak,
+      });
     } catch (err) {
       setError(err instanceof Error ? err.message : vi.common.error);
     } finally {
@@ -159,7 +171,9 @@ export default function LearnPage() {
             <>
               <FeedbackBanner
                 type={result.isCorrect ? "success" : "error"}
-                title={result.isCorrect ? vi.learn.correct : vi.learn.incorrect}
+                title={encouragement?.title ?? (result.isCorrect ? vi.learn.correct : vi.learn.incorrect)}
+                subtitle={encouragement?.subtitle}
+                celebrate={encouragement?.celebrate}
                 explanation={result.explanationVi}
               />
               {result.explanationVi && (
