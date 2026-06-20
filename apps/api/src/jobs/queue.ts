@@ -1,5 +1,5 @@
 import { logger } from "../middleware/logger.js";
-import { emitInngestJob, inngestEventToJobName } from "./inngest-client.js";
+import { emitInngestJob, inngestEventToJobName, isInngestCloudEmitEnabled } from "./inngest-client.js";
 
 export type JobName = "ingest" | "reembed" | "review-reminders";
 
@@ -83,13 +83,22 @@ export async function handleInngestEvent(body: {
   return { ok: true, jobId: job.id };
 }
 
-/** Prefer Inngest Cloud when configured; otherwise in-process queue with retries. */
+/** Prefer Inngest when configured; fall back to in-process queue on send failure. */
 export async function scheduleJob(
   name: JobName,
   data: Record<string, unknown> = {},
 ): Promise<{ mode: "inngest" | "local"; jobId?: string }> {
-  const sent = await emitInngestJob(name, data);
-  if (sent) return { mode: "inngest" };
+  if (isInngestCloudEmitEnabled()) {
+    try {
+      const sent = await emitInngestJob(name, data);
+      if (sent) return { mode: "inngest" };
+    } catch (err) {
+      logger.warn("inngest emit failed — using local queue", {
+        name,
+        error: err instanceof Error ? err.message : String(err),
+      });
+    }
+  }
   const job = enqueueJob(name, data);
   return { mode: "local", jobId: job.id };
 }

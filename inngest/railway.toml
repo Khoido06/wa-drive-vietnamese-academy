@@ -1,6 +1,7 @@
 [build]
 builder = "dockerfile"
-dockerfilePath = "inngest/Dockerfile"
+dockerfilePath = "Dockerfile"
 
 [deploy]
+startCommand = "inngest start --sqlite-dir /data --port 8288"
 restartPolicyType = "on_failure"

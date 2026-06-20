@@ -61,7 +61,7 @@ export async function observabilityStatus(c: Context) {
       endpoint: "/api/inngest",
       legacyEndpoint: "/jobs/inngest",
       mode: isInngestConfigured()
-        ? "cloud"
+        ? "self-hosted"
         : isInngestServeEnabled() || isInngestCloudEmitEnabled()
           ? "partial"
           : "in-memory-queue",

@@ -98,6 +98,9 @@ if (!services.includes("inngest")) {
 }
 
 console.log("\nServices:", services.join(", ") || "(unknown)");
+console.log(
+  "Note: set Inngest service → Settings → Railway Config File = inngest/railway.toml (or start: inngest start --sqlite-dir /data --port 8288)",
+);
 
 // --- Inngest service vars ---
 console.log("\nConfiguring inngest service…");
@@ -117,7 +120,7 @@ if (inngestUrl && !inngestUrl.startsWith("http")) {
 }
 if (!inngestUrl || inngestUrl.includes("undefined")) {
   console.log("\nGenerating public domain for inngest…");
-  railway("domain --service inngest", "inngest");
+  railway("domain --port 8288", "inngest");
   await new Promise((r) => setTimeout(r, 3000));
   const domain = getVar("RAILWAY_PUBLIC_DOMAIN", "inngest");
   inngestUrl = domain ? `https://${domain}` : null;
