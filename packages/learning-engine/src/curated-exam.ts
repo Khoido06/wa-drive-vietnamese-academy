@@ -50,6 +50,14 @@ export const WA_EXAM_SETS: WaExamSetMeta[] = [
     passCount: WA_DMV_PASS_COUNT,
   },
   {
+    id: "wa-set-03",
+    name: "Bộ đề 3",
+    description: "50 câu nâng cao — ôn sát đề thi",
+    questionCount: 50,
+    examLength: WA_DMV_EXAM_LENGTH,
+    passCount: WA_DMV_PASS_COUNT,
+  },
+  {
     id: "wa-set-04",
     name: "Bộ đề 4",
     description: "50 câu mới — nhiều biển báo có hình",
