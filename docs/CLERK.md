@@ -37,12 +37,14 @@
 
 ### 2. Vercel env (Production)
 
-| Biến | Giá trị |
-|------|---------|
-| `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` | `pk_test_...` |
-| `CLERK_SECRET_KEY` | `sk_test_...` |
-| `NEXT_PUBLIC_CLERK_SIGN_IN_URL` | `/sign-in` |
-| `NEXT_PUBLIC_CLERK_SIGN_UP_URL` | `/sign-up` |
+| Biến | Giá trị | Bắt buộc |
+|------|---------|----------|
+| `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` | `pk_test_...` | ✅ |
+| `CLERK_SECRET_KEY` | `sk_test_...` | ✅ (server/API routes) |
+| `NEXT_PUBLIC_CLERK_SIGN_IN_URL` | `/sign-in` | Khuyên dùng |
+| `NEXT_PUBLIC_CLERK_SIGN_UP_URL` | `/sign-up` | Khuyên dùng |
+
+> Middleware **không** gọi `clerkMiddleware` — tránh lỗi `500 MIDDLEWARE_INVOCATION_FAILED`. Đăng nhập + sync tiến độ chạy client-side.
 
 Redeploy sau khi set.
 
