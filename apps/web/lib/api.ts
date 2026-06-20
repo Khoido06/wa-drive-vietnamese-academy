@@ -89,6 +89,7 @@ export async function streamRagQuery(
   query: string,
   onToken: (token: string) => void,
   onDone: (data: unknown) => void,
+  onError?: (message: string) => void,
 ): Promise<void> {
   const res = await fetch(`${API_URL}/rag/query/stream`, {
     method: "POST",
@@ -101,6 +102,7 @@ export async function streamRagQuery(
   const reader = res.body.getReader();
   const decoder = new TextDecoder();
   let buffer = "";
+  let gotDone = false;
 
   while (true) {
     const { done, value } = await reader.read();
@@ -114,8 +116,21 @@ export async function streamRagQuery(
       try {
         const event = JSON.parse(line.slice(5).trim()) as { type: string; data: unknown };
         if (event.type === "token") onToken(String(event.data));
-        if (event.type === "done") onDone(event.data);
-      } catch { /* skip */ }
+        if (event.type === "done") {
+          gotDone = true;
+          onDone(event.data);
+        }
+        if (event.type === "error") {
+          const message = String(event.data);
+          onError?.(message);
+          throw new Error(message);
+        }
+      } catch (err) {
+        if (err instanceof SyntaxError) continue;
+        throw err;
+      }
     }
   }
+
+  if (!gotDone) throw new Error("Stream ended without response");
 }

@@ -42,13 +42,13 @@ export default function TutorPage() {
         (token) => setAnswer((prev) => prev + token),
         (data) => {
           const d = data as { rejected?: boolean; answerVi?: string };
-          if (d.answerVi && !answer) setAnswer(d.answerVi);
+          setAnswer((prev) => prev || d.answerVi || "");
           setRejected(!!d.rejected);
           setDone(true);
         },
       );
     } catch {
-      setAnswer(vi.tutor.noAnswer);
+      setAnswer((prev) => prev || vi.tutor.noAnswer);
       setRejected(true);
       setDone(true);
     } finally {

@@ -40,7 +40,13 @@ export const DEFAULT_RAG_CONFIG: RagConfig = {
   chunkOverlap: 64,
   minConfidence: 0.6,
   embeddingModel: process.env.EMBED_MODEL ?? process.env.OLLAMA_EMBED_MODEL ?? "nomic-embed-text",
-  generationModel: process.env.LLM_MODEL ?? process.env.OLLAMA_LLM_MODEL ?? "qwen2.5:7b",
+  generationModel:
+    process.env.LLM_MODEL ??
+    (process.env.AI_PROVIDER === "groq"
+      ? "llama-3.1-8b-instant"
+      : process.env.AI_PROVIDER === "openai"
+        ? "gpt-4o-mini"
+        : (process.env.OLLAMA_LLM_MODEL ?? "qwen2.5:7b")),
   embeddingDimensions: Number(process.env.EMBEDDING_DIMENSIONS ?? 768),
 };
 

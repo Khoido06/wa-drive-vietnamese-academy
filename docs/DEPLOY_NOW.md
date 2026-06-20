@@ -44,17 +44,23 @@ DATABASE_URL=postgresql://...neon...
 AI_PROVIDER=groq
 GROQ_API_KEY=gsk_...
 LLM_MODEL=llama-3.1-8b-instant
-EMBED_MODEL=text-embedding-3-small
-EMBEDDING_DIMENSIONS=1536
-OPENAI_API_KEY=sk-...   # chỉ cần nếu chưa import DB từ bước 1
+EMBEDDING_DIMENSIONS=768
 WA_DRIVER_GUIDE_PDF_PATH=./docs/driver-guide-vi.pdf
 MUTATION_ENABLED=true
 ```
 
-6. Deploy → copy URL (vd: `https://wa-drive-api-production.up.railway.app`)
-7. Test: `curl https://YOUR-API/health`
+> **Không cần** `OLLAMA_BASE_URL`, `REDIS_URL`, `NEXT_PUBLIC_API_URL` trên Railway.
+> Import Neon backup trước → không cần `OPENAI_API_KEY` cho embedding.
 
-> Nếu đã import DB từ bước 1 → bỏ qua ingest. Nếu chưa: `curl -X POST https://YOUR-API/rag/ingest`
+6. **Settings → Deploy** → xóa Custom Start Command (Dockerfile tự chạy `pnpm start`)
+7. Deploy → copy URL (vd: `https://api-production-72db.up.railway.app`)
+8. Test:
+   ```bash
+   curl https://YOUR-API/health
+   curl -N -X POST https://YOUR-API/rag/query/stream \
+     -H "Content-Type: application/json" \
+     -d '{"query":"Tốc độ tối đa trong khu dân cư?"}'
+   ```
 
 ---
 
