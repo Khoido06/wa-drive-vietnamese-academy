@@ -2,7 +2,28 @@
 
 > Self-improving AI learning platform for Vietnamese elderly learners preparing for the Washington Driver Test.
 
-**Live demo:** _Deploy with [docs/DEPLOY.md](docs/DEPLOY.md)_
+**GitHub:** https://github.com/Khoido06/wa-drive-vietnamese-academy  
+**Deploy:** [docs/DEPLOY.md](docs/DEPLOY.md) (Vercel + Railway + Neon)
+
+## Tech Stack (Enterprise-grade)
+
+| Layer | Technology |
+|-------|-----------|
+| Frontend | Next.js 16, React 19, PWA, SSE streaming |
+| API | Hono, TypeScript |
+| AI | Ollama (local) / Groq (cloud) / OpenAI |
+| RAG | pgvector, triple-check pipeline, PDF ingestion |
+| Learning | SM-2 spaced repetition, Elo difficulty, failure clusters |
+| Self-improve | Mutation engine from telemetry analytics |
+| Infra | Docker, GitHub Actions CI, Vercel, Railway |
+| Accessibility | Vietnamese TTS, font scaling A/A+/A++, 64px touch |
+
+## For Mom 👩
+
+- **Đọc to** — bấm 🔊 nghe câu hỏi bằng tiếng Việt
+- **Chữ lớn** — bấm **A+** góc màn hình
+- **Một câu/lần** — không vội, không rối
+- **Hỏi AI** — trả lời streaming như ChatGPT
 
 ## Highlights (Resume)
 
