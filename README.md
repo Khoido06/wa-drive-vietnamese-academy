@@ -1,159 +1,71 @@
-# Turborepo starter
+# WA Drive Vietnamese Academy
 
-This Turborepo starter is maintained by the Turborepo core team.
+> Self-improving AI learning platform for Vietnamese elderly learners preparing for the Washington Driver Test.
 
-## Using this example
+**Live demo:** _Deploy with [docs/DEPLOY.md](docs/DEPLOY.md)_
 
-Run the following command:
+## Highlights (Resume)
 
-```sh
-npx create-turbo@latest
+- **RAG-powered AI tutor** — grounded exclusively on WA Driver Guide PDF, triple-check anti-hallucination pipeline
+- **Elderly-first PWA** — 64px touch targets, Vietnamese-first, one task per screen (Duolingo + Apple HIG inspired)
+- **Adaptive learning engine** — SM-2 spaced repetition, Elo difficulty, failure-cluster curriculum reordering
+- **Self-improvement loop** — telemetry → analytics → automatic system mutations
+- **Stack:** Next.js 16 · Hono · PostgreSQL/pgvector · Drizzle · Ollama/Groq · Turborepo
+
+## Screenshots
+
+| Home | Learn | AI Tutor |
+|------|-------|----------|
+| One-task navigation cards | Question + A/B/C/D options | Fast RAG with quick-ask chips |
+
+## AI Setup (Free — Ollama)
+
+```bash
+brew install ollama
+pnpm setup:ollama   # qwen2.5:7b + nomic-embed-text
 ```
 
-## What's inside?
+| Provider | Cost | Best for |
+|----------|------|----------|
+| **Ollama** (default) | Free | Local dev, Vietnamese |
+| **Groq** | Free tier | Production deploy |
+| OpenAI | Paid | Optional |
 
-This Turborepo includes the following packages/apps:
+## Quick Start
 
-### Apps and Packages
+```bash
+pnpm install
+pnpm infra:up          # Postgres + Redis
+pnpm db:push
+pnpm dev               # :3000 web + :4000 api
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
-
-```sh
-cd my-turborepo
-turbo build
+curl -X POST http://localhost:4000/rag/ingest
 ```
 
-Without global `turbo`, use your package manager:
+## Architecture
 
-```sh
-cd my-turborepo
-npx turbo build
-pnpm dlx turbo build
-pnpm exec turbo build
+See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) · Deploy: [docs/DEPLOY.md](docs/DEPLOY.md)
+
+```
+apps/web (PWA) → apps/api (Hono) → packages/ai-core (RAG)
+                                  → packages/learning-engine
+                                  → packages/mutation-engine
+                                  → packages/db (Postgres/pgvector)
 ```
 
-You can build a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
+## Monorepo
 
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
-
-```sh
-turbo build --filter=docs
+```
+apps/web      Next.js PWA — elderly Vietnamese UI
+apps/api      Hono REST API
+packages/ai-core           Triple-check RAG pipeline
+packages/learning-engine   Adaptive spaced repetition
+packages/mutation-engine   Self-improvement from telemetry
+packages/db                Drizzle + pgvector schema
+packages/ui                Elderly-first design system
+infra/                     Docker Compose (Postgres, Redis)
 ```
 
-Without global `turbo`:
+## License
 
-```sh
-npx turbo build --filter=docs
-pnpm exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
-```
-
-### Develop
-
-To develop all apps and packages, run the following command:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
-
-```sh
-cd my-turborepo
-turbo dev
-```
-
-Without global `turbo`, use your package manager:
-
-```sh
-cd my-turborepo
-npx turbo dev
-pnpm exec turbo dev
-pnpm exec turbo dev
-```
-
-You can develop a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
-
-```sh
-turbo dev --filter=web
-```
-
-Without global `turbo`:
-
-```sh
-npx turbo dev --filter=web
-pnpm exec turbo dev --filter=web
-pnpm exec turbo dev --filter=web
-```
-
-### Remote Caching
-
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
-
-Turborepo can use a technique known as [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
-
-```sh
-cd my-turborepo
-turbo login
-```
-
-Without global `turbo`, use your package manager:
-
-```sh
-cd my-turborepo
-npx turbo login
-pnpm exec turbo login
-pnpm exec turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
-
-```sh
-turbo link
-```
-
-Without global `turbo`:
-
-```sh
-npx turbo link
-pnpm exec turbo link
-pnpm exec turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turborepo.dev/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.dev/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.dev/docs/reference/configuration)
-- [CLI Usage](https://turborepo.dev/docs/reference/command-line-reference)
+MIT

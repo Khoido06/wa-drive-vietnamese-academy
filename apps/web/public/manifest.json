@@ -1,0 +1,15 @@
+{
+  "name": "Học Lái Xe WA",
+  "short_name": "Học Lái Xe",
+  "description": "Luyện thi bằng lái xe Washington cho người Việt — AI tutor, thi thử, spaced repetition",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f5f3ef",
+  "theme_color": "#0b5cad",
+  "orientation": "portrait",
+  "lang": "vi",
+  "categories": ["education", "utilities"],
+  "icons": [
+    { "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
