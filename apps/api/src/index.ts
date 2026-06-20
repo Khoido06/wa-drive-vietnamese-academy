@@ -16,13 +16,22 @@ import {
 import { mutationStatus, runMutations } from "./routes/mutation.js";
 import { queryRagStream } from "./routes/rag-stream.js";
 import { openApiDocs, openApiJson } from "./routes/docs.js";
-import { adminAuth, adminOverview, adminTraces, adminMutations } from "./routes/admin.js";
+import { adminAuth, adminOverview, adminTraces, adminMutations, adminOrganizations, adminCreateOrganization } from "./routes/admin.js";
 import {
   billingStatus,
   createCheckout,
   createPortal,
   stripeWebhook,
 } from "./routes/billing.js";
+import { b2bRagStream, b2bHealth } from "./routes/b2b.js";
+import { orgApiKeyAuth, orgRateLimit } from "./middleware/org-api-key.js";
+import {
+  postRagFeedback,
+  createInvite,
+  acceptInvite,
+  sharedProgress,
+  familyLinks,
+} from "./routes/family.js";
 import { createRateLimit } from "./middleware/rate-limit-upstash.js";
 import { logger, requestLogger } from "./middleware/logger.js";
 import { startMutationCron } from "./jobs/mutation-cron.js";
@@ -66,6 +75,16 @@ app.get("/learning/:userId/next", nextQuestion);
 app.post("/learning/attempt", submitAttempt);
 app.get("/learning/:userId/progress", userProgress);
 app.post("/telemetry", postTelemetry);
+app.post("/rag/feedback", postRagFeedback);
+
+app.post("/family/invite", createInvite);
+app.post("/family/accept", acceptInvite);
+app.get("/family/shared/:token", sharedProgress);
+app.get("/family/:userId/links", familyLinks);
+
+const b2bAuth = orgApiKeyAuth();
+app.get("/b2b/health", b2bAuth, b2bHealth);
+app.post("/b2b/v1/rag/query/stream", b2bAuth, orgRateLimit, b2bRagStream);
 
 app.get("/mutation/status", mutationStatus);
 app.post("/mutation/run", runMutations);
@@ -74,6 +93,8 @@ const admin = adminAuth();
 app.get("/admin/overview", admin, adminOverview);
 app.get("/admin/traces", admin, adminTraces);
 app.get("/admin/mutations", admin, adminMutations);
+app.get("/admin/organizations", admin, adminOrganizations);
+app.post("/admin/organizations", admin, adminCreateOrganization);
 
 const port = Number(process.env.PORT ?? process.env.API_PORT ?? 4000);
 

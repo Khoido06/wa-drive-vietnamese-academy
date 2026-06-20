@@ -10,6 +10,7 @@ import { streamRagQuery, useTelemetry } from "../../lib/api";
 import { HeaderAction } from "../../components/header-action";
 import { VoiceButton } from "../../components/voice-button";
 import { VoiceInputButton } from "../../components/voice-input-button";
+import { TutorFeedback } from "../../components/tutor-feedback";
 
 const QUICK_QUESTIONS = [
   "Tốc độ tối đa trong khu dân cư?",
@@ -86,6 +87,10 @@ export default function TutorPage() {
       </ElderButton>
 
       {streaming && !answer && <LoadingState message="AI đang trả lời..." />}
+
+      {done && answer && !streaming && (
+        <TutorFeedback query={query} />
+      )}
 
       {answer && (
         <div className={`tutor-answer ${rejected ? "tutor-answer--fail" : "tutor-answer--ok"}`}>

@@ -50,6 +50,7 @@ export default function HomePage() {
         <NavCard icon="🎓" label={vi.home.askQuestion} description="Hỏi AI · Trả lời tức thì" onClick={() => go("/tutor", vi.home.askQuestion)} />
         <NavCard icon="📊" label={vi.home.viewProgress} description="Theo dõi tiến độ học" onClick={() => go("/progress", vi.home.viewProgress)} />
         <NavCard icon="⭐" label="Gói Pro" description="Không giới hạn · Thêm bang" onClick={() => go("/pricing", "pricing")} />
+        <NavCard icon="👨‍👩‍👧" label="Gia đình" description="Chia sẻ tiến độ với con" onClick={() => go("/family", "family")} />
       </nav>
     </ScreenLayout>
   );

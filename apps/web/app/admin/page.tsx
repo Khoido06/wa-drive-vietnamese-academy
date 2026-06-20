@@ -8,6 +8,16 @@ interface Overview {
   traceCount: number;
   ai: Record<string, unknown>;
   mutation: Record<string, unknown>;
+  feedback?: { total: number; helpfulRate: number };
+}
+
+interface Organization {
+  id: string;
+  name: string;
+  apiKeyPrefix: string;
+  seatLimit: number;
+  seatsUsed: number;
+  requestCount: number;
 }
 
 interface RagTrace {
@@ -31,6 +41,9 @@ export default function AdminDashboardPage() {
   const [overview, setOverview] = useState<Overview | null>(null);
   const [traces, setTraces] = useState<RagTrace[]>([]);
   const [mutations, setMutations] = useState<Mutation[]>([]);
+  const [orgs, setOrgs] = useState<Organization[]>([]);
+  const [newOrgName, setNewOrgName] = useState("");
+  const [createdKey, setCreatedKey] = useState("");
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -38,15 +51,34 @@ export default function AdminDashboardPage() {
       fetch("/api/admin/overview").then((r) => r.json()),
       fetch("/api/admin/traces?limit=20").then((r) => r.json()),
       fetch("/api/admin/mutations?limit=20").then((r) => r.json()),
+      fetch("/api/admin/organizations").then((r) => r.json()),
     ])
-      .then(([ov, tr, mu]) => {
+      .then(([ov, tr, mu, orgRes]) => {
         if (ov.error) throw new Error(ov.error);
         setOverview(ov);
         setTraces(tr.traces ?? []);
         setMutations(mu.mutations ?? []);
+        setOrgs(orgRes.organizations ?? []);
       })
       .catch((err: Error) => setError(err.message));
   }, []);
+
+  const createOrg = async () => {
+    if (!newOrgName.trim()) return;
+    const res = await fetch("/api/admin/organizations", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name: newOrgName.trim() }),
+    });
+    const data = await res.json();
+    if (data.error) {
+      setError(data.error);
+      return;
+    }
+    setCreatedKey(data.apiKey);
+    setNewOrgName("");
+    setOrgs((prev) => [data.organization, ...prev]);
+  };
 
   const logout = async () => {
     await fetch("/api/admin/login", { method: "DELETE" });
@@ -93,8 +125,43 @@ export default function AdminDashboardPage() {
             <span className="admin-card-label">Retrieval</span>
             <strong>{String(overview.ai.embedProvider ?? "—")}</strong>
           </div>
+          {overview.feedback && (
+            <div className="admin-card">
+              <span className="admin-card-label">Feedback 👍 rate</span>
+              <strong>{Math.round(overview.feedback.helpfulRate * 100)}%</strong>
+            </div>
+          )}
         </section>
       )}
+
+      <section className="admin-section">
+        <h2>Driving schools (B2B)</h2>
+        <div className="admin-login-form">
+          <input
+            placeholder="Tên trường lái xe"
+            value={newOrgName}
+            onChange={(e) => setNewOrgName(e.target.value)}
+          />
+          <button type="button" onClick={createOrg}>
+            Tạo org + API key
+          </button>
+        </div>
+        {createdKey && (
+          <p className="family-share-url">
+            API key (lưu ngay): <code>{createdKey}</code>
+          </p>
+        )}
+        <ul className="admin-list">
+          {orgs.map((o) => (
+            <li key={o.id}>
+              <strong>{o.name}</strong>
+              <span>
+                {o.apiKeyPrefix}… · {o.requestCount} requests · {o.seatsUsed}/{o.seatLimit} seats
+              </span>
+            </li>
+          ))}
+        </ul>
+      </section>
 
       <section className="admin-section">
         <h2>Recent RAG queries</h2>

@@ -1,19 +1,14 @@
-import { generateCompletion, generateJSON } from "../llm/client.js";
+import { generateCompletion } from "../llm/client.js";
 import type { RagConfig, RetrievalTrace } from "../types.js";
+import { validateAnswer, recheckAnswer } from "./validator.js";
+
+export { validateAnswer, recheckAnswer } from "./validator.js";
 
 const GENERATOR_SYSTEM = `You are a Washington State driving instructor for Vietnamese elderly learners.
 Answer ONLY using the provided source chunks from the Washington Driver Guide.
 If the chunks do not contain enough information, say "Không đủ thông tin trong tài liệu."
 Never invent facts, numbers, or rules not present in the chunks.
 Respond in Vietnamese first, then English translation on a new line prefixed with "EN:".`;
-
-const VALIDATOR_SYSTEM = `You are a strict fact-checker for Washington Driver Guide answers.
-Given source chunks and a generated answer, verify EVERY claim in the answer is supported by the chunks.
-Respond with JSON: { "passed": boolean, "reason": string, "unsupportedClaims": string[] }`;
-
-const RECHECKER_SYSTEM = `You are an independent second validator. Re-check if the answer is fully grounded in the source chunks.
-Look for hallucinations, invented numbers, or rules not in the source.
-Respond with JSON: { "passed": boolean, "reason": string }`;
 
 function buildContext(trace: RetrievalTrace): string {
   return trace.chunks
@@ -48,60 +43,6 @@ export async function generateGroundedAnswer(
   const answer = parts[1]?.trim() ?? raw;
 
   return { answer, answerVi };
-}
-
-export async function validateAnswer(
-  trace: RetrievalTrace,
-  answer: string,
-  config: RagConfig,
-): Promise<{ passed: boolean; reason: string }> {
-  if (trace.chunks.length === 0) {
-    return { passed: false, reason: "No chunks retrieved" };
-  }
-
-  const context = buildContext(trace);
-
-  try {
-    const result = await generateJSON<{
-      passed: boolean;
-      reason: string;
-      unsupportedClaims: string[];
-    }>(
-      VALIDATOR_SYSTEM,
-      `Source chunks:\n${context}\n\nAnswer to validate:\n${answer}`,
-      config,
-    );
-    return { passed: result.passed, reason: result.reason };
-  } catch {
-    const answerWords = answer.toLowerCase().split(/\s+/);
-    const contextText = trace.chunks.map((c) => c.content.toLowerCase()).join(" ");
-    const matchRatio =
-      answerWords.filter((w) => w.length > 4 && contextText.includes(w)).length /
-      Math.max(answerWords.filter((w) => w.length > 4).length, 1);
-    return {
-      passed: matchRatio > 0.5,
-      reason: matchRatio > 0.5 ? "Heuristic validation passed" : "Heuristic validation failed",
-    };
-  }
-}
-
-export async function recheckAnswer(
-  trace: RetrievalTrace,
-  answer: string,
-  config: RagConfig,
-): Promise<{ passed: boolean; reason: string }> {
-  const context = buildContext(trace);
-
-  try {
-    const result = await generateJSON<{ passed: boolean; reason: string }>(
-      RECHECKER_SYSTEM,
-      `Source chunks:\n${context}\n\nAnswer to re-check:\n${answer}`,
-      config,
-    );
-    return result;
-  } catch {
-    return validateAnswer(trace, answer, config);
-  }
 }
 
 export function computeConfidence(trace: RetrievalTrace): number {

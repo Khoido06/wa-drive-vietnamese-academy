@@ -1,8 +1,8 @@
 import { computeConfidence } from "./generator.js";
 import { streamText } from "../llm/client.js";
 import { startRagTrace } from "../observability/langfuse.js";
-import { isAnswerGrounded } from "./keyword-search.js";
 import { retrieve } from "./retriever.js";
+import { validateStreamAnswer } from "./validator.js";
 import { DEFAULT_RAG_CONFIG, type RagConfig } from "../types.js";
 
 export async function* streamRagAnswer(
@@ -52,8 +52,8 @@ Trả lời CHỈ từ nguồn được cung cấp. Trả lời bằng tiếng V
     }
 
     const answerVi = fullText.trim();
-    const grounded = isAnswerGrounded(answerVi, trace.chunks);
-    const rejected = !grounded || answerVi.length === 0;
+    const validation = await validateStreamAnswer(trace, answerVi, config);
+    const rejected = !validation.passed || answerVi.length === 0;
 
     const done = {
       answerVi: rejected
@@ -61,7 +61,9 @@ Trả lời CHỈ từ nguồn được cung cấp. Trả lời bằng tiếng V
         : answerVi,
       rejected,
       confidence,
-      grounded,
+      validatorPassed: validation.validatorPassed,
+      recheckerPassed: validation.recheckerPassed,
+      rejectionReason: validation.reason,
       trace,
     };
 

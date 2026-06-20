@@ -30,3 +30,19 @@ export {
   findUserById,
   type SubscriptionTier,
 } from "./billing.js";
+
+export {
+  createOrganization,
+  listOrganizations,
+  verifyOrganizationApiKey,
+  incrementOrgUsage,
+  recordRagFeedback,
+  generateApiKey,
+} from "./organizations.js";
+
+export {
+  createCaregiverInvite,
+  acceptCaregiverInvite,
+  getSharedProgress,
+  listCaregiverLinks,
+} from "./family.js";

@@ -99,9 +99,13 @@ Scale roadmap (A + B + C): [docs/SCALE_ROADMAP.md](docs/SCALE_ROADMAP.md)
 - **Multi-state RAG** — `state_code` filter (WA default, Pro unlocks more)
 - **RAG response cache** — Upstash or in-memory (24h TTL)
 - **A/B RAG config** — optional topK variants (`RAG_AB_ENABLED`)
+- **LLM validator** — 2nd-pass fact-check on streamed tutor answers
+- **Human feedback** — 👍/👎 tunes retrieval via mutation cron
+- **B2B API** — org-scoped keys for driving schools (`/b2b/v1/...`)
+- **Caregiver sharing** — Family tier read-only progress links
 - **Elderly UX** — TTS 🔊, font scaling, one task per screen
 
-Billing: [docs/BILLING.md](docs/BILLING.md)
+Billing: [docs/BILLING.md](docs/BILLING.md) · B2B: [docs/B2B.md](docs/B2B.md)
 
 ---
 

@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000";
 const ADMIN_COOKIE = "wa_admin";
 
-async function proxyAdmin(path: string, search: string) {
+async function proxyAdmin(path: string, search: string, init?: RequestInit) {
   const jar = await cookies();
   if (jar.get(ADMIN_COOKIE)?.value !== "1") {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -16,7 +16,8 @@ async function proxyAdmin(path: string, search: string) {
   }
 
   const res = await fetch(`${API_URL}/admin/${path}${search}`, {
-    headers: { "X-Admin-Key": secret },
+    ...init,
+    headers: { "X-Admin-Key": secret, ...init?.headers },
     cache: "no-store",
   });
 
@@ -31,4 +32,17 @@ export async function GET(
   const { resource } = await params;
   const { search } = new URL(request.url);
   return proxyAdmin(resource, search);
+}
+
+export async function POST(
+  request: Request,
+  { params }: { params: Promise<{ resource: string }> },
+) {
+  const { resource } = await params;
+  const body = await request.text();
+  return proxyAdmin(resource, "", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body,
+  });
 }

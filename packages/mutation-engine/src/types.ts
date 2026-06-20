@@ -37,4 +37,5 @@ export interface MutationResult {
   insights: SystemInsight[];
   proposals: MutationProposal[];
   applied: number;
+  feedbackTuning?: { applied: boolean; reason: string };
 }

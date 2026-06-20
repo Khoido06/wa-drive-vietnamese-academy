@@ -11,6 +11,7 @@ import {
   getCurrentRagConfig,
   saveRagConfig,
 } from "./analytics.js";
+import { applyFeedbackTuning } from "./feedback-tuning.js";
 import type { MutationProposal, MutationResult } from "./types.js";
 
 function buildProposals(
@@ -169,7 +170,10 @@ export async function runMutationCycle(): Promise<MutationResult> {
     }
   }
 
-  return { insights, proposals, applied };
+  const feedback = await applyFeedbackTuning();
+  if (feedback.applied) applied++;
+
+  return { insights, proposals, applied, feedbackTuning: feedback };
 }
 
 export async function getSystemHealth() {

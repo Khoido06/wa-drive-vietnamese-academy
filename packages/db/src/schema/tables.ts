@@ -189,3 +189,58 @@ export const systemConfig = pgTable("system_config", {
   value: jsonb("value").$type<Record<string, unknown>>().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
+
+export const ragFeedback = pgTable(
+  "rag_feedback",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    userId: uuid("user_id").references(() => users.id),
+    query: text("query").notNull(),
+    helpful: boolean("helpful").notNull(),
+    traceId: uuid("trace_id"),
+    stateCode: text("state_code").default("WA"),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+  },
+  (table) => [
+    index("rag_feedback_created_idx").on(table.createdAt),
+    index("rag_feedback_helpful_idx").on(table.helpful),
+  ],
+);
+
+export const organizations = pgTable(
+  "organizations",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    name: text("name").notNull(),
+    apiKeyHash: text("api_key_hash").notNull().unique(),
+    apiKeyPrefix: text("api_key_prefix").notNull(),
+    seatLimit: integer("seat_limit").notNull().default(50),
+    seatsUsed: integer("seats_used").notNull().default(0),
+    requestCount: integer("request_count").notNull().default(0),
+    branding: jsonb("branding").$type<{ logoUrl?: string; primaryColor?: string }>(),
+    stripeCustomerId: text("stripe_customer_id"),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+    updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  },
+  (table) => [index("orgs_name_idx").on(table.name)],
+);
+
+export const caregiverLinks = pgTable(
+  "caregiver_links",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    learnerUserId: uuid("learner_user_id")
+      .notNull()
+      .references(() => users.id),
+    caregiverUserId: uuid("caregiver_user_id").references(() => users.id),
+    inviteToken: text("invite_token").notNull().unique(),
+    accepted: boolean("accepted").notNull().default(false),
+    permission: text("permission").notNull().default("read"),
+    expiresAt: timestamp("expires_at").notNull(),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+  },
+  (table) => [
+    index("caregiver_learner_idx").on(table.learnerUserId),
+    index("caregiver_token_idx").on(table.inviteToken),
+  ],
+);

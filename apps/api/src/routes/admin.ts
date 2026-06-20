@@ -2,7 +2,8 @@ import type { Context, Next } from "hono";
 import { desc, sql } from "drizzle-orm";
 import { getDb, ragTraces, systemMutations } from "@repo/db";
 import { getProviderStatus, getChunkCount } from "@repo/ai-core";
-import { getSystemHealth } from "@repo/mutation-engine";
+import { getSystemHealth, getFeedbackStats } from "@repo/mutation-engine";
+import { createOrganization, listOrganizations } from "@repo/learning-engine";
 
 export function adminAuth() {
   return async (c: Context, next: Next) => {
@@ -36,6 +37,7 @@ export async function adminOverview(c: Context): Promise<Response> {
       ai,
       mutation: health,
       traceCount: traceCountRow?.count ?? 0,
+      feedback: await getFeedbackStats(),
     });
   } catch (err) {
     const message = err instanceof Error ? err.message : "Overview failed";
@@ -73,6 +75,33 @@ export async function adminMutations(c: Context): Promise<Response> {
     return c.json({ mutations: rows });
   } catch (err) {
     const message = err instanceof Error ? err.message : "Failed to load mutations";
+    return c.json({ error: message }, 500);
+  }
+}
+
+export async function adminOrganizations(c: Context): Promise<Response> {
+  try {
+    const orgs = await listOrganizations();
+    return c.json({ organizations: orgs });
+  } catch (err) {
+    const message = err instanceof Error ? err.message : "Failed to list orgs";
+    return c.json({ error: message }, 500);
+  }
+}
+
+export async function adminCreateOrganization(c: Context): Promise<Response> {
+  const { name, seatLimit } = await c.req.json<{ name: string; seatLimit?: number }>();
+  if (!name) return c.json({ error: "name required" }, 400);
+
+  try {
+    const result = await createOrganization(name, seatLimit ?? 50);
+    return c.json({
+      organization: result.organization,
+      apiKey: result.apiKey,
+      note: "Save API key now — shown once only",
+    });
+  } catch (err) {
+    const message = err instanceof Error ? err.message : "Create failed";
     return c.json({ error: message }, 500);
   }
 }

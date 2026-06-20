@@ -15,4 +15,6 @@ export {
 
 export { resolveRagConfig, getAbTestConfig, saveAbTestWinner } from "./ab-test.js";
 
+export { applyFeedbackTuning, getFeedbackStats } from "./feedback-tuning.js";
+
 export { runMutationCycle, getSystemHealth } from "./engine.js";
