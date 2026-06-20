@@ -14,7 +14,10 @@
     "infra:up": "docker compose -f infra/docker-compose.yml up -d",
     "infra:down": "docker compose -f infra/docker-compose.yml down",
     "db:push": "pnpm --filter @repo/db db:push",
-    "setup:ollama": "bash scripts/setup-ollama.sh"
+    "setup:ollama": "bash scripts/setup-ollama.sh",
+    "env:check": "node scripts/connect-all-keys.mjs",
+    "env:sync": "node scripts/connect-all-keys.mjs --apply",
+    "env:merge-local": "node scripts/connect-all-keys.mjs --merge-local"
   },
   "devDependencies": {
     "prettier": "^3.7.4",
