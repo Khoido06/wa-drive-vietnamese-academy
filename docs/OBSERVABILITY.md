@@ -93,6 +93,22 @@ Free: 50k observations/month
 
 ---
 
+## 6b. OpenTelemetry (distributed tracing)
+
+Spans instrument RAG SSE (`rag.query.stream`). Export is **optional** — without env vars, spans stay in-process (no backend cost).
+
+1. [Honeycomb](https://www.honeycomb.io) or [Jaeger](https://www.jaegertracing.io) OTLP endpoint (free tiers exist)
+2. Set on Railway API:
+
+```env
+OTEL_EXPORTER_OTLP_ENDPOINT=https://.../v1/traces
+OTEL_SERVICE_NAME=wa-drive-api
+```
+
+Verify: trigger a RAG query, then check your OTLP backend for span attributes (`cache_hit`, `state_code`, etc.).
+
+---
+
 ## 7. Playwright E2E (local + CI)
 
 ```bash
@@ -154,7 +170,7 @@ curl -X POST https://YOUR-API/jobs/run -H 'Content-Type: application/json' \
 curl -X POST https://YOUR-API/jobs/inngest -d '{"name":"review-reminders"}'
 ```
 
-Set `INNGEST_EVENT_KEY` when wiring Inngest Cloud.
+Set `INNGEST_EVENT_KEY` when wiring Inngest Cloud. Without it: in-memory queue with **3 retries** (production default on Railway).
 
 ---
 

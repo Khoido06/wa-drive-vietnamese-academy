@@ -1,4 +1,5 @@
 import * as Sentry from "@sentry/node";
+import { initOtel } from "./telemetry/tracing.js";
 
 if (process.env.SENTRY_DSN) {
   Sentry.init({
@@ -7,5 +8,7 @@ if (process.env.SENTRY_DSN) {
     tracesSampleRate: Number(process.env.SENTRY_TRACES_SAMPLE_RATE ?? 0.1),
   });
 }
+
+void initOtel();
 
 export { Sentry };

@@ -64,7 +64,7 @@ app.use("*", optionalClerkAuth);
 const ragRateLimit = createRateLimit({ windowMs: 60_000, max: 20, keyPrefix: "rag" });
 
 app.get("/health", (c) =>
-  c.json({ status: "ok", system: "wa-drive-vietnamese-academy", version: "0.6.0" }),
+  c.json({ status: "ok", system: "wa-drive-vietnamese-academy", version: "0.7.0" }),
 );
 
 app.get("/health/observability", observabilityStatus);

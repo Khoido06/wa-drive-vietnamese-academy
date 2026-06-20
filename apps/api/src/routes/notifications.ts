@@ -1,6 +1,8 @@
 import type { Context } from "hono";
 import { savePushSubscription } from "../jobs/review-reminders.js";
-import { enqueueJob, listJobs, handleInngestEvent } from "../jobs/queue.js";
+import { enqueueJob, listJobs, handleInngestEvent, scheduleJob } from "../jobs/queue.js";
+import { isInngestConfigured } from "../jobs/inngest-client.js";
+import { isOtelEnabled } from "../telemetry/tracing.js";
 
 export async function subscribePush(c: Context) {
   const body = await c.req.json<{ userId?: string; subscription: PushSubscriptionJSON }>();
@@ -20,8 +22,8 @@ export async function subscribePush(c: Context) {
 export async function triggerJob(c: Context) {
   const body = await c.req.json<{ name: "ingest" | "reembed" | "review-reminders"; data?: Record<string, unknown> }>();
   if (!body.name) return c.json({ error: "name required" }, 400);
-  const job = enqueueJob(body.name, body.data ?? {});
-  return c.json({ ok: true, jobId: job.id });
+  const result = await scheduleJob(body.name, body.data ?? {});
+  return c.json({ ok: true, ...result });
 }
 
 export async function jobStatus(c: Context) {
@@ -52,7 +54,15 @@ export async function observabilityStatus(c: Context) {
       enabled: !!(process.env.LANGFUSE_PUBLIC_KEY && process.env.LANGFUSE_SECRET_KEY),
     },
     vapid: { enabled: !!(process.env.VAPID_PUBLIC_KEY && process.env.VAPID_PRIVATE_KEY) },
-    inngest: { enabled: !!process.env.INNGEST_EVENT_KEY, endpoint: "/jobs/inngest" },
+    inngest: {
+      enabled: isInngestConfigured(),
+      endpoint: "/jobs/inngest",
+      mode: isInngestConfigured() ? "cloud+local-fallback" : "in-memory-queue",
+    },
+    opentelemetry: {
+      enabled: isOtelEnabled(),
+      exporter: process.env.OTEL_EXPORTER_OTLP_ENDPOINT ? "otlp" : "off",
+    },
     tripleCheck: { streamLlmValidator: process.env.STREAM_LLM_VALIDATOR !== "false" },
     jobs: listJobs(5),
   });
