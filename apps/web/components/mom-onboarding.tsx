@@ -59,7 +59,7 @@ export function MomOnboarding() {
               className="onboarding-input"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="Ví dụ: Cô Lan"
+              placeholder="Ví dụ: Hạnh"
               autoFocus
             />
             <ElderButton variant="success" onClick={() => setStep(1)}>

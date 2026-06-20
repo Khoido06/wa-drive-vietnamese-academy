@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Grant Pro/Family tier to a user (unlimited AI + practice).
- * Run: pnpm grant:premium -- "Cô Lan"
+ * Run: pnpm grant:premium -- "Hạnh"
  *   or: pnpm grant:premium -- --id USER_UUID
  *   or: pnpm grant:premium -- --all-matching "Mẹ"
  */
@@ -69,7 +69,7 @@ async function main() {
   const name = args.join(" ").trim();
   if (!name) {
     console.log(`Usage:
-  pnpm grant:premium -- "Cô Lan"
+  pnpm grant:premium -- "Hạnh"
   pnpm grant:premium -- --id USER_UUID
   pnpm grant:premium -- --all-matching "Mẹ"`);
     process.exit(1);

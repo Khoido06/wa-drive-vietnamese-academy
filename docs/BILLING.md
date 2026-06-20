@@ -58,19 +58,21 @@ Override: `FREE_TUTOR_DAILY`, `FREE_PRACTICE_DAILY`
 
 ## 5b. Unlimited for mom (no Stripe)
 
-**Option A — by display name only (recommended for mom):** Railway API env:
+**Railway API env** (mẹ tên **Hạnh**):
 
 ```env
 FAMILY_UNLIMITED=false
-PREMIUM_DISPLAY_NAMES=Mẹ,Cô Lan,Lan
+PREMIUM_DISPLAY_NAMES=Mẹ,Hạnh,Lan,Mom
 ```
 
-Mom must enter one of these names at onboarding. Other users stay on Free limits.
+Mẹ nhập **Hạnh** (hoặc **Mẹ**) lúc onboarding → unlimited AI + luyện tập. User khác vẫn Free limits.
 
-**Option B — grant Pro in database** (after mom opens app once):
+> **Quan trọng:** Thêm tên mẹ vào `PREMIUM_DISPLAY_NAMES` trên [Railway](https://railway.app) → API service → Variables → Save (API tự restart).
+
+**Option B — grant Pro in database** (sau khi mẹ mở app 1 lần):
 
 ```bash
-pnpm grant:premium -- "Cô Lan"
+pnpm grant:premium -- "Hạnh"
 pnpm grant:premium -- --all-matching "Mẹ"
 ```
 
@@ -80,7 +82,7 @@ Do **not** set `FAMILY_UNLIMITED=true` unless you want everyone unlimited.
 
 ## 6. Clerk auth (optional — mom does NOT need login)
 
-**Mẹ:** mở app, nhập tên **Cô Lan** / **Mẹ** → học/thi/AI — **không cần đăng nhập**. Unlimited qua `PREMIUM_DISPLAY_NAMES`.
+**Mẹ (Hạnh):** mở app, nhập tên **Hạnh** hoặc **Mẹ** → học/thi/AI — **không cần đăng nhập**. Unlimited qua `PREMIUM_DISPLAY_NAMES` trên Railway.
 
 Clerk chỉ cho:
 - Con thử đăng nhập / xem tiến độ (Family)

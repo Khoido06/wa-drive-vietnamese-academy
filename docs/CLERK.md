@@ -21,7 +21,7 @@ Mẹ unlimited free qua **tên** (`PREMIUM_DISPLAY_NAMES`), **không** qua Clerk
 
 **Không set** Clerk env trên Vercel → không có nút Đăng nhập.
 
-App vẫn: học / thi / AI tutor / offline Bộ đề 1 / unlimited cho **Cô Lan**, **Mẹ**, **Lan**, **Mom**.
+App vẫn: học / thi / AI tutor / offline Bộ đề 1 / unlimited cho **Hạnh**, **Mẹ**, **Lan**, **Mom**.
 
 ---
 
@@ -88,7 +88,7 @@ OAuth (Google) production: tạo credentials riêng trên Google Cloud.
 
 | Người dùng | Cần đăng nhập? | Cách dùng |
 |------------|----------------|-----------|
-| **Mẹ** | ❌ Không | Nhập **Cô Lan** / **Mẹ** → học/thi/AI ngay |
+| **Mẹ** | ❌ Không | Nhập **Hạnh** / **Mẹ** → học/thi/AI ngay |
 | **Con** | ✅ Tuỳ chọn | Mức 2: đăng nhập trên vercel.app |
 | **User Pro** | ✅ Tuỳ chọn | Mức 3: sync cross-device với domain riêng |
 
@@ -113,7 +113,7 @@ Code: `apps/web/components/user-sync.tsx`, `apps/web/lib/clerk-config.ts`, `apps
 
 1. Mở https://wa-drive-vietnamese-academy.vercel.app
 2. Add to Home Screen
-3. Nhập tên **Cô Lan** — **bỏ qua** nút Đăng nhập
+3. Nhập tên **Hạnh** — **bỏ qua** nút Đăng nhập
 4. Học → Thi thử → Hỏi AI
 
 ---
