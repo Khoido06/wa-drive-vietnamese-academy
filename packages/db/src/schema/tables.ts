@@ -65,6 +65,11 @@ export const questions = pgTable(
   "questions",
   {
     id: uuid("id").primaryKey().defaultRandom(),
+    externalId: text("external_id").unique(),
+    stateCode: text("state_code").notNull().default("WA"),
+    examSetId: text("exam_set_id"),
+    questionNumber: integer("question_number"),
+    isCurated: boolean("is_curated").notNull().default(false),
     topic: text("topic").notNull(),
     questionTextVi: text("question_text_vi").notNull(),
     questionTextEn: text("question_text_en"),
@@ -73,7 +78,8 @@ export const questions = pgTable(
       .notNull(),
     correctOptionId: text("correct_option_id").notNull(),
     explanationVi: text("explanation_vi"),
-    sourceChunkIds: jsonb("source_chunk_ids").$type<string[]>().notNull(),
+    sourceRef: text("source_ref"),
+    sourceChunkIds: jsonb("source_chunk_ids").$type<string[]>().notNull().default([]),
     difficultyScore: real("difficulty_score").notNull().default(0.5),
     ambiguityScore: real("ambiguity_score").notNull().default(0),
     timesAsked: integer("times_asked").notNull().default(0),
@@ -85,6 +91,8 @@ export const questions = pgTable(
   (table) => [
     index("questions_topic_idx").on(table.topic),
     index("questions_difficulty_idx").on(table.difficultyScore),
+    index("questions_state_set_idx").on(table.stateCode, table.examSetId),
+    index("questions_curated_idx").on(table.isCurated),
   ],
 );
 

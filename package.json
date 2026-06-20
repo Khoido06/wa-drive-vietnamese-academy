@@ -20,7 +20,9 @@
     "env:merge-local": "node scripts/connect-all-keys.mjs --merge-local",
     "ingest:states": "node --import tsx scripts/ingest-states.ts",
     "ingest:states:all": "node --import tsx scripts/ingest-states.ts --all",
-    "db:migrate:multi-state": "node --import tsx scripts/migrate-multi-state.ts"
+    "db:migrate:multi-state": "node --import tsx scripts/migrate-multi-state.ts",
+    "db:migrate:curated-questions": "node --import tsx scripts/migrate-curated-questions.ts",
+    "seed:wa-exams": "node --import tsx scripts/seed-wa-exams.ts"
   },
   "devDependencies": {
     "prettier": "^3.7.4",

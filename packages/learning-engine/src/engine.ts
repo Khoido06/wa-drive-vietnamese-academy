@@ -21,6 +21,7 @@ import {
   WA_DRIVER_TOPICS,
   type FailureCluster,
 } from "./spaced-repetition.js";
+import { getNextCuratedQuestion } from "./curated-exam.js";
 
 export interface NextQuestionResult {
   question: {
@@ -85,6 +86,27 @@ export async function linkClerkUser(
 
 export async function getNextQuestion(userId: string): Promise<NextQuestionResult> {
   const db = getDb();
+
+  const [user] = await db.select().from(users).where(eq(users.id, userId)).limit(1);
+  const stateCode = user?.selectedState ?? "WA";
+
+  // WA curated DMV bank — fixed answers, no AI generation
+  if (stateCode === "WA") {
+    const curated = await getNextCuratedQuestion(userId, "WA");
+    if (curated) {
+      return {
+        question: {
+          id: curated.id,
+          topic: curated.topic,
+          questionTextVi: curated.questionTextVi,
+          questionTextEn: curated.questionTextEn,
+          options: curated.options,
+          difficultyScore: curated.difficultyScore,
+        },
+        dueTopics: [],
+      };
+    }
+  }
 
   const dueMastery = await db
     .select()

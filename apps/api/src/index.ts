@@ -12,6 +12,8 @@ import {
   userProgress,
   postTelemetry,
   setUserState,
+  examSets,
+  startExam,
 } from "./routes/learning.js";
 import { mutationStatus, runMutations } from "./routes/mutation.js";
 import { queryRagStream } from "./routes/rag-stream.js";
@@ -71,6 +73,8 @@ app.get("/billing/status/:userId", billingStatus);
 app.post("/billing/checkout", createCheckout);
 app.post("/billing/portal", createPortal);
 app.post("/billing/webhook", stripeWebhook);
+app.get("/learning/exam-sets", examSets);
+app.get("/learning/:userId/exam/start", startExam);
 app.get("/learning/:userId/next", nextQuestion);
 app.post("/learning/attempt", submitAttempt);
 app.get("/learning/:userId/progress", userProgress);

@@ -1,0 +1,1552 @@
+[
+  {
+    "externalId": "wa-s3-q01",
+    "topic": "speed_limits",
+    "questionTextVi": "Theo luật Washington, tốc độ tối đa trên đường phố trong thành phố (city/town streets) là bao nhiêu nếu không có biển báo khác?",
+    "questionTextEn": "Under Washington law, what is the maximum speed on city/town streets when no other sign is posted?",
+    "options": [
+      {
+        "id": "a",
+        "textVi": "20 dặm/giờ",
+        "textEn": "20 mph"
+      },
+      {
+        "id": "b",
+        "textVi": "25 dặm/giờ",
+        "textEn": "25 mph"
+      },
+      {
+        "id": "c",
+        "textVi": "30 dặm/giờ",
+        "textEn": "30 mph"
+      },
+      {
+        "id": "d",
+        "textVi": "35 dặm/giờ",
+        "textEn": "35 mph"
+      }
+    ],
+    "correctOptionId": "b",
+    "explanationVi": "RCW 46.61.400 quy định tốc độ tối đa 25 mph trên đường phố trong thành phố/thị trấn trừ khi có biển báo khác.",
+    "sourceRef": "WA Driver Guide — Speed Limits"
+  },
+  {
+    "externalId": "wa-s3-q02",
+    "topic": "speed_limits",
+    "questionTextVi": "Khi lái xe trên đường cao tốc tiểu bang (state highway), tốc độ tối đa mặc định theo luật Washington là bao nhiêu?",
+    "questionTextEn": "On a state highway, what is the default maximum speed under Washington law?",
+    "options": [
+      {
+        "id": "a",
+        "textVi": "50 dặm/giờ",
+        "textEn": "50 mph"
+      },
+      {
+        "id": "b",
+        "textVi": "55 dặm/giờ",
+        "textEn": "55 mph"
+      },
+      {
+        "id": "c",
+        "textVi": "60 dặm/giờ",
+        "textEn": "60 mph"
+      },
+      {
+        "id": "d",
+        "textVi": "65 dặm/giờ",
+        "textEn": "65 mph"
+      }
+    ],
+    "correctOptionId": "c",
+    "explanationVi": "RCW 46.61.400 quy định tốc độ tối đa 60 mph trên đường cao tốc tiểu bang, trừ khi biển báo cho phép cao hơn.",
+    "sourceRef": "WA Driver Guide — Speed Limits"
+  },
+  {
+    "externalId": "wa-s3-q03",
+    "topic": "speed_limits",
+    "questionTextVi": "Luật tốc độ cơ bản (Basic Speed Law) của Washington yêu cầu gì?",
+    "questionTextEn": "What does Washington's Basic Speed Law require?",
+    "options": [
+      {
+        "id": "a",
+        "textVi": "Luôn lái đúng tốc độ biển báo, dù trời mưa hay sương mù",
+        "textEn": "Always drive at the posted limit regardless of weather"
+      },
+      {
+        "id": "b",
+        "textVi": "Không được lái nhanh hơn mức an toàn cho điều kiện đường hiện tại",
+        "textEn": "Never drive faster than is safe for current conditions"
+      },
+      {
+        "id": "c",
+        "textVi": "Chỉ giảm tốc khi có công nhân đường bộ",
+        "textEn": "Only slow down when road workers are present"
+      },
+      {
+        "id": "d",
+        "textVi": "Được tăng tốc để theo kịp dòng xe",
+        "textEn": "You may speed up to match traffic flow"
+      }
+    ],
+    "correctOptionId": "b",
+    "explanationVi": "Washington yêu cầu lái ở tốc độ an toàn cho điều kiện thực tế — mưa, tuyết, sương mù, giao thông đông đều phải giảm tốc dù biển báo ghi cao hơn.",
+    "sourceRef": "WA Driver Guide — Speed Limits"
+  },
+  {
+    "externalId": "wa-s3-q04",
+    "topic": "speed_limits",
+    "questionTextVi": "Theo Sổ Tay Lái Xe Washington, khoảng cách theo sau xe phía trước nên ít nhất bằng bao nhiêu?",
+    "questionTextEn": "According to the WA Driver Guide, following distance should be at least what?",
+    "options": [
+      {
+        "id": "a",
+        "textVi": "Bằng chiều dài một xe",
+        "textEn": "One vehicle length"
+      },
+      {
+        "id": "b",
+        "textVi": "Ít nhất gấp đôi chiều dài xe của bạn",
+        "textEn": "At least twice the length of your vehicle"
+      },
+      {
+        "id": "c",
+        "textVi": "10 feet (3 mét)",
+        "textEn": "10 feet"
+      },
+      {
+        "id": "d",
+        "textVi": "Không cần giữ khoảng cách trên cao tốc",
+        "textEn": "No following distance needed on freeways"
+      }
+    ],
+    "correctOptionId": "b",
+    "explanationVi": "Sổ tay khuyên giữ khoảng cách ít nhất gấp đôi chiều dài xe giữa bạn và xe phía trước để có thời gian phản ứng.",
+    "sourceRef": "WA Driver Guide — Speed Limits"
+  },
+  {
+    "externalId": "wa-s3-q05",
+    "topic": "traffic_signs",
+    "questionTextVi": "Biển báo hình thoi màu vàng thường có ý nghĩa gì?",
+    "questionTextEn": "What do yellow diamond-shaped signs generally mean?",
+    "options": [
+      {
+        "id": "a",
+        "textVi": "Biển hướng dẫn",
+        "textEn": "Guide signs"
+      },
+      {
+        "id": "b",
+        "textVi": "Biển cảnh báo nguy hiểm phía trước",
+        "textEn": "Warning of hazards ahead"
+      },
+      {
+        "id": "c",
+        "textVi": "Biển cấm đậu xe",
+        "textEn": "No parking signs"
+      },
+      {
+        "id": "d",
+        "textVi": "Biển chỉ tốc độ tối thiểu",
+        "textEn": "Minimum speed signs"
+      }
+    ],
+    "correctOptionId": "b",
+    "explanationVi": "Biển hình thoi màu vàng là biển cảnh báo, báo hiệu nguy hiểm hoặc thay đổi điều kiện đường phía trước.",
+    "sourceRef": "WA Driver Guide — Traffic Signs"
+  },
+  {
+    "externalId": "wa-s3-q06",
+    "topic": "traffic_signs",
+    "questionTextVi": "Biển hình tam giác ngược màu đỏ-trắng (YIELD) yêu cầu bạn làm gì?",
+    "questionTextEn": "What does a red-and-white inverted triangle (YIELD) sign require?",
+    "options": [
+      {
+        "id": "a",
+        "textVi": "Dừng hoàn toàn luôn luôn",
+        "textEn": "Always come to a complete stop"
+      },
+      {
+        "id": "b",
+        "textVi": "Giảm tốc và nhường đường cho xe có quyền ưu tiên",
+        "textEn": "Slow down and yield to traffic with right-of-way"
+      },
+      {
+        "id": "c",
+        "textVi": "Tăng tốc để hòa nhập giao thông",
+        "textEn": "Speed up to merge"
+      },
+      {
+        "id": "d",
+        "textVi": "Bấm còi cảnh báo",
+        "textEn": "Honk your horn"
+      }
+    ],
+    "correctOptionId": "b",
+    "explanationVi": "Biển YIELD yêu cầu giảm tốc và nhường đường cho xe, người đi bộ có quyền ưu tiên trước khi tiếp tục.",
+    "sourceRef": "WA Driver Guide — Traffic Signs"
+  },
+  {
+    "externalId": "wa-s3-q07",
+    "topic": "traffic_signs",
+    "questionTextVi": "Biển tam giác màu cam phản quang trên xe nông nghiệp báo hiệu điều gì?",
+    "questionTextEn": "What does an orange reflective triangle on an agricultural vehicle indicate?",
+    "options": [
+      {
+        "id": "a",
+        "textVi": "Xe ưu tiên khẩn cấp",
+        "textEn": "Emergency priority vehicle"
+      },
+      {
+        "id": "b",
+        "textVi": "Xe di chuyển chậm (25 mph trở xuống)",
+        "textEn": "Slow-moving vehicle (25 mph or less)"
+      },
+      {
+        "id": "c",
+        "textVi": "Xe chở hàng nguy hiểm",
+        "textEn": "Hazardous cargo vehicle"
+      },
+      {
+        "id": "d",
+        "textVi": "Xe buýt trường học",
+        "textEn": "School bus"
+      }
+    ],
+    "correctOptionId": "b",
+    "explanationVi": "Tam giác cam là biểu tượng xe chậm, thường gắn trên máy kéo và xe nông nghiệp thiết kế chạy 25 mph trở xuống.",
+    "sourceRef": "WA Driver Guide — Traffic Signs"
+  },
+  {
+    "externalId": "wa-s3-q08",
+    "topic": "right_of_way",
+    "questionTextVi": "Tại ngã tư không có biển báo (uncontrolled intersection), xe nào phải nhường đường?",
+    "questionTextEn": "At an uncontrolled intersection, who must yield?",
+    "options": [
+      {
+        "id": "a",
+        "textVi": "Xe đến trước luôn có quyền ưu tiên",
+        "textEn": "First to arrive always has right-of-way"
+      },
+      {
+        "id": "b",
+        "textVi": "Xe từ đường đất lên đường nhựa phải nhường",
+        "textEn": "Vehicle on unpaved road must yield to paved road"
+      },
+      {
+        "id": "c",
+        "textVi": "Xe rẽ phải luôn nhường xe đi thẳng",
+        "textEn": "Right-turning vehicle always yields to straight traffic"
+      },
+      {
+        "id": "d",
+        "textVi": "Xe lớn hơn luôn đi trước",
+        "textEn": "Larger vehicle always goes first"
+      }
+    ],
+    "correctOptionId": "b",
+    "explanationVi": "Tại ngã tư không kiểm soát, xe vào đường nhựa từ đường đất, xe vào cao tốc từ đường phụ, và xe rẽ trái đều phải nhường theo luật WA.",
+    "sourceRef": "WA Driver Guide — Right of Way"
+  },
+  {
+    "externalId": "wa-s3-q09",
+    "topic": "right_of_way",
+    "questionTextVi": "Khi hai xe đến ngã tư bốn hướng dừng (four-way stop) gần như cùng lúc, ai đi trước?",
+    "questionTextEn": "At a four-way stop, if two vehicles arrive at about the same time, who goes first?",
+    "options": [
+      {
+        "id": "a",
+        "textVi": "Xe bên trái đi trước",
+        "textEn": "Vehicle on the left goes first"
+      },
+      {
+        "id": "b",
+        "textVi": "Xe bên phải đi trước",
+        "textEn": "Vehicle on the right goes first"
+      },
+      {
+        "id": "c",
+        "textVi": "Xe lớn hơn đi trước",
+        "textEn": "Larger vehicle goes first"
+      },
+      {
+        "id": "d",
+        "textVi": "Xe rẽ trái đi trước",
+        "textEn": "Left-turning vehicle goes first"
+      }
+    ],
+    "correctOptionId": "b",
+    "explanationVi": "Quy tắc four-way stop: xe đến trước đi trước; nếu cùng lúc, nhường xe bên phải.",
+    "sourceRef": "WA Driver Guide — Right of Way"
+  },
+  {
+    "externalId": "wa-s3-q10",
+    "topic": "right_of_way",
+    "questionTextVi": "Xe tàu hỏa trên đường ray có quyền ưu tiên như thế nào?",
+    "questionTextEn": "What right-of-way do trains at railroad crossings have?",
+    "options": [
+      {
+        "id": "a",
+        "textVi": "Chỉ ưu tiên khi có rào chắn",
+        "textEn": "Priority only when gates are down"
+      },
+      {
+        "id": "b",
+        "textVi": "Tàu LUÔN có quyền ưu tiên",
+        "textEn": "Trains ALWAYS have the right-of-way"
+      },
+      {
+        "id": "c",
+        "textVi": "Xe ô tô ưu tiên nếu đến trước",
+        "textEn": "Cars have priority if they arrive first"
+      },
+      {
+        "id": "d",
+        "textVi": "Chỉ ưu tiên ban ngày",
+        "textEn": "Priority only during daytime"
+      }
+    ],
+    "correctOptionId": "b",
+    "explanationVi": "Tàu hỏa luôn có quyền ưu tiên — nặng, không thể dừng nhanh. Dừng cách ray 15–50 feet khi có tín hiệu cảnh báo.",
+    "sourceRef": "WA Driver Guide — Right of Way"
+  },
+  {
+    "externalId": "wa-s3-q11",
+    "topic": "right_of_way",
+    "questionTextVi": "Khi đèn xanh nhưng bạn rẽ trái, bạn phải nhường ai?",
+    "questionTextEn": "On a green light when turning left, whom must you yield to?",
+    "options": [
+      {
+        "id": "a",
+        "textVi": "Xe đi thẳng và người đi bộ đối diện",
+        "textEn": "Oncoming straight traffic and pedestrians"
+      },
+      {
+        "id": "b",
+        "textVi": "Chỉ người đi bộ",
+        "textEn": "Pedestrians only"
+      },
+      {
+        "id": "c",
+        "textVi": "Không cần nhường vì đèn xanh",
+        "textEn": "No need to yield on green"
+      },
+      {
+        "id": "d",
+        "textVi": "Xe phía sau bạn",
+        "textEn": "Vehicle behind you"
+      }
+    ],
+    "correctOptionId": "a",
+    "explanationVi": "Đèn xanh cho phép rẽ trái nhưng phải nhường xe đi thẳng từ hướng ngược lại và người đi bộ.",
+    "sourceRef": "WA Driver Guide — Right of Way"
+  },
+  {
+    "externalId": "wa-s3-q12",
+    "topic": "parking",
+    "questionTextVi": "Theo luật Washington, không được đậu xe trong bao nhiêu feet từ trụ cứu hỏa (fire hydrant)?",
+    "questionTextEn": "Under WA law, how far from a fire hydrant may you NOT park?",
+    "options": [
+      {
+        "id": "a",
+        "textVi": "10 feet",
+        "textEn": "10 feet"
+      },
+      {
+        "id": "b",
+        "textVi": "15 feet",
+        "textEn": "15 feet"
+      },
+      {
+        "id": "c",
+        "textVi": "20 feet",
+        "textEn": "20 feet"
+      },
+      {
+        "id": "d",
+        "textVi": "30 feet",
+        "textEn": "30 feet"
+      }
+    ],
+    "correctOptionId": "b",
+    "explanationVi": "Cấm đậu trong vòng 15 feet từ trụ cứu hỏa để xe cứu hỏa tiếp cận được.",
+    "sourceRef": "WA Driver Guide — Parking"
+  },
+  {
+    "externalId": "wa-s3-q13",
+    "topic": "parking",
+    "questionTextVi": "Khi đậu song song (parallel parking), xe phải cách lề đường tối đa bao nhiêu?",
+    "questionTextEn": "When parallel parking, how far from the curb may your vehicle be at most?",
+    "options": [
+      {
+        "id": "a",
+        "textVi": "6 inches (15 cm)",
+        "textEn": "6 inches"
+      },
+      {
+        "id": "b",
+        "textVi": "12 inches (30 cm)",
+        "textEn": "12 inches"
+      },
+      {
+        "id": "c",
+        "textVi": "18 inches (45 cm)",
+        "textEn": "18 inches"
+      },
+      {
+        "id": "d",
+        "textVi": "24 inches (60 cm)",
+        "textEn": "24 inches"
+      }
+    ],
+    "correctOptionId": "b",
+    "explanationVi": "Không được đậu cách lề đường quá 12 inches — xe phải sát lề để không cản trở giao thông.",
+    "sourceRef": "WA Driver Guide — Parking"
+  },
+  {
+    "externalId": "wa-s3-q14",
+    "topic": "parking",
+    "questionTextVi": "Lề đường màu trắng (white curb) thường có nghĩa gì?",
+    "questionTextEn": "What does a white painted curb usually mean?",
+    "options": [
+      {
+        "id": "a",
+        "textVi": "Đậu xe không giới hạn thời gian",
+        "textEn": "Unlimited parking"
+      },
+      {
+        "id": "b",
+        "textVi": "Chỉ được dừng ngắn (short stops)",
+        "textEn": "Short stops only"
+      },
+      {
+        "id": "c",
+        "textVi": "Khu vực nạp hàng (loading zone)",
+        "textEn": "Loading zone"
+      },
+      {
+        "id": "d",
+        "textVi": "Cấm dừng và đậu",
+        "textEn": "No stopping or parking"
+      }
+    ],
+    "correctOptionId": "b",
+    "explanationVi": "Lề trắng cho phép dừng ngắn; lề vàng/đỏ thường là khu nạp hàng hoặc hạn chế khác.",
+    "sourceRef": "WA Driver Guide — Parking"
+  },
+  {
+    "externalId": "wa-s3-q15",
+    "topic": "dui_laws",
+    "questionTextVi": "Tài xế dưới 21 tuổi tại Washington bị coi là DUI khi nồng độ cồn (BAC) đạt bao nhiêu?",
+    "questionTextEn": "For drivers under 21 in WA, DUI applies at what BAC?",
+    "options": [
+      {
+        "id": "a",
+        "textVi": "0.00%",
+        "textEn": "0.00%"
+      },
+      {
+        "id": "b",
+        "textVi": "0.02% trở lên",
+        "textEn": "0.02% or higher"
+      },
+      {
+        "id": "c",
+        "textVi": "0.05% trở lên",
+        "textEn": "0.05% or higher"
+      },
+      {
+        "id": "d",
+        "textVi": "0.08% trở lên",
+        "textEn": "0.08% or higher"
+      }
+    ],
+    "correctOptionId": "b",
+    "explanationVi": "Tài xế dưới 21 tuổi: BAC từ 0.02% trở lên là DUI. Từ 21 tuổi trở lên: ngưỡng 0.08%.",
+    "sourceRef": "WA Driver Guide — DUI Laws"
+  },
+  {
+    "externalId": "wa-s3-q16",
+    "topic": "dui_laws",
+    "questionTextVi": "Uống rượu bia ảnh hưởng đến khả năng lái xe như thế nào?",
+    "questionTextEn": "How does alcohol affect driving ability?",
+    "options": [
+      {
+        "id": "a",
+        "textVi": "Chỉ ảnh hưởng thị lực ban đêm",
+        "textEn": "Only affects vision at night"
+      },
+      {
+        "id": "b",
+        "textVi": "Làm chậm phản xạ, giảm khả năng phán đoán và tập trung",
+        "textEn": "Slows reactions, impairs judgment and concentration"
+      },
+      {
+        "id": "c",
+        "textVi": "Giúp tập trung tốt hơn ở tốc độ cao",
+        "textEn": "Improves focus at high speeds"
+      },
+      {
+        "id": "d",
+        "textVi": "Không ảnh hưởng nếu uống ít",
+        "textEn": "No effect if you drink little"
+      }
+    ],
+    "correctOptionId": "b",
+    "explanationVi": "Rượu bia làm chậm phản xạ, giảm khả năng phán đoán khoảng cách và tốc độ — nguy hiểm dù uống ít.",
+    "sourceRef": "WA Driver Guide — DUI Laws"
+  },
+  {
+    "externalId": "wa-s3-q17",
+    "topic": "dui_laws",
+    "questionTextVi": "Thuốc kê đơn kết hợp với rượu bia có thể gây ra điều gì?",
+    "questionTextEn": "Prescription drugs combined with alcohol can cause what?",
+    "options": [
+      {
+        "id": "a",
+        "textVi": "Không có tác dụng phụ",
+        "textEn": "No side effects"
+      },
+      {
+        "id": "b",
+        "textVi": "Tăng cường khả năng tập trung",
+        "textEn": "Improved concentration"
+      },
+      {
+        "id": "c",
+        "textVi": "Tác dụng phụ nghiêm trọng, nguy hiểm khi lái xe",
+        "textEn": "Serious side effects dangerous for driving"
+      },
+      {
+        "id": "d",
+        "textVi": "Chỉ ảnh hưởng người trên 65 tuổi",
+        "textEn": "Only affects people over 65"
+      }
+    ],
+    "correctOptionId": "c",
+    "explanationVi": "Thuốc kê đơn kết hợp rượu hoặc thuốc khác có thể gây buồn ngủ, chóng mặt — không an toàn khi lái xe.",
+    "sourceRef": "WA Driver Guide — DUI Laws"
+  },
+  {
+    "externalId": "wa-s3-q18",
+    "topic": "seat_belts",
+    "questionTextVi": "Trẻ em dưới 2 tuổi tại Washington phải ngồi ghế nào?",
+    "questionTextEn": "Children under 2 in WA must use what type of seat?",
+    "options": [
+      {
+        "id": "a",
+        "textVi": "Ghế booster",
+        "textEn": "Booster seat"
+      },
+      {
+        "id": "b",
+        "textVi": "Ghế an toàn quay về phía sau (rear-facing)",
+        "textEn": "Properly secured rear-facing car seat"
+      },
+      {
+        "id": "c",
+        "textVi": "Chỉ cần dây an toàn",
+        "textEn": "Seat belt only"
+      },
+      {
+        "id": "d",
+        "textVi": "Ngồi ghế trước với dây an toàn",
+        "textEn": "Front seat with seat belt"
+      }
+    ],
+    "correctOptionId": "b",
+    "explanationVi": "Luật Washington: trẻ dưới 2 tuổi phải ngồi ghế an toàn quay về phía sau, đúng tiêu chuẩn DOT.",
+    "sourceRef": "WA Driver Guide — Seat Belts"
+  },
+  {
+    "externalId": "wa-s3-q19",
+    "topic": "seat_belts",
+    "questionTextVi": "Trẻ em từ 4 tuổi trở lên phải dùng ghế gì cho đến khi cao 4 feet 9 inches?",
+    "questionTextEn": "Children 4 and older must use what until they are 4'9\" tall?",
+    "options": [
+      {
+        "id": "a",
+        "textVi": "Chỉ dây an toàn thường",
+        "textEn": "Regular seat belt only"
+      },
+      {
+        "id": "b",
+        "textVi": "Ghế xe hoặc ghế booster",
+        "textEn": "Car seat or booster seat"
+      },
+      {
+        "id": "c",
+        "textVi": "Ngồi tự do trên ghế sau",
+        "textEn": "Unrestrained in back seat"
+      },
+      {
+        "id": "d",
+        "textVi": "Ghế quay về phía sau bắt buộc",
+        "textEn": "Rear-facing seat required"
+      }
+    ],
+    "correctOptionId": "b",
+    "explanationVi": "Trẻ từ 4 tuổi phải dùng ghế xe hoặc booster cho đến khi cao 4'9\" (khoảng 145 cm).",
+    "sourceRef": "WA Driver Guide — Seat Belts"
+  },
+  {
+    "externalId": "wa-s3-q20",
+    "topic": "seat_belts",
+    "questionTextVi": "Dây an toàn vai (shoulder belt) phải đặt ở vị trí nào?",
+    "questionTextEn": "Where should the shoulder belt be positioned?",
+    "options": [
+      {
+        "id": "a",
+        "textVi": "Dưới cánh tay",
+        "textEn": "Under the arm"
+      },
+      {
+        "id": "b",
+        "textVi": "Phía sau lưng",
+        "textEn": "Behind the back"
+      },
+      {
+        "id": "c",
+        "textVi": "Qua vai và ngực, không qua cổ hoặc mặt",
+        "textEn": "Across shoulder and chest, not neck or face"
+      },
+      {
+        "id": "d",
+        "textVi": "Thoải mái, không cần căng",
+        "textEn": "Loose, no need to be snug"
+      }
+    ],
+    "correctOptionId": "c",
+    "explanationVi": "Dây vai phải nằm sát qua vai và ngực; dây hông đặt dưới bụng, trên đùi — không đặt sau lưng hoặc dưới cánh tay.",
+    "sourceRef": "WA Driver Guide — Seat Belts"
+  },
+  {
+    "externalId": "wa-s3-q21",
+    "topic": "school_zones",
+    "questionTextVi": "Khu vực trường học (school zone) tại Washington thường giới hạn tốc độ bao nhiêu?",
+    "questionTextEn": "What speed limit typically applies in WA school zones?",
+    "options": [
+      {
+        "id": "a",
+        "textVi": "15 dặm/giờ",
+        "textEn": "15 mph"
+      },
+      {
+        "id": "b",
+        "textVi": "20 dặm/giờ",
+        "textEn": "20 mph"
+      },
+      {
+        "id": "c",
+        "textVi": "25 dặm/giờ",
+        "textEn": "25 mph"
+      },
+      {
+        "id": "d",
+        "textVi": "30 dặm/giờ",
+        "textEn": "30 mph"
+      }
+    ],
+    "correctOptionId": "b",
+    "explanationVi": "Tốc độ khu trường học là 20 mph vì tốc độ cao hơn làm tăng nguy cơ tai nạn chết người với trẻ em.",
+    "sourceRef": "WA Driver Guide — School Zones"
+  },
+  {
+    "externalId": "wa-s3-q22",
+    "topic": "school_zones",
+    "questionTextVi": "Khi đèn đỏ và cánh STOP trên xe buýt trường bật, tài xế cùng chiều phải làm gì?",
+    "questionTextEn": "When a school bus red lights and stop arm are activated, same-direction drivers must:",
+    "options": [
+      {
+        "id": "a",
+        "textVi": "Giảm tốc và vượt cẩn thận",
+        "textEn": "Slow down and pass carefully"
+      },
+      {
+        "id": "b",
+        "textVi": "Dừng hoàn toàn cho đến khi đèn tắt và cánh thu lại",
+        "textEn": "Stop completely until lights off and arm retracted"
+      },
+      {
+        "id": "c",
+        "textVi": "Bấm còi và đi qua",
+        "textEn": "Honk and proceed"
+      },
+      {
+        "id": "d",
+        "textVi": "Chỉ dừng nếu thấy trẻ em",
+        "textEn": "Stop only if children are visible"
+      }
+    ],
+    "correctOptionId": "b",
+    "explanationVi": "Cấm vượt xe buýt trường khi đèn đỏ nhấp nháy. Tất cả xe cùng chiều phải dừng. Phạt gấp đôi nếu vi phạm.",
+    "sourceRef": "WA Driver Guide — School Zones"
+  },
+  {
+    "externalId": "wa-s3-q23",
+    "topic": "school_zones",
+    "questionTextVi": "Đèn vàng trên xe buýt trường có nghĩa gì?",
+    "questionTextEn": "What do yellow lights on a school bus mean?",
+    "options": [
+      {
+        "id": "a",
+        "textVi": "Được phép vượt nhanh",
+        "textEn": "You may pass quickly"
+      },
+      {
+        "id": "b",
+        "textVi": "Cảnh báo — chuẩn bị dừng, trẻ em sắp lên/xuống xe",
+        "textEn": "Caution — prepare to stop, children boarding or exiting"
+      },
+      {
+        "id": "c",
+        "textVi": "Xe buýt sắp rẽ",
+        "textEn": "Bus is about to turn"
+      },
+      {
+        "id": "d",
+        "textVi": "Không có ý nghĩa gì",
+        "textEn": "No meaning"
+      }
+    ],
+    "correctOptionId": "b",
+    "explanationVi": "Đèn vàng trên xe buýt trường giống đèn vàng giao thông — cảnh báo, chuẩn bị dừng. Đèn đỏ nghĩa là dừng.",
+    "sourceRef": "WA Driver Guide — School Zones"
+  },
+  {
+    "externalId": "wa-s3-q24",
+    "topic": "highway_driving",
+    "questionTextVi": "Khi nhập làn cao tốc (merging), ai có quyền ưu tiên?",
+    "questionTextEn": "When merging onto a freeway, who has the right-of-way?",
+    "options": [
+      {
+        "id": "a",
+        "textVi": "Xe đang nhập làn",
+        "textEn": "Merging vehicle"
+      },
+      {
+        "id": "b",
+        "textVi": "Xe đã đi trên cao tốc",
+        "textEn": "Vehicles already on the freeway"
+      },
+      {
+        "id": "c",
+        "textVi": "Xe lớn hơn",
+        "textEn": "Larger vehicle"
+      },
+      {
+        "id": "d",
+        "textVi": "Xe bên trái",
+        "textEn": "Left-lane vehicle"
+      }
+    ],
+    "correctOptionId": "b",
+    "explanationVi": "Xe trên cao tốc có quyền ưu tiên. Người nhập làn phải tìm khoảng trống an toàn, dùng toàn bộ làn nhập và xi-nhan.",
+    "sourceRef": "WA Driver Guide — Highway Driving"
+  },
+  {
+    "externalId": "wa-s3-q25",
+    "topic": "highway_driving",
+    "questionTextVi": "Trên đường nhiều làn cùng chiều, bạn nên đi làn nào khi không vượt xe?",
+    "questionTextEn": "On multi-lane roads, which lane should you use when not passing?",
+    "options": [
+      {
+        "id": "a",
+        "textVi": "Làn trái",
+        "textEn": "Left lane"
+      },
+      {
+        "id": "b",
+        "textVi": "Làn giữa",
+        "textEn": "Middle lane"
+      },
+      {
+        "id": "c",
+        "textVi": "Làn phải (Keep Right Except to Pass)",
+        "textEn": "Right lane (Keep Right Except to Pass)"
+      },
+      {
+        "id": "d",
+        "textVi": "Làn shoulder",
+        "textEn": "Shoulder lane"
+      }
+    ],
+    "correctOptionId": "c",
+    "explanationVi": "Luật WA: giữ làn phải trừ khi vượt xe. Làn HOV/carpool không phải làn vượt.",
+    "sourceRef": "WA Driver Guide — Highway Driving"
+  },
+  {
+    "externalId": "wa-s3-q26",
+    "topic": "highway_driving",
+    "questionTextVi": "Zipper merge (nhập làn kiểu khóa kéo) nghĩa là gì?",
+    "questionTextEn": "What is zipper merging?",
+    "options": [
+      {
+        "id": "a",
+        "textVi": "Chen hàng sớm nhất có thể",
+        "textEn": "Merge as early as possible"
+      },
+      {
+        "id": "b",
+        "textVi": "Dùng cả hai làn đến điểm nhập, xen kẽ từng xe một",
+        "textEn": "Use both lanes to merge point, alternate one vehicle at a time"
+      },
+      {
+        "id": "c",
+        "textVi": "Luôn nhường xe làn kết thúc",
+        "textEn": "Always yield to ending lane"
+      },
+      {
+        "id": "d",
+        "textVi": "Dừng hoàn toàn trước khi nhập",
+        "textEn": "Stop completely before merging"
+      }
+    ],
+    "correctOptionId": "b",
+    "explanationVi": "Zipper merge: giữ cả hai làn đến điểm nhập, xen kẽ từng xe — cải thiện luồng giao thông khoảng 60%.",
+    "sourceRef": "WA Driver Guide — Highway Driving"
+  },
+  {
+    "externalId": "wa-s3-q27",
+    "topic": "highway_driving",
+    "questionTextVi": "Có được lùi xe trên cao tốc (freeway) không?",
+    "questionTextEn": "Is it legal to back up on a freeway?",
+    "options": [
+      {
+        "id": "a",
+        "textVi": "Được, nếu bỏ lỡ lối ra",
+        "textEn": "Yes, if you miss your exit"
+      },
+      {
+        "id": "b",
+        "textVi": "Được trên làn shoulder",
+        "textEn": "Yes, on the shoulder"
+      },
+      {
+        "id": "c",
+        "textVi": "Không — cấm lùi xe trên cao tốc và shoulder",
+        "textEn": "No — illegal on freeway and shoulder"
+      },
+      {
+        "id": "d",
+        "textVi": "Được ban đêm khi vắng xe",
+        "textEn": "Yes at night when empty"
+      }
+    ],
+    "correctOptionId": "c",
+    "explanationVi": "Cấm lùi xe trên cao tốc và shoulder. Bỏ lỡ lối ra thì tiếp tục đến lối ra tiếp theo.",
+    "sourceRef": "WA Driver Guide — Highway Driving"
+  },
+  {
+    "externalId": "wa-s3-q28",
+    "topic": "pedestrians",
+    "questionTextVi": "Người đi bộ trong vạch sang đường (crosswalk) có quyền ưu tiên như thế nào?",
+    "questionTextEn": "What right-of-way do pedestrians in crosswalks have?",
+    "options": [
+      {
+        "id": "a",
+        "textVi": "Chỉ ở vạch có vẽ rõ",
+        "textEn": "Only at marked crosswalks"
+      },
+      {
+        "id": "b",
+        "textVi": "Luôn nhường — cả vạch có vẽ và không vẽ",
+        "textEn": "Always yield — marked and unmarked crosswalks"
+      },
+      {
+        "id": "c",
+        "textVi": "Chỉ khi có đèn xanh cho người đi bộ",
+        "textEn": "Only with walk signal"
+      },
+      {
+        "id": "d",
+        "textVi": "Xe ô tô luôn ưu tiên",
+        "textEn": "Cars always have priority"
+      }
+    ],
+    "correctOptionId": "b",
+    "explanationVi": "Luôn nhường người đi bộ tại vạch sang đường, kể cả vạch không vẽ tại ngã tư.",
+    "sourceRef": "WA Driver Guide — Pedestrians"
+  },
+  {
+    "externalId": "wa-s3-q29",
+    "topic": "pedestrians",
+    "questionTextVi": "Khi người đi bộ dùng xe lăn hoặc gậy đang qua đường, bạn nên làm gì?",
+    "questionTextEn": "When a pedestrian using a wheelchair or cane is crossing, you should:",
+    "options": [
+      {
+        "id": "a",
+        "textVi": "Bấm còi để họ đi nhanh",
+        "textEn": "Honk so they hurry"
+      },
+      {
+        "id": "b",
+        "textVi": "Đợi họ qua hết đường rồi mới đi",
+        "textEn": "Wait until they completely cross before proceeding"
+      },
+      {
+        "id": "c",
+        "textVi": "Rẽ quanh họ nếu còn một làn",
+        "textEn": "Drive around them if one lane clear"
+      },
+      {
+        "id": "d",
+        "textVi": "Chỉ dừng nếu có đèn đỏ",
+        "textEn": "Stop only on red light"
+      }
+    ],
+    "correctOptionId": "b",
+    "explanationVi": "Nếu người đi bộ dùng xe lăn, gậy, chó dẫn đường — đợi họ qua hết đường. Không bấm còi làm họ hoảng.",
+    "sourceRef": "WA Driver Guide — Pedestrians"
+  },
+  {
+    "externalId": "wa-s3-q30",
+    "topic": "pedestrians",
+    "questionTextVi": "Người đi bộ đã qua làn của bạn và một làn nữa, bạn có thể đi chưa?",
+    "questionTextEn": "A pedestrian cleared your lane and one more — may you proceed?",
+    "options": [
+      {
+        "id": "a",
+        "textVi": "Được, đi ngay",
+        "textEn": "Yes, go immediately"
+      },
+      {
+        "id": "b",
+        "textVi": "Chờ họ qua hết làn của bạn và thêm một làn nữa",
+        "textEn": "Wait until they clear your lane plus one additional lane"
+      },
+      {
+        "id": "c",
+        "textVi": "Chỉ chờ nếu có cảnh sát",
+        "textEn": "Wait only if police present"
+      },
+      {
+        "id": "d",
+        "textVi": "Bấm còi nhẹ nhắc nhở",
+        "textEn": "Honk gently to remind them"
+      }
+    ],
+    "correctOptionId": "b",
+    "explanationVi": "Đợi người đi bộ qua làn bạn và thêm một làn trước khi tiếp tục — đảm bảo an toàn cho mọi làn.",
+    "sourceRef": "WA Driver Guide — Pedestrians"
+  },
+  {
+    "externalId": "wa-s3-q31",
+    "topic": "emergency_vehicles",
+    "questionTextVi": "Khi nghe còi hoặc thấy đèn xe cứu thương/cảnh sát, bạn phải làm gì ngay lập tức?",
+    "questionTextEn": "When you hear a siren or see emergency vehicle lights, you must immediately:",
+    "options": [
+      {
+        "id": "a",
+        "textVi": "Dừng giữa đường",
+        "textEn": "Stop in the middle of the road"
+      },
+      {
+        "id": "b",
+        "textVi": "Sang phải và dừng",
+        "textEn": "Pull to the right and stop"
+      },
+      {
+        "id": "c",
+        "textVi": "Tăng tốc để nhường",
+        "textEn": "Speed up to get out of the way"
+      },
+      {
+        "id": "d",
+        "textVi": "Rẽ trái nhanh",
+        "textEn": "Turn left quickly"
+      }
+    ],
+    "correctOptionId": "b",
+    "explanationVi": "Xe cứu thương, cứu hỏa, cảnh sát có đèn/còi luôn ưu tiên — lập tức sang phải và dừng.",
+    "sourceRef": "WA Driver Guide — Emergency Vehicles"
+  },
+  {
+    "externalId": "wa-s3-q32",
+    "topic": "emergency_vehicles",
+    "questionTextVi": "Luật Move Over/Slow Down của Washington yêu cầu gì khi gặp xe cứu hộ bên đường có đèn nhấp nháy?",
+    "questionTextEn": "What does WA's Move Over law require near a roadside response vehicle with flashing lights?",
+    "options": [
+      {
+        "id": "a",
+        "textVi": "Giữ nguyên tốc độ và làn",
+        "textEn": "Maintain speed and lane"
+      },
+      {
+        "id": "b",
+        "textVi": "Sang làn xa hơn HOẶC giảm tốc ít nhất 10 mph dưới giới hạn",
+        "textEn": "Move to a farther lane OR slow at least 10 mph below the limit"
+      },
+      {
+        "id": "c",
+        "textVi": "Dừng hoàn toàn trên cao tốc",
+        "textEn": "Stop completely on freeway"
+      },
+      {
+        "id": "d",
+        "textVi": "Chỉ áp dụng ban đêm",
+        "textEn": "Only applies at night"
+      }
+    ],
+    "correctOptionId": "b",
+    "explanationVi": "Phải sang làn xa hơn nếu có thể, hoặc giảm tốc ít nhất 10 mph dưới giới hạn. Trong vùng khẩn cấp không vượt 50 mph.",
+    "sourceRef": "WA Driver Guide — Emergency Vehicles"
+  },
+  {
+    "externalId": "wa-s3-q33",
+    "topic": "emergency_vehicles",
+    "questionTextVi": "Xe nào được coi là xe phản ứng khẩn cấp bên đường (roadside response) theo luật Move Over?",
+    "questionTextEn": "Which vehicles count as roadside response under the Move Over law?",
+    "options": [
+      {
+        "id": "a",
+        "textVi": "Chỉ xe cảnh sát và cứu thương",
+        "textEn": "Police and ambulance only"
+      },
+      {
+        "id": "b",
+        "textVi": "Cảnh sát, cứu hỏa, cứu thương, xe kéo, bảo trì đường, xe thu gom rác",
+        "textEn": "Police, fire, ambulance, tow, highway maintenance, solid waste trucks"
+      },
+      {
+        "id": "c",
+        "textVi": "Chỉ xe cứu hỏa",
+        "textEn": "Fire trucks only"
+      },
+      {
+        "id": "d",
+        "textVi": "Xe giao hàng",
+        "textEn": "Delivery vehicles"
+      }
+    ],
+    "correctOptionId": "b",
+    "explanationVi": "Luật Move Over áp dụng cho xe cứu hộ, bảo trì đường, xe tiện ích, cảnh sát, cứu hỏa, cứu thương và xe kéo.",
+    "sourceRef": "WA Driver Guide — Emergency Vehicles"
+  },
+  {
+    "externalId": "wa-s3-q34",
+    "topic": "intersections",
+    "questionTextVi": "Khi đèn giao thông không hoạt động, bạn xử lý ngã tư như thế nào?",
+    "questionTextEn": "When traffic signals are not working, how do you treat the intersection?",
+    "options": [
+      {
+        "id": "a",
+        "textVi": "Như ngã tư không có biển — đi thẳng không dừng",
+        "textEn": "As uncontrolled — proceed without stopping"
+      },
+      {
+        "id": "b",
+        "textVi": "Như ngã tư bốn hướng dừng (four-way stop)",
+        "textEn": "As a four-way stop"
+      },
+      {
+        "id": "c",
+        "textVi": "Xe lớn hơn đi trước",
+        "textEn": "Larger vehicle goes first"
+      },
+      {
+        "id": "d",
+        "textVi": "Chỉ dừng nếu có cảnh sát",
+        "textEn": "Stop only if police present"
+      }
+    ],
+    "correctOptionId": "b",
+    "explanationVi": "Đèn hỏng: coi như four-way stop — dừng hoàn toàn, nhường xe bên phải nếu cùng lúc đến.",
+    "sourceRef": "WA Driver Guide — Intersections"
+  },
+  {
+    "externalId": "wa-s3-q35",
+    "topic": "intersections",
+    "questionTextVi": "Trong vòng xoay (roundabout), bạn đi theo hướng nào?",
+    "questionTextEn": "In a roundabout, which direction do you travel?",
+    "options": [
+      {
+        "id": "a",
+        "textVi": "Theo chiều kim đồng hồ",
+        "textEn": "Clockwise"
+      },
+      {
+        "id": "b",
+        "textVi": "Ngược chiều kim đồng hồ (counterclockwise)",
+        "textEn": "Counterclockwise"
+      },
+      {
+        "id": "c",
+        "textVi": "Tùy ý",
+        "textEn": "Either direction"
+      },
+      {
+        "id": "d",
+        "textVi": "Dừng giữa vòng xoay",
+        "textEn": "Stop in the center"
+      }
+    ],
+    "correctOptionId": "b",
+    "explanationVi": "Vòng xoay WA: vào bên phải, đi ngược chiều kim đồng hồ quanh đảo trung tâm, nhường xe đã trong vòng.",
+    "sourceRef": "WA Driver Guide — Intersections"
+  },
+  {
+    "externalId": "wa-s3-q36",
+    "topic": "intersections",
+    "questionTextVi": "Tốc độ thiết kế cho vòng xoay (roundabout) tại Washington là bao nhiêu?",
+    "questionTextEn": "What speed are WA roundabouts designed for?",
+    "options": [
+      {
+        "id": "a",
+        "textVi": "5–10 mph",
+        "textEn": "5–10 mph"
+      },
+      {
+        "id": "b",
+        "textVi": "15–25 mph",
+        "textEn": "15–25 mph"
+      },
+      {
+        "id": "c",
+        "textVi": "30–35 mph",
+        "textEn": "30–35 mph"
+      },
+      {
+        "id": "d",
+        "textVi": "40–45 mph",
+        "textEn": "40–45 mph"
+      }
+    ],
+    "correctOptionId": "b",
+    "explanationVi": "Vòng xoay thiết kế cho tốc độ 15–25 mph. Giảm tốc khi vào, nhường xe và người đi bộ.",
+    "sourceRef": "WA Driver Guide — Intersections"
+  },
+  {
+    "externalId": "wa-s3-q37",
+    "topic": "intersections",
+    "questionTextVi": "Đèn vàng nhấp nháy (flashing yellow) tại ngã tư có nghĩa gì?",
+    "questionTextEn": "What does a flashing yellow light at an intersection mean?",
+    "options": [
+      {
+        "id": "a",
+        "textVi": "Dừng hoàn toàn",
+        "textEn": "Complete stop"
+      },
+      {
+        "id": "b",
+        "textVi": "Giảm tốc, cẩn thận — tương đương biển YIELD",
+        "textEn": "Slow down, proceed with caution — like a YIELD sign"
+      },
+      {
+        "id": "c",
+        "textVi": "Đi nhanh qua",
+        "textEn": "Speed through"
+      },
+      {
+        "id": "d",
+        "textVi": "Chỉ xe rẽ phải được đi",
+        "textEn": "Only right turns allowed"
+      }
+    ],
+    "correctOptionId": "b",
+    "explanationVi": "Đèn vàng nhấp nháy = cẩn thận, giảm tốc, nhường nếu cần — giống biển YIELD.",
+    "sourceRef": "WA Driver Guide — Intersections"
+  },
+  {
+    "externalId": "wa-s3-q38",
+    "topic": "lane_changes",
+    "questionTextVi": "Trước khi rẽ hoặc đổi làn, bạn phải bật xi-nhan trước bao nhiêu feet?",
+    "questionTextEn": "How many feet before turning or changing lanes must you signal?",
+    "options": [
+      {
+        "id": "a",
+        "textVi": "50 feet",
+        "textEn": "50 feet"
+      },
+      {
+        "id": "b",
+        "textVi": "100 feet",
+        "textEn": "100 feet"
+      },
+      {
+        "id": "c",
+        "textVi": "200 feet",
+        "textEn": "200 feet"
+      },
+      {
+        "id": "d",
+        "textVi": "300 feet",
+        "textEn": "300 feet"
+      }
+    ],
+    "correctOptionId": "b",
+    "explanationVi": "Luật WA: bật xi-nhan ít nhất 100 feet (khoảng 30 mét) trước khi rẽ hoặc đổi làn.",
+    "sourceRef": "WA Driver Guide — Lane Changes"
+  },
+  {
+    "externalId": "wa-s3-q39",
+    "topic": "lane_changes",
+    "questionTextVi": "Hai vạch trắng liền (double solid white lines) giữa các làn có nghĩa gì?",
+    "questionTextEn": "What do double solid white lines between lanes mean?",
+    "options": [
+      {
+        "id": "a",
+        "textVi": "Được đổi làn nếu an toàn",
+        "textEn": "Lane changes allowed if safe"
+      },
+      {
+        "id": "b",
+        "textVi": "Cấm vượt qua — rào chắn giữa các làn",
+        "textEn": "Illegal to cross — barrier between lanes"
+      },
+      {
+        "id": "c",
+        "textVi": "Chỉ xe buýt được đi",
+        "textEn": "Buses only"
+      },
+      {
+        "id": "d",
+        "textVi": "Làn sắp hết",
+        "textEn": "Lane ending soon"
+      }
+    ],
+    "correctOptionId": "b",
+    "explanationVi": "Hai vạch trắng liền là rào chắn — cấm vượt qua giữa các làn.",
+    "sourceRef": "WA Driver Guide — Lane Changes"
+  },
+  {
+    "externalId": "wa-s3-q40",
+    "topic": "lane_changes",
+    "questionTextVi": "Làn HOV (carpool) được đánh dấu bằng biểu tượng gì?",
+    "questionTextEn": "How are HOV (carpool) lanes marked?",
+    "options": [
+      {
+        "id": "a",
+        "textVi": "Hình tròn đỏ",
+        "textEn": "Red circle"
+      },
+      {
+        "id": "b",
+        "textVi": "Hình thoi (diamond) trên biển và mặt đường",
+        "textEn": "Diamond symbol on signs and pavement"
+      },
+      {
+        "id": "c",
+        "textVi": "Mũi tên xanh",
+        "textEn": "Green arrow"
+      },
+      {
+        "id": "d",
+        "textVi": "Chữ X đỏ",
+        "textEn": "Red X"
+      }
+    ],
+    "correctOptionId": "b",
+    "explanationVi": "Làn HOV có biểu tượng hình thoi trên biển và vạch đường. Xe mô tô cũng được dùng làn HOV.",
+    "sourceRef": "WA Driver Guide — Lane Changes"
+  },
+  {
+    "externalId": "wa-s3-q41",
+    "topic": "night_driving",
+    "questionTextVi": "Theo luật Washington, đèn pha (headlights) phải bật từ khi nào?",
+    "questionTextEn": "When must headlights be on under WA law?",
+    "options": [
+      {
+        "id": "a",
+        "textVi": "Chỉ sau 10 giờ tối",
+        "textEn": "Only after 10 PM"
+      },
+      {
+        "id": "b",
+        "textVi": "Từ nửa giờ sau hoàng hôn đến nửa giờ trước bình minh",
+        "textEn": "From half hour after sunset to half hour before sunrise"
+      },
+      {
+        "id": "c",
+        "textVi": "Chỉ khi mưa",
+        "textEn": "Only when raining"
+      },
+      {
+        "id": "d",
+        "textVi": "Chỉ trên cao tốc",
+        "textEn": "Only on freeways"
+      }
+    ],
+    "correctOptionId": "b",
+    "explanationVi": "Luật WA: bật đèn pha từ nửa giờ sau hoàng hôn đến nửa giờ trước bình minh, và khi tầm nhìn dưới 1.000 feet.",
+    "sourceRef": "WA Driver Guide — Night Driving"
+  },
+  {
+    "externalId": "wa-s3-q42",
+    "topic": "night_driving",
+    "questionTextVi": "Khi đi sau xe khác ban đêm, bạn nên dùng đèn gì?",
+    "questionTextEn": "When following another vehicle at night, which lights should you use?",
+    "options": [
+      {
+        "id": "a",
+        "textVi": "Đèn chiếu xa (high beams)",
+        "textEn": "High beams"
+      },
+      {
+        "id": "b",
+        "textVi": "Đèn pha thường (regular/low beams)",
+        "textEn": "Regular/low beams"
+      },
+      {
+        "id": "c",
+        "textVi": "Chỉ đèn sương mù",
+        "textEn": "Fog lights only"
+      },
+      {
+        "id": "d",
+        "textVi": "Tắt hết đèn",
+        "textEn": "All lights off"
+      }
+    ],
+    "correctOptionId": "b",
+    "explanationVi": "Đi sau xe khác dùng đèn pha thường. Đèn chiếu xa làm chói mắt tài xế phía trước.",
+    "sourceRef": "WA Driver Guide — Night Driving"
+  },
+  {
+    "externalId": "wa-s3-q43",
+    "topic": "night_driving",
+    "questionTextVi": "Ban đêm, bạn nên lái ở tốc độ cho phép dừng trong phạm vi bao nhiêu?",
+    "questionTextEn": "At night, drive slow enough to stop within what range?",
+    "options": [
+      {
+        "id": "a",
+        "textVi": "200 feet (60 m)",
+        "textEn": "200 feet"
+      },
+      {
+        "id": "b",
+        "textVi": "400 feet (120 m) — vùng sáng đèn pha",
+        "textEn": "400 feet — headlight range"
+      },
+      {
+        "id": "c",
+        "textVi": "800 feet (240 m)",
+        "textEn": "800 feet"
+      },
+      {
+        "id": "d",
+        "textVi": "Không cần giảm tốc ban đêm",
+        "textEn": "No need to slow at night"
+      }
+    ],
+    "correctOptionId": "b",
+    "explanationVi": "Ban đêm khó nhìn — lái tốc độ cho phép dừng trong vùng sáng đèn pha, thường khoảng 400 feet.",
+    "sourceRef": "WA Driver Guide — Night Driving"
+  },
+  {
+    "externalId": "wa-s3-q44",
+    "topic": "weather_conditions",
+    "questionTextVi": "Khi trượt nước (hydroplaning), bước đầu tiên bạn nên làm gì?",
+    "questionTextEn": "When hydroplaning, what should you do first?",
+    "options": [
+      {
+        "id": "a",
+        "textVi": "Phanh mạnh ngay",
+        "textEn": "Brake hard immediately"
+      },
+      {
+        "id": "b",
+        "textVi": "Nhả chân ga (take foot off accelerator)",
+        "textEn": "Take foot off the accelerator"
+      },
+      {
+        "id": "c",
+        "textVi": "Quay vô-lăng mạnh",
+        "textEn": "Jerk the steering wheel"
+      },
+      {
+        "id": "d",
+        "textVi": "Tăng tốc để thoát",
+        "textEn": "Speed up to escape"
+      }
+    ],
+    "correctOptionId": "b",
+    "explanationVi": "Trượt nước: nhả ga, phanh nhẹ, giữ vô-lăng ổn định. Cách tốt nhất là giảm tốc khi đường ướt.",
+    "sourceRef": "WA Driver Guide — Weather Conditions"
+  },
+  {
+    "externalId": "wa-s3-q45",
+    "topic": "weather_conditions",
+    "questionTextVi": "Cách tốt nhất tránh trượt nước (hydroplaning) là gì?",
+    "questionTextEn": "What is the best way to prevent hydroplaning?",
+    "options": [
+      {
+        "id": "a",
+        "textVi": "Lái nhanh để cán hết nước",
+        "textEn": "Drive fast to push through water"
+      },
+      {
+        "id": "b",
+        "textVi": "Giảm tốc khi đường ướt",
+        "textEn": "Slow down when the road is wet"
+      },
+      {
+        "id": "c",
+        "textVi": "Bật đèn chiếu xa",
+        "textEn": "Use high beams"
+      },
+      {
+        "id": "d",
+        "textVi": "Tăng áp suất lốp tối đa",
+        "textEn": "Maximize tire pressure"
+      }
+    ],
+    "correctOptionId": "b",
+    "explanationVi": "Trượt nước xảy ra khi nước tích giữa lốp và mặt đường — giảm tốc khi đường ướt là cách phòng tốt nhất.",
+    "sourceRef": "WA Driver Guide — Weather Conditions"
+  },
+  {
+    "externalId": "wa-s3-q46",
+    "topic": "weather_conditions",
+    "questionTextVi": "Khi đường có tuyết hoặc băng, bạn nên làm gì với khoảng cách theo sau?",
+    "questionTextEn": "On snowy or icy roads, what should you do with following distance?",
+    "options": [
+      {
+        "id": "a",
+        "textVi": "Giữ nguyên như bình thường",
+        "textEn": "Keep normal distance"
+      },
+      {
+        "id": "b",
+        "textVi": "Giảm khoảng cách để theo sát",
+        "textEn": "Reduce distance to follow closely"
+      },
+      {
+        "id": "c",
+        "textVi": "Tăng khoảng cách theo sau",
+        "textEn": "Increase following distance"
+      },
+      {
+        "id": "d",
+        "textVi": "Không cần thay đổi trên cao tốc",
+        "textEn": "No change needed on freeways"
+      }
+    ],
+    "correctOptionId": "c",
+    "explanationVi": "Đường tuyết/băng trơn — tăng khoảng cách theo sau và giảm tốc để có thời gian dừng an toàn.",
+    "sourceRef": "WA Driver Guide — Weather Conditions"
+  },
+  {
+    "externalId": "wa-s3-q47",
+    "topic": "weather_conditions",
+    "questionTextVi": "Trong khu công trình (work zone), bạn nên làm gì dù không thấy công nhân?",
+    "questionTextEn": "In a work zone, what should you do even if no workers are visible?",
+    "options": [
+      {
+        "id": "a",
+        "textVi": "Giữ nguyên tốc độ",
+        "textEn": "Maintain speed"
+      },
+      {
+        "id": "b",
+        "textVi": "Luôn giảm tốc — làn hẹp và mặt đường có thể nguy hiểm",
+        "textEn": "Always slow down — narrow lanes and rough pavement can be hazardous"
+      },
+      {
+        "id": "c",
+        "textVi": "Vượt xe chậm",
+        "textEn": "Pass slow vehicles"
+      },
+      {
+        "id": "d",
+        "textVi": "Dùng làn shoulder",
+        "textEn": "Use the shoulder"
+      }
+    ],
+    "correctOptionId": "b",
+    "explanationVi": "Luôn giảm tốc trong work zone dù không thấy công nhân. Tăng khoảng cách theo sau và chuẩn bị dừng.",
+    "sourceRef": "WA Driver Guide — Weather Conditions"
+  },
+  {
+    "externalId": "wa-s3-q48",
+    "topic": "sharing_the_road",
+    "questionTextVi": "Khi đi sau xe máy (motorcycle), bạn nên giữ khoảng cách như thế nào?",
+    "questionTextEn": "When following a motorcycle, how much following distance should you leave?",
+    "options": [
+      {
+        "id": "a",
+        "textVi": "Ít hơn xe ô tô vì xe máy nhỏ",
+        "textEn": "Less than for cars because motorcycles are small"
+      },
+      {
+        "id": "b",
+        "textVi": "Nhiều hơn — xe máy dễ trượt khi mưa hoặc đường trơn",
+        "textEn": "More — motorcycles are vulnerable on wet or slick surfaces"
+      },
+      {
+        "id": "c",
+        "textVi": "Sát đuôi để xe máy đi nhanh",
+        "textEn": "Close behind so motorcycle speeds up"
+      },
+      {
+        "id": "d",
+        "textVi": "Không cần khoảng cách đặc biệt",
+        "textEn": "No special distance needed"
+      }
+    ],
+    "correctOptionId": "b",
+    "explanationVi": "Xe máy nhỏ, khó thấy, dễ trượt — để nhiều khoảng cách phía trước, đặc biệt khi mưa.",
+    "sourceRef": "WA Driver Guide — Sharing the Road"
+  },
+  {
+    "externalId": "wa-s3-q49",
+    "topic": "sharing_the_road",
+    "questionTextVi": "Khi vượt xe đạp, khoảng cách tối thiểu giữa xe bạn và người đi xe đạp là bao nhiêu?",
+    "questionTextEn": "When passing a bicyclist, what minimum clearance must you leave?",
+    "options": [
+      {
+        "id": "a",
+        "textVi": "1 foot",
+        "textEn": "1 foot"
+      },
+      {
+        "id": "b",
+        "textVi": "3 feet",
+        "textEn": "3 feet"
+      },
+      {
+        "id": "c",
+        "textVi": "5 feet",
+        "textEn": "5 feet"
+      },
+      {
+        "id": "d",
+        "textVi": "Không cần khoảng cách riêng",
+        "textEn": "No special clearance needed"
+      }
+    ],
+    "correctOptionId": "b",
+    "explanationVi": "Luật WA: để ít nhất 3 feet giữa phần rộng nhất xe bạn và xe đạp khi vượt.",
+    "sourceRef": "WA Driver Guide — Sharing the Road"
+  },
+  {
+    "externalId": "wa-s3-q50",
+    "topic": "sharing_the_road",
+    "questionTextVi": "Khi vượt xe nông nghiệp chậm trên đường hai làn, khoảng cách tối thiểu khi vượt là bao nhiêu?",
+    "questionTextEn": "When passing a slow agricultural vehicle on a two-lane road, what minimum clearance is required?",
+    "options": [
+      {
+        "id": "a",
+        "textVi": "1 foot",
+        "textEn": "1 foot"
+      },
+      {
+        "id": "b",
+        "textVi": "3 feet giữa phần rộng nhất hai xe",
+        "textEn": "3 feet between widest parts of both vehicles"
+      },
+      {
+        "id": "c",
+        "textVi": "6 feet",
+        "textEn": "6 feet"
+      },
+      {
+        "id": "d",
+        "textVi": "Không cần khoảng cách nếu bên kia vắng",
+        "textEn": "No clearance if opposite lane is clear"
+      }
+    ],
+    "correctOptionId": "b",
+    "explanationVi": "Vượt xe nông nghiệp: ít nhất 3 feet giữa phần rộng nhất hai xe. Kiên nhẫn, giảm tốc.",
+    "sourceRef": "WA Driver Guide — Sharing the Road"
+  }
+]

@@ -46,3 +46,13 @@ export {
   getSharedProgress,
   listCaregiverLinks,
 } from "./family.js";
+
+export {
+  getWaExamSets,
+  startWaExamSet,
+  seedWaExamQuestions,
+  getCuratedQuestionCount,
+  WA_DMV_EXAM_LENGTH,
+  WA_DMV_PASS_COUNT,
+  WA_EXAM_SETS,
+} from "./curated-exam.js";

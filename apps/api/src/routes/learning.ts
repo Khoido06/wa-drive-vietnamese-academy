@@ -9,6 +9,8 @@ import {
   setUserState as updateUserState,
   getUserTier,
   isPremium,
+  getWaExamSets,
+  startWaExamSet,
 } from "@repo/learning-engine";
 import { checkAndIncrementUsage } from "../services/usage.js";
 
@@ -106,6 +108,55 @@ export async function userProgress(c: Context) {
     return c.json(progress);
   } catch (err) {
     const message = err instanceof Error ? err.message : "Failed to get progress";
+    return c.json({ error: message }, 500);
+  }
+}
+
+export async function examSets(c: Context) {
+  return c.json({
+    sets: getWaExamSets(),
+    dmv: { examLength: 40, passCount: 32, passRate: 0.8 },
+  });
+}
+
+export async function startExam(c: Context) {
+  const userId = c.req.param("userId");
+  const setId = c.req.query("setId") ?? "wa-set-01";
+  if (!userId) return c.json({ error: "userId required" }, 400);
+
+  try {
+    const { tier } = await getUserTier(userId);
+    const usage = await checkAndIncrementUsage(userId, "practice", isPremium(tier));
+    if (!usage.allowed) {
+      return c.json(
+        {
+          error: "Đã hết lượt luyện tập hôm nay. Nâng cấp Pro để luyện không giới hạn.",
+          code: "USAGE_LIMIT",
+        },
+        429,
+      );
+    }
+
+    const meta = getWaExamSets().find((s) => s.id === setId);
+    if (!meta) return c.json({ error: "Invalid exam set" }, 400);
+
+    const questions = await startWaExamSet(setId, meta.examLength);
+    return c.json({
+      setId,
+      setName: meta.name,
+      examLength: meta.examLength,
+      passCount: meta.passCount,
+      questions: questions.map((q) => ({
+        id: q.id,
+        topic: q.topic,
+        questionTextVi: q.questionTextVi,
+        questionTextEn: q.questionTextEn,
+        options: q.options,
+        questionNumber: q.questionNumber,
+      })),
+    });
+  } catch (err) {
+    const message = err instanceof Error ? err.message : "Failed to start exam";
     return c.json({ error: message }, 500);
   }
 }
