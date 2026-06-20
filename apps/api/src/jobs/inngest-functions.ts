@@ -21,10 +21,10 @@ export const waReviewRemindersJob = jobFn(
   "review-reminders",
 );
 
-/** Daily review reminders at 9am UTC (1am PT) */
+/** Daily review reminders at 7am PT (15:00 UTC) */
 export const waReviewRemindersCron = inngest.createFunction(
   { id: "wa-review-reminders-cron", name: "Daily review reminders" },
-  { cron: "0 9 * * *" },
+  { cron: "0 15 * * *" },
   async ({ step }) => {
     await step.run("review-reminders", () => runJob("review-reminders", {}));
     return { ok: true };

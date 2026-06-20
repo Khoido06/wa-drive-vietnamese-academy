@@ -4,7 +4,7 @@
 [![CI](https://img.shields.io/github/actions/workflow/status/Khoido06/wa-drive-vietnamese-academy/ci.yml?branch=main&label=CI&style=for-the-badge)](https://github.com/Khoido06/wa-drive-vietnamese-academy/actions)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green?style=for-the-badge)](LICENSE)
 
-**AI learning platform for Vietnamese-speaking elderly learners preparing for the Washington State Driver Knowledge Test.**
+Production AI learning platform for Vietnamese-speaking learners preparing for U.S. driver knowledge tests. Grounded RAG over official state driver guides, adaptive practice with spaced repetition, and an elderly-first progressive web app.
 
 | | |
 |---|---|
@@ -13,19 +13,11 @@
 | **API Docs** | https://api-production-72db.up.railway.app/docs |
 | **Repository** | https://github.com/Khoido06/wa-drive-vietnamese-academy |
 
-Production RAG over the official **191-page Vietnamese WA Driver Guide** (100 indexed chunks). Built on **free-tier** infrastructure — no paid AI tokens required for core features.
-
 ---
 
-## Problem → Solution
+## Overview
 
-| Problem | Solution |
-|---------|----------|
-| 191-page English-heavy driver guide | Vietnamese PDF as sole RAG corpus |
-| Static quiz apps hallucinate | Triple-check RAG + keyword hybrid fallback |
-| Seniors struggle with small UI | Elderly-first PWA: 64px touch, TTS, A/A+/A++ fonts |
-| One-size-fits-all learning | SM-2 spaced repetition + Elo difficulty + failure clusters |
-| Systems don't improve | Telemetry → mutation engine auto-tunes retrieval |
+The platform indexes the official **191-page Vietnamese Washington Driver Guide** (100+ RAG chunks) and serves a full learning loop: AI tutor, adaptive practice, timed exams, progress tracking, and optional account sync. Core features run on **free-tier** infrastructure with graceful fallbacks when optional services are unavailable.
 
 ---
 
@@ -34,78 +26,79 @@ Production RAG over the official **191-page Vietnamese WA Driver Guide** (100 in
 ```
 ┌─────────────────┐   SSE/REST    ┌─────────────────┐   pgvector/SQL   ┌──────────────┐
 │  Next.js 16 PWA │ ────────────► │   Hono API      │ ───────────────► │ Neon Postgres │
-│  Vercel (free)  │               │  Railway (free) │                  │  (free tier)  │
+│  Vercel         │               │  Railway        │                  │               │
 └─────────────────┘               └────────┬────────┘                  └──────────────┘
          │                                 │
          │ Analytics                       ▼
          ▼                          ┌─────────────┐
-  Vercel · PostHog · Sentry         │ Groq (free)  │  LLM inference
-                                    │ Ollama (dev) │  local embed + LLM
+  Vercel · PostHog · Sentry         │ Groq / Ollama│  LLM + embeddings
                                     └─────────────┘
+         ┌──────────────────────────────────────────┐
+         │ Inngest (self-hosted) · OpenTelemetry    │
+         │ Web Push · Langfuse · Upstash            │
+         └──────────────────────────────────────────┘
 ```
 
-### 4-Layer Monorepo (Turborepo)
+### Monorepo (Turborepo — 11 packages)
 
 | Layer | Package | Role |
 |-------|---------|------|
-| Product | `apps/web` | Elderly PWA, Vietnamese UI, SSE tutor |
-| Intelligence | `packages/ai-core` | RAG: ingest → embed → retrieve → generate |
-| Learning Loop | `packages/learning-engine` | SM-2, Elo, adaptive questions |
-| Self-Improvement | `packages/mutation-engine` | Telemetry → analytics → config mutations |
+| Product | `apps/web` | PWA, Vietnamese UI, SSE tutor, Playwright E2E |
+| API | `apps/api` | Hono REST, OpenAPI, cron, Inngest serve |
+| Intelligence | `packages/ai-core` | RAG ingest → embed → retrieve → generate |
+| Learning | `packages/learning-engine` | SM-2, Elo, curated exams, billing |
+| Self-improvement | `packages/mutation-engine` | Telemetry → analytics → config mutations |
+| Data | `packages/db` | Drizzle ORM + pgvector schema |
 
 ---
 
 ## Tech Stack
 
-| Category | Technology | Cost |
-|----------|-----------|------|
-| Frontend | Next.js 16, React 19, PWA, Web Speech API | Vercel free |
-| Backend | Hono, TypeScript, Docker | Railway free |
-| Database | PostgreSQL 16 + pgvector, Drizzle ORM | Neon free |
-| AI (prod) | Groq `llama-3.1-8b-instant` | Free tier |
-| AI (local) | Ollama `qwen2.5:7b` + `nomic-embed-text` | Free |
-| Search | pgvector + **keyword hybrid fallback** | $0 |
-| Observability | Sentry, PostHog, Vercel Analytics, **Speed Insights**, Langfuse | Free tiers (optional) |
-| Rate Limiting | Upstash Redis → in-memory fallback | Free tiers |
-| Testing | Node.js test runner + Playwright E2E | $0 |
-| API Docs | OpenAPI 3 + Swagger UI | $0 |
-| CI/CD | GitHub Actions (typecheck, unit, E2E, build) | $0 |
+| Category | Technology |
+|----------|-----------|
+| Frontend | Next.js 16, React 19, PWA, Web Speech API, Web Push |
+| Backend | Hono, TypeScript, Inngest SDK, OpenTelemetry |
+| Database | PostgreSQL 16 + pgvector, Drizzle ORM |
+| AI (prod) | Groq `llama-3.1-8b-instant` |
+| AI (local) | Ollama `qwen2.5:7b` + `nomic-embed-text` |
+| Search | pgvector HNSW + keyword hybrid fallback |
+| Jobs | Self-hosted Inngest on Railway |
+| Observability | Sentry, PostHog, Langfuse OTLP, Vercel Analytics |
+| Auth | Clerk (optional JWT-verified API linking) |
+| Billing | Stripe Checkout (Free / Pro / Family) |
+| CI/CD | GitHub Actions — typecheck, unit, RAG eval, E2E, build |
 
-> **No OpenAI key required.** Production uses keyword hybrid search when embeddings unavailable. Optional `EMBED_PROVIDER=openai` improves vector search (~$0.00002/query).
-
-Observability setup: [docs/OBSERVABILITY.md](docs/OBSERVABILITY.md)
-
-Scale roadmap (A + B + C): [docs/SCALE_ROADMAP.md](docs/SCALE_ROADMAP.md)
+> **No OpenAI key required** for core features. Optional `EMBED_PROVIDER=openai` improves vector search quality.
 
 ---
 
-## Key Features
+## Features
 
-- **AI Tutor** — Vietnamese Q&A with Groq SSE streaming (ChatGPT-style)
-- **Hybrid RAG** — pgvector when Ollama available; keyword search on Railway (free)
-- **Grounding check** — post-stream heuristic validates answer ⊆ retrieved chunks
-- **Adaptive practice** — dynamic questions from RAG, never a static bank
-- **SM-2 + Elo** — spaced repetition and difficulty adaptation
-- **Mutation cron** — auto-tunes retrieval params from telemetry (hourly)
-- **Rate limiting** — 20 req/min on RAG routes (Upstash or in-memory)
-- **OpenAPI docs** — `/docs` + `/openapi.json`
-- **Observability** — Sentry, PostHog, Vercel Analytics, Langfuse (all optional)
-- **Playwright E2E** — smoke tests in CI
-- **RAG eval (CI gate)** — 50 golden queries, RAGAS-style metrics, 85% pass rate
-- **Admin dashboard** — `/admin` (RAG traces, mutations, system health)
-- **Clerk auth + JWT API** — sign-in sync; `@clerk/backend` verifies account linking
-- **Voice input (STT)** — 🎤 nói câu hỏi trên tutor page
-- **Stripe tiers** — Free / Pro / Family (mom WA stays free)
-- **Multi-state RAG** — `state_code` filter (WA default, Pro unlocks more)
-- **RAG response cache** — Upstash or in-memory (24h TTL)
-- **A/B RAG config** — optional topK variants (`RAG_AB_ENABLED`)
-- **LLM validator** — 2nd-pass fact-check on streamed tutor answers
-- **Human feedback** — 👍/👎 tunes retrieval via mutation cron
-- **B2B API** — org-scoped keys for driving schools (`/b2b/v1/...`)
-- **Caregiver sharing** — Family tier read-only progress links
-- **Elderly UX** — TTS 🔊, font scaling, one task per screen
+**Learning & content**
+- AI tutor with Groq SSE streaming and Vietnamese UI
+- 250+ curated WA DMV questions with offline PWA bundle
+- Adaptive practice — SM-2 spaced repetition, Elo difficulty, failure-cluster routing
+- Timed practice exams with Vietnamese explanations
+- Multi-state RAG corpus support (`state_code` filter)
 
-Billing: [docs/BILLING.md](docs/BILLING.md) · Clerk: [docs/CLERK.md](docs/CLERK.md) · B2B: [docs/B2B.md](docs/B2B.md)
+**AI & quality**
+- Hybrid RAG: vector search with keyword fallback
+- Triple-check validation on streamed tutor answers
+- 50 golden-query eval with RAGAS-style metrics (85% CI gate)
+- Human feedback loop (👍/👎) feeding mutation cron
+
+**Platform**
+- Clerk auth with JWT-verified account linking across devices
+- Stripe subscription tiers with usage limits and family sharing
+- B2B org API keys for driving schools
+- Caregiver read-only progress links
+- Daily Web Push review reminders (SM-2-aware, VAPID)
+- Rate limiting via Upstash with in-memory fallback
+- Admin dashboard — RAG traces, mutations, system health
+
+**Accessibility**
+- Elderly-first UX: large touch targets, font scaling (A/A+/A++), one task per screen
+- Vietnamese TTS and voice input (STT) on tutor page
 
 ---
 
@@ -114,30 +107,33 @@ Billing: [docs/BILLING.md](docs/BILLING.md) · Clerk: [docs/CLERK.md](docs/CLERK
 | Method | Path | Description |
 |--------|------|-------------|
 | GET | `/health` | Health check |
+| GET | `/health/observability` | Sentry, Langfuse, VAPID, Inngest status |
 | GET | `/docs` | Swagger UI |
-| GET | `/rag/status` | Chunks + AI provider + observability flags |
+| GET | `/rag/status` | Chunks indexed + AI provider flags |
 | POST | `/rag/query/stream` | SSE streaming tutor |
 | POST | `/rag/query` | RAG Q&A (strict/fast) |
 | GET | `/learning/:userId/next` | Adaptive question |
 | POST | `/telemetry` | UX event tracking |
+| POST | `/notifications/subscribe` | Web Push subscription |
+| POST | `/jobs/run` | Trigger background job (ingest, reembed, review-reminders) |
 | GET | `/mutation/status` | Self-improvement health |
-| GET | `/rag/states` | Available state corpora |
 | GET | `/billing/status/:userId` | Tier + daily usage |
-| POST | `/billing/checkout` | Stripe Checkout (Pro/Family) |
-| POST | `/rag/feedback` | Tutor answer feedback 👍/👎 |
+| POST | `/billing/checkout` | Stripe Checkout |
 | POST | `/b2b/v1/rag/query/stream` | B2B SSE tutor (API key) |
-| POST | `/family/invite` | Caregiver share link (Family) |
+| POST | `/family/invite` | Caregiver share link |
 | GET | `/family/shared/:token` | Read-only learner progress |
+
+Full OpenAPI spec: `/openapi.json`
 
 ---
 
-## Quick Start (Local — Free)
+## Quick Start
 
 ```bash
 git clone https://github.com/Khoido06/wa-drive-vietnamese-academy.git
 cd wa-drive-vietnamese-academy
 pnpm install
-pnpm infra:up          # Postgres + pgvector
+pnpm infra:up          # Postgres + pgvector (Docker)
 pnpm db:push
 pnpm setup:ollama      # qwen2.5:7b + nomic-embed-text
 pnpm dev               # web :3000 · api :4000
@@ -145,69 +141,52 @@ pnpm dev               # web :3000 · api :4000
 curl -X POST http://localhost:4000/rag/ingest
 ```
 
-### Testing
+### Scripts
 
 ```bash
-pnpm test              # unit tests (SM-2, keyword RAG, golden eval)
-pnpm eval:rag          # RAG retrieval eval report
-pnpm test:e2e          # Playwright smoke tests (7 tests)
+pnpm test              # unit tests
+pnpm eval:rag          # RAG retrieval eval (CI gate)
+pnpm test:e2e          # Playwright smoke tests
 pnpm check-types       # TypeScript across monorepo
-```
-
-Deploy: [docs/DEPLOY_NOW.md](docs/DEPLOY_NOW.md)
-
----
-
-## For Mom (Hạnh) 👩
-
-1. Mở https://wa-drive-vietnamese-academy.vercel.app → **Add to Home Screen**
-2. Nhập tên **Hạnh** → bước **Lưu tiến độ** → **Đăng nhập** (email/Gmail 1 lần)
-3. **Học** → **Thi thử** → **Hỏi thầy giáo AI**
-
-Unlimited: `PREMIUM_DISPLAY_NAMES=Mẹ,Hạnh,Mom` on **Railway API**. Clerk setup: [docs/CLERK.md](docs/CLERK.md).
-
----
-
-## Resume Bullets
-
-Full portfolio write-up: **[docs/RESUME.md](docs/RESUME.md)** (metrics, interview talking points, FAANG-ready copy).
-
-```
-• Built production AI learning platform (Next.js 16, React 19, Hono, pgvector) for Vietnamese
-  elderly DMV prep — live Vercel + Railway + Neon; 250 curated questions, offline PWA,
-  Clerk JWT-verified API account linking
-
-• Hybrid RAG: vector + keyword fallback, Groq SSE streaming, triple-check LLM validation,
-  Langfuse tracing; 50 golden-query eval with RAGAS-style metrics and 85% CI gate
-
-• Adaptive learning: SM-2 spaced repetition, Elo difficulty, failure-cluster curriculum,
-  telemetry-driven mutation cron; elderly UX (Vietnamese TTS/STT, font scaling, WCAG touch)
-
-• Production observability: Sentry, PostHog, Vercel Speed Insights, Upstash rate limiting
-  with graceful fallbacks; OpenAPI 3, Playwright E2E, GitHub Actions CI
-
-• Monorepo (Turborepo, 11 packages): Stripe billing, B2B org API keys, multi-state RAG,
-  family caregiver share — $0/month infra on free tiers
+pnpm setup:push        # VAPID keys + Web Push production setup
+pnpm setup:tier2       # Inngest self-host + OpenTelemetry on Railway
+pnpm deploy:inngest    # Redeploy Inngest service (isolated Dockerfile)
+pnpm smoke:prod        # Production smoke tests
 ```
 
 ---
 
-## Monorepo Structure
+## Documentation
+
+| Doc | Description |
+|-----|-------------|
+| [docs/DEPLOY.md](docs/DEPLOY.md) | Deployment guide |
+| [docs/OBSERVABILITY.md](docs/OBSERVABILITY.md) | Sentry, Langfuse, Inngest, Web Push |
+| [docs/BILLING.md](docs/BILLING.md) | Stripe tiers and usage limits |
+| [docs/CLERK.md](docs/CLERK.md) | Auth setup and account linking |
+| [docs/B2B.md](docs/B2B.md) | Org API keys for driving schools |
+| [docs/SCALE_ROADMAP.md](docs/SCALE_ROADMAP.md) | Growth and scaling plan |
+
+---
+
+## Project Structure
 
 ```
 apps/web              Next.js PWA + Playwright E2E
-apps/api              Hono REST API + OpenAPI + cron
-packages/ai-core      RAG pipeline + hybrid retrieval + Langfuse
-packages/learning-engine   SM-2, Elo, failure clusters
+apps/api              Hono REST API + OpenAPI + Inngest
+packages/ai-core      RAG pipeline + hybrid retrieval
+packages/learning-engine   SM-2, Elo, exams, billing
 packages/mutation-engine   Self-improvement loop
 packages/db           Drizzle + pgvector
 packages/ui           Elderly-first design system
+inngest/              Self-hosted Inngest Dockerfile
 infra/                Docker Compose
-docs/                 Deploy guide + observability setup
+docs/                 Guides and state corpora
+scripts/              Migrations, eval, deploy helpers
 ```
 
 ---
 
 ## License
 
-MIT · Built to help my mom pass the Washington driver test 🇺🇸
+MIT

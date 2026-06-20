@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { ElderButton } from "@repo/ui/elder-button";
+import { apiFetch, ensureUser, getUserId } from "../lib/api";
 
 const VAPID_KEY = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
 
@@ -12,25 +13,47 @@ export function PushPrompt() {
   useEffect(() => {
     if (!VAPID_KEY || typeof window === "undefined") return;
     if (!("Notification" in window) || !("serviceWorker" in navigator)) return;
-    if (Notification.permission === "granted" || Notification.permission === "denied") return;
+    if (Notification.permission === "denied") return;
+
     const dismissed = localStorage.getItem("wa_push_dismissed");
-    if (!dismissed) setVisible(true);
+    if (dismissed) return;
+
+    void (async () => {
+      try {
+        const reg = await navigator.serviceWorker.ready;
+        if (Notification.permission === "granted") {
+          const existing = await reg.pushManager.getSubscription();
+          if (existing) return;
+        }
+        setVisible(true);
+      } catch {
+        setVisible(true);
+      }
+    })();
   }, []);
 
   if (!visible || !VAPID_KEY) return null;
 
   const subscribe = async () => {
     try {
+      const permission = await Notification.requestPermission();
+      if (permission !== "granted") {
+        setStatus("Bạn có thể bật thông báo sau trong cài đặt trình duyệt");
+        return;
+      }
+
       const reg = await navigator.serviceWorker.ready;
-      const sub = await reg.pushManager.subscribe({
-        userVisibleOnly: true,
-        applicationServerKey: urlBase64ToUint8Array(VAPID_KEY) as BufferSource,
-      });
-      const userId = localStorage.getItem("wa_user_id");
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000";
-      await fetch(`${apiUrl}/notifications/subscribe`, {
+      let sub = await reg.pushManager.getSubscription();
+      if (!sub) {
+        sub = await reg.pushManager.subscribe({
+          userVisibleOnly: true,
+          applicationServerKey: urlBase64ToUint8Array(VAPID_KEY) as BufferSource,
+        });
+      }
+
+      const userId = getUserId() ?? (await ensureUser());
+      await apiFetch("/notifications/subscribe", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ userId, subscription: sub.toJSON() }),
       });
       setStatus("✅ Đã bật nhắc học hàng ngày");
@@ -50,8 +73,12 @@ export function PushPrompt() {
       <p>🔔 Bật nhắc học mỗi ngày? (SM-2 spaced repetition)</p>
       {status && <p style={{ fontSize: "var(--font-size-sm)" }}>{status}</p>}
       <div style={{ display: "flex", gap: "8px", marginTop: "8px" }}>
-        <ElderButton variant="success" onClick={subscribe}>Bật nhắc</ElderButton>
-        <ElderButton variant="secondary" onClick={dismiss}>Để sau</ElderButton>
+        <ElderButton variant="success" onClick={subscribe}>
+          Bật nhắc
+        </ElderButton>
+        <ElderButton variant="secondary" onClick={dismiss}>
+          Để sau
+        </ElderButton>
       </div>
     </div>
   );

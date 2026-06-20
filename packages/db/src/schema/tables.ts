@@ -234,6 +234,20 @@ export const organizations = pgTable(
   (table) => [index("orgs_name_idx").on(table.name)],
 );
 
+export const pushSubscriptions = pgTable(
+  "push_subscriptions",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    userId: uuid("user_id").references(() => users.id),
+    endpoint: text("endpoint").notNull().unique(),
+    p256dh: text("p256dh").notNull(),
+    auth: text("auth").notNull(),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+    updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  },
+  (table) => [index("push_sub_user_idx").on(table.userId)],
+);
+
 export const caregiverLinks = pgTable(
   "caregiver_links",
   {

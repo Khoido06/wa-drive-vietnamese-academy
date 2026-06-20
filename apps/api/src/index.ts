@@ -49,6 +49,7 @@ import {
 import { serve as inngestServeHandler } from "inngest/hono";
 import { inngest } from "./jobs/inngest-client.js";
 import { inngestFunctions } from "./jobs/inngest-functions.js";
+import { ensurePushSubscriptionsTable } from "./db/bootstrap.js";
 
 const inngestServe = inngestServeHandler({ client: inngest, functions: inngestFunctions });
 
@@ -141,6 +142,8 @@ logger.info("server starting", {
 
 startMutationCron();
 startReviewReminderCron();
+
+void ensurePushSubscriptionsTable();
 
 serveHttp({ fetch: app.fetch, port });
 

@@ -145,7 +145,7 @@ Creates pgvector HNSW index and re-embeds all `rag_chunks`.
 
 ## 9. Web Push (SM-2 review reminders)
 
-Generate VAPID keys: `npx web-push generate-vapid-keys`
+Generate VAPID keys: `npx web-push generate-vapid-keys` or `pnpm setup:push`
 
 ```env
 # Railway API
@@ -156,6 +156,8 @@ REVIEW_REMINDER_ENABLED=true
 # Vercel Web
 NEXT_PUBLIC_VAPID_PUBLIC_KEY=...   # same public key
 ```
+
+Daily cron: **7:00 AM PT** (`0 15 * * *` UTC). Subscriptions persist in `push_subscriptions` table.
 
 ---
 
