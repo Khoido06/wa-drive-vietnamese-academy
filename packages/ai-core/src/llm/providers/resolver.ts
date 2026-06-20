@@ -62,13 +62,13 @@ export async function resolveProviders(): Promise<{
     cached = { provider: ollamaProvider, embedProvider: ollamaProvider };
     return { provider: ollamaProvider, embedProvider: ollamaProvider, active: "ollama" };
   }
-  if (await groqProvider.isAvailable()) {
-    cached = { provider: groqProvider, embedProvider };
-    return { provider: groqProvider, embedProvider, active: "groq" };
-  }
   if (await openaiProvider.isAvailable()) {
     cached = { provider: openaiProvider, embedProvider: openaiProvider };
     return { provider: openaiProvider, embedProvider: openaiProvider, active: "openai" };
+  }
+  if (await groqProvider.isAvailable()) {
+    cached = { provider: groqProvider, embedProvider };
+    return { provider: groqProvider, embedProvider, active: "groq" };
   }
 
   cached = { provider: mockProvider, embedProvider: mockProvider };

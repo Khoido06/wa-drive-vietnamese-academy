@@ -34,7 +34,7 @@ app.post("/telemetry", postTelemetry);
 app.get("/mutation/status", mutationStatus);
 app.post("/mutation/run", runMutations);
 
-const port = Number(process.env.API_PORT ?? 4000);
+const port = Number(process.env.PORT ?? process.env.API_PORT ?? 4000);
 
 console.log(`🧬 WA Drive API running on http://localhost:${port}`);
 
