@@ -4,6 +4,22 @@ import { useCallback, useEffect, useRef } from "react";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000";
 
+let clerkTokenGetter: (() => Promise<string | null>) | null = null;
+
+/** Called from ClerkTokenBridge — sends JWT on API requests when signed in. */
+export function setClerkTokenGetter(fn: () => Promise<string | null>) {
+  clerkTokenGetter = fn;
+}
+
+async function buildHeaders(extra?: HeadersInit): Promise<HeadersInit> {
+  const headers: Record<string, string> = { "Content-Type": "application/json" };
+  if (clerkTokenGetter) {
+    const token = await clerkTokenGetter();
+    if (token) headers.Authorization = `Bearer ${token}`;
+  }
+  return { ...headers, ...(extra as Record<string, string> | undefined) };
+}
+
 function getSessionId(): string {
   if (typeof window === "undefined") return "server";
   let id = sessionStorage.getItem("wa_session_id");
@@ -24,9 +40,10 @@ export function setUserId(id: string) {
 }
 
 export async function apiFetch<T>(path: string, options?: RequestInit): Promise<T> {
+  const headers = await buildHeaders(options?.headers);
   const res = await fetch(`${API_URL}${path}`, {
     ...options,
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers,
   });
   if (!res.ok) {
     const err = await res.json().catch(() => ({ error: res.statusText }));
@@ -100,7 +117,7 @@ export async function streamRagQuery(
 
   const res = await fetch(`${API_URL}/rag/query/stream`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: await buildHeaders(),
     body: JSON.stringify({ query, userId, stateCode }),
   });
 

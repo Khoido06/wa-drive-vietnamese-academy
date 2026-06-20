@@ -30,4 +30,25 @@ test.describe("WA Drive — smoke tests", () => {
       timeout: 20_000,
     });
   });
+
+  test("exam page loads", async ({ page }) => {
+    await page.goto("/exam");
+    await expect(page.getByRole("heading", { name: /Thi thử/i })).toBeVisible({
+      timeout: 20_000,
+    });
+  });
+
+  test("sign-in page loads without server error", async ({ page }) => {
+    const res = await page.goto("/sign-in");
+    expect(res?.status()).toBeLessThan(500);
+    await expect(page.locator("body")).not.toContainText("MIDDLEWARE_INVOCATION_FAILED");
+    await expect(page.locator("body")).not.toContainText("500: INTERNAL_SERVER_ERROR");
+  });
+
+  test("progress page loads", async ({ page }) => {
+    await page.goto("/progress");
+    await expect(page.getByRole("heading", { name: /Tiến độ học/i })).toBeVisible({
+      timeout: 15_000,
+    });
+  });
 });

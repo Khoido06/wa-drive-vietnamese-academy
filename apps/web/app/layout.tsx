@@ -5,6 +5,7 @@ import { PushPrompt } from "../components/push-prompt";
 import { ServiceWorkerRegister } from "../components/sw-register";
 import { AppProviders } from "../components/app-providers";
 import { OptionalClerkProvider } from "../components/clerk-provider";
+import { ClerkTokenBridge } from "../components/clerk-token-bridge";
 import { OptionalUserSync } from "../components/user-sync";
 import "./globals.css";
 
@@ -41,6 +42,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <OptionalClerkProvider>
           <AppProviders>
             <FontSizeProvider>
+              <ClerkTokenBridge />
               <OptionalUserSync />
               {children}
               <MomOnboarding />

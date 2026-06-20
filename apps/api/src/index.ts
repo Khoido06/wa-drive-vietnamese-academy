@@ -3,6 +3,7 @@ import "./instrument.js";
 import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
+import { optionalClerkAuth } from "./middleware/clerk-auth.js";
 import { queryRag, ingestPdf, ragStatus, ragStates } from "./routes/rag.js";
 import {
   createUser,
@@ -58,11 +59,12 @@ app.onError((err, c) => {
 
 app.use("*", cors());
 app.use("*", requestLogger());
+app.use("*", optionalClerkAuth);
 
 const ragRateLimit = createRateLimit({ windowMs: 60_000, max: 20, keyPrefix: "rag" });
 
 app.get("/health", (c) =>
-  c.json({ status: "ok", system: "wa-drive-vietnamese-academy", version: "0.5.0" }),
+  c.json({ status: "ok", system: "wa-drive-vietnamese-academy", version: "0.6.0" }),
 );
 
 app.get("/health/observability", observabilityStatus);

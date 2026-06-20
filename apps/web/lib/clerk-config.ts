@@ -4,7 +4,7 @@ export function isClerkEnabled(): boolean {
   return Boolean(key?.trim());
 }
 
-/** Clerk middleware — needs both keys or Edge runtime throws 500. */
+/** Clerk middleware — needs both keys (API JWT verification). */
 export function isClerkMiddlewareEnabled(): boolean {
   const pk = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY?.trim();
   const sk = process.env.CLERK_SECRET_KEY?.trim();

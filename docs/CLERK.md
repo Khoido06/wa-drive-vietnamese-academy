@@ -44,7 +44,7 @@
 | `NEXT_PUBLIC_CLERK_SIGN_IN_URL` | `/sign-in` | Khuyên dùng |
 | `NEXT_PUBLIC_CLERK_SIGN_UP_URL` | `/sign-up` | Khuyên dùng |
 
-> Middleware **không** gọi `clerkMiddleware` — tránh lỗi `500 MIDDLEWARE_INVOCATION_FAILED`. Đăng nhập + sync tiến độ chạy client-side.
+> Middleware **không** gọi `clerkMiddleware` (tránh 500 Edge). API xác minh JWT qua `@clerk/backend` trên `/users/link`.
 
 Redeploy sau khi set.
 

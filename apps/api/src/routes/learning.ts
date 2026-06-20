@@ -33,6 +33,11 @@ export async function linkUser(c: Context) {
     return c.json({ error: "clerkId and displayName required" }, 400);
   }
 
+  const jwtClerkId = c.get("clerkUserId");
+  if (jwtClerkId && jwtClerkId !== clerkId) {
+    return c.json({ error: "clerkId does not match session" }, 403);
+  }
+
   try {
     const user = await linkClerkUser(clerkId, displayName, localUserId);
     return c.json(user);

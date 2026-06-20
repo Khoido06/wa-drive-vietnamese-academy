@@ -65,7 +65,7 @@ Production RAG over the official **191-page Vietnamese WA Driver Guide** (100 in
 | AI (prod) | Groq `llama-3.1-8b-instant` | Free tier |
 | AI (local) | Ollama `qwen2.5:7b` + `nomic-embed-text` | Free |
 | Search | pgvector + **keyword hybrid fallback** | $0 |
-| Observability | Sentry, PostHog, Vercel Analytics, Langfuse | Free tiers (optional) |
+| Observability | Sentry, PostHog, Vercel Analytics, **Speed Insights**, Langfuse | Free tiers (optional) |
 | Rate Limiting | Upstash Redis → in-memory fallback | Free tiers |
 | Testing | Node.js test runner + Playwright E2E | $0 |
 | API Docs | OpenAPI 3 + Swagger UI | $0 |
@@ -91,9 +91,9 @@ Scale roadmap (A + B + C): [docs/SCALE_ROADMAP.md](docs/SCALE_ROADMAP.md)
 - **OpenAPI docs** — `/docs` + `/openapi.json`
 - **Observability** — Sentry, PostHog, Vercel Analytics, Langfuse (all optional)
 - **Playwright E2E** — smoke tests in CI
-- **RAG eval (CI gate)** — 12 golden queries, 85% retrieval pass rate
+- **RAG eval (CI gate)** — 50 golden queries, RAGAS-style metrics, 85% pass rate
 - **Admin dashboard** — `/admin` (RAG traces, mutations, system health)
-- **Clerk auth** — optional; **mom does not need login** (sync when changing phone)
+- **Clerk auth + JWT API** — sign-in sync; `@clerk/backend` verifies account linking
 - **Voice input (STT)** — 🎤 nói câu hỏi trên tutor page
 - **Stripe tiers** — Free / Pro / Family (mom WA stays free)
 - **Multi-state RAG** — `state_code` filter (WA default, Pro unlocks more)
@@ -150,7 +150,7 @@ curl -X POST http://localhost:4000/rag/ingest
 ```bash
 pnpm test              # unit tests (SM-2, keyword RAG, golden eval)
 pnpm eval:rag          # RAG retrieval eval report
-pnpm test:e2e          # Playwright smoke tests (4 tests)
+pnpm test:e2e          # Playwright smoke tests (7 tests)
 pnpm check-types       # TypeScript across monorepo
 ```
 
@@ -170,21 +170,24 @@ Unlimited: `PREMIUM_DISPLAY_NAMES=Mẹ,Hạnh,Mom` on **Railway API**. Clerk set
 
 ## Resume Bullets
 
+Full portfolio write-up: **[docs/RESUME.md](docs/RESUME.md)** (metrics, interview talking points, FAANG-ready copy).
+
 ```
-• Built full-stack AI learning platform (Next.js 16, Hono, pgvector RAG) for Vietnamese
-  elderly learners — deployed Vercel + Railway + Neon on 100% free tier
+• Built production AI learning platform (Next.js 16, React 19, Hono, pgvector) for Vietnamese
+  elderly DMV prep — live Vercel + Railway + Neon; 250 curated questions, offline PWA,
+  Clerk JWT-verified API account linking
 
-• Implemented hybrid RAG (vector + keyword fallback), Groq SSE streaming tutor, triple-check
-  validation, and grounding heuristics over 191-page PDF corpus
+• Hybrid RAG: vector + keyword fallback, Groq SSE streaming, triple-check LLM validation,
+  Langfuse tracing; 50 golden-query eval with RAGAS-style metrics and 85% CI gate
 
-• Designed elderly-first PWA with Vietnamese TTS, dynamic font scaling, SM-2 spaced
-  repetition, Elo difficulty, and telemetry-driven mutation engine
+• Adaptive learning: SM-2 spaced repetition, Elo difficulty, failure-cluster curriculum,
+  telemetry-driven mutation cron; elderly UX (Vietnamese TTS/STT, font scaling, WCAG touch)
 
-• Production observability: Sentry error tracking, PostHog analytics, Langfuse RAG tracing,
-  Upstash rate limiting — all optional free tiers with graceful fallbacks
+• Production observability: Sentry, PostHog, Vercel Speed Insights, Upstash rate limiting
+  with graceful fallbacks; OpenAPI 3, Playwright E2E, GitHub Actions CI
 
-• Monorepo (Turborepo, 11 packages): OpenAPI docs, Playwright E2E, GitHub Actions CI,
-  Docker, unit tests — zero paid AI tokens required for core features
+• Monorepo (Turborepo, 11 packages): Stripe billing, B2B org API keys, multi-state RAG,
+  family caregiver share — $0/month infra on free tiers
 ```
 
 ---
