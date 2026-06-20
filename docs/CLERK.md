@@ -60,8 +60,17 @@ Bật khi bạn muốn:
 |------|---------|
 | `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` | `pk_live_...` |
 | `CLERK_SECRET_KEY` | `sk_live_...` |
+| `NEXT_PUBLIC_CLERK_SIGN_IN_URL` | `/sign-in` |
+| `NEXT_PUBLIC_CLERK_SIGN_UP_URL` | `/sign-up` |
 
 Xóa các key `pk_test_` / `sk_test_` cũ → **Redeploy**.
+
+Hoặc chạy script (sau khi có `pk_live_` / `sk_live_`):
+
+```bash
+chmod +x scripts/setup-clerk-production.sh
+./scripts/setup-clerk-production.sh
+```
 
 ### 3. Clerk paths
 

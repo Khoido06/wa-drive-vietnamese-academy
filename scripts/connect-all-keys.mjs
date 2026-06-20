@@ -58,6 +58,8 @@ const VERCEL_VARS = [
   "NEXT_PUBLIC_POSTHOG_KEY",
   "NEXT_PUBLIC_POSTHOG_HOST",
   "NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY",
+  "NEXT_PUBLIC_CLERK_SIGN_IN_URL",
+  "NEXT_PUBLIC_CLERK_SIGN_UP_URL",
   "CLERK_SECRET_KEY",
   "ADMIN_SECRET",
 ];
@@ -75,6 +77,8 @@ const DEFAULTS = {
   WEB_URL: "https://wa-drive-vietnamese-academy.vercel.app",
   NEXT_PUBLIC_API_URL: "https://api-production-72db.up.railway.app",
   NEXT_PUBLIC_POSTHOG_HOST: "https://us.i.posthog.com",
+  NEXT_PUBLIC_CLERK_SIGN_IN_URL: "/sign-in",
+  NEXT_PUBLIC_CLERK_SIGN_UP_URL: "/sign-up",
   LANGFUSE_BASE_URL: "https://cloud.langfuse.com",
   STREAM_LLM_VALIDATOR: "true",
   RAG_AB_ENABLED: "false",

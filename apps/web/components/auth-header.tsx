@@ -1,6 +1,7 @@
 "use client";
 
-import { useAuth, SignInButton, UserButton } from "@clerk/nextjs";
+import Link from "next/link";
+import { useAuth, UserButton } from "@clerk/nextjs";
 import { isClerkEnabled } from "../lib/clerk-config";
 
 function ClerkAuthHeader() {
@@ -11,11 +12,9 @@ function ClerkAuthHeader() {
       {isSignedIn ? (
         <UserButton />
       ) : (
-        <SignInButton mode="modal">
-          <button type="button" className="auth-sign-in">
-            Đăng nhập
-          </button>
-        </SignInButton>
+        <Link href="/sign-in" className="auth-sign-in">
+          Đăng nhập
+        </Link>
       )}
     </div>
   );
