@@ -116,6 +116,7 @@ Billing: [docs/BILLING.md](docs/BILLING.md)
 | POST | `/rag/query` | RAG Q&A (strict/fast) |
 | GET | `/learning/:userId/next` | Adaptive question |
 | POST | `/telemetry` | UX event tracking |
+| GET | `/mutation/status` | Self-improvement health |
 | GET | `/rag/states` | Available state corpora |
 | GET | `/billing/status/:userId` | Tier + daily usage |
 | POST | `/billing/checkout` | Stripe Checkout (Pro/Family) |
