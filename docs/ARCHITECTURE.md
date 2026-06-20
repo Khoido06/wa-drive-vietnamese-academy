@@ -188,4 +188,5 @@ See `.env.example` at repo root.
 | 3 | Mutation engine + telemetry pipeline | ✅ |
 | 4 | Elderly PWA product layer | ✅ |
 | 5 | Voice tutor + offline PWA | 🔜 |
-| 6 | Production deployment + continuous loop | 🔜 |
+| 6 | Production deployment + continuous loop | ✅ |
+| 7 | Scale: B+C balanced roadmap | 📋 [SCALE_ROADMAP.md](./SCALE_ROADMAP.md) |

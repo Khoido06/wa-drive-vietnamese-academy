@@ -32,6 +32,7 @@ export const users = pgTable("users", {
   id: uuid("id").primaryKey().defaultRandom(),
   displayName: text("display_name").notNull(),
   locale: text("locale").notNull().default("vi"),
+  clerkId: text("clerk_id").unique(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });

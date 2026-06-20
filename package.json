@@ -10,6 +10,7 @@
     "check-types": "turbo run check-types",
     "test": "turbo run test",
     "test:e2e": "pnpm --filter web test:e2e",
+    "eval:rag": "pnpm --filter @repo/ai-core eval:rag",
     "infra:up": "docker compose -f infra/docker-compose.yml up -d",
     "infra:down": "docker compose -f infra/docker-compose.yml down",
     "db:push": "pnpm --filter @repo/db db:push",

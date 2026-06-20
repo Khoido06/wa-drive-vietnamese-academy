@@ -3,6 +3,8 @@ import { FontSizeProvider } from "../lib/font-size";
 import { MomOnboarding } from "../components/mom-onboarding";
 import { ServiceWorkerRegister } from "../components/sw-register";
 import { AppProviders } from "../components/app-providers";
+import { OptionalClerkProvider } from "../components/clerk-provider";
+import { OptionalUserSync } from "../components/user-sync";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -35,13 +37,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="icon" href="/icon.svg" type="image/svg+xml" />
       </head>
       <body>
-        <AppProviders>
-          <FontSizeProvider>
-            {children}
-            <MomOnboarding />
-            <ServiceWorkerRegister />
-          </FontSizeProvider>
-        </AppProviders>
+        <OptionalClerkProvider>
+          <AppProviders>
+            <FontSizeProvider>
+              <OptionalUserSync />
+              {children}
+              <MomOnboarding />
+              <ServiceWorkerRegister />
+            </FontSizeProvider>
+          </AppProviders>
+        </OptionalClerkProvider>
       </body>
     </html>
   );

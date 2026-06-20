@@ -9,6 +9,7 @@ import { vi } from "@repo/ui/i18n/vi";
 import { streamRagQuery, useTelemetry } from "../../lib/api";
 import { HeaderAction } from "../../components/header-action";
 import { VoiceButton } from "../../components/voice-button";
+import { VoiceInputButton } from "../../components/voice-input-button";
 
 const QUICK_QUESTIONS = [
   "Tốc độ tối đa trong khu dân cư?",
@@ -60,6 +61,14 @@ export default function TutorPage() {
     <ScreenLayout title={vi.tutor.title} subtitle={vi.tutor.subtitle} onBack={() => router.push("/")} headerAction={<HeaderAction />}>
       <label htmlFor="tutor-input" className="question-topic">Câu hỏi của bạn</label>
       <textarea id="tutor-input" className="tutor-input" value={query} onChange={(e) => setQuery(e.target.value)} placeholder={vi.tutor.placeholder} rows={3} />
+
+      <VoiceInputButton
+        onTranscript={(text) => {
+          setQuery(text);
+          track("tutor_voice_input");
+        }}
+        disabled={streaming}
+      />
 
       <div className="tutor-chips">
         {QUICK_QUESTIONS.map((q) => (

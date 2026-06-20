@@ -6,6 +6,7 @@ import { cors } from "hono/cors";
 import { queryRag, ingestPdf, ragStatus } from "./routes/rag.js";
 import {
   createUser,
+  linkUser,
   nextQuestion,
   submitAttempt,
   userProgress,
@@ -14,6 +15,7 @@ import {
 import { mutationStatus, runMutations } from "./routes/mutation.js";
 import { queryRagStream } from "./routes/rag-stream.js";
 import { openApiDocs, openApiJson } from "./routes/docs.js";
+import { adminAuth, adminOverview, adminTraces, adminMutations } from "./routes/admin.js";
 import { createRateLimit } from "./middleware/rate-limit-upstash.js";
 import { logger, requestLogger } from "./middleware/logger.js";
 import { startMutationCron } from "./jobs/mutation-cron.js";
@@ -46,6 +48,7 @@ app.post("/rag/ingest", queryRag);
 app.get("/rag/status", ragStatus);
 
 app.post("/users", createUser);
+app.post("/users/link", linkUser);
 app.get("/learning/:userId/next", nextQuestion);
 app.post("/learning/attempt", submitAttempt);
 app.get("/learning/:userId/progress", userProgress);
@@ -53,6 +56,11 @@ app.post("/telemetry", postTelemetry);
 
 app.get("/mutation/status", mutationStatus);
 app.post("/mutation/run", runMutations);
+
+const admin = adminAuth();
+app.get("/admin/overview", admin, adminOverview);
+app.get("/admin/traces", admin, adminTraces);
+app.get("/admin/mutations", admin, adminMutations);
 
 const port = Number(process.env.PORT ?? process.env.API_PORT ?? 4000);
 

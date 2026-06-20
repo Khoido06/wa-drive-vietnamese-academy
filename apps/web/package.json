@@ -13,6 +13,7 @@
     "test:e2e:ui": "playwright test --ui"
   },
   "dependencies": {
+    "@clerk/nextjs": "^7.5.7",
     "@repo/ui": "workspace:*",
     "@sentry/nextjs": "^10.59.0",
     "@vercel/analytics": "^2.0.1",

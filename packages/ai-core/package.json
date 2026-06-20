@@ -12,7 +12,8 @@
   "scripts": {
     "lint": "eslint . --max-warnings 0",
     "check-types": "tsc --noEmit",
-    "test": "node --import tsx --test src/**/*.test.ts"
+    "test": "node --import tsx --test src/**/*.test.ts eval/**/*.test.ts",
+    "eval:rag": "node --import tsx eval/run-eval.ts"
   },
   "dependencies": {
     "@repo/db": "workspace:*",

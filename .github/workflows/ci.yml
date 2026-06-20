@@ -27,6 +27,8 @@ jobs:
 
       - run: pnpm test
 
+      - run: pnpm eval:rag
+
       - run: pnpm --filter web build
 
   e2e:

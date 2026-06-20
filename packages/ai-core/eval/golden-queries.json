@@ -1,0 +1,74 @@
+[
+  {
+    "id": "q1",
+    "query": "Tốc độ tối đa trong khu dân cư?",
+    "expectedInTopChunk": ["25", "mph", "dân cư"],
+    "minRetrievalScore": 0.25
+  },
+  {
+    "id": "q2",
+    "query": "Thắt dây an toàn có bắt buộc không?",
+    "expectedInTopChunk": ["dây an toàn", "bắt buộc"],
+    "minRetrievalScore": 0.25
+  },
+  {
+    "id": "q3",
+    "query": "Gặp xe cứu thương phải làm gì?",
+    "expectedInTopChunk": ["cứu thương", "nhường"],
+    "minRetrievalScore": 0.25
+  },
+  {
+    "id": "q4",
+    "query": "Đèn vàng có nghĩa là gì?",
+    "expectedInTopChunk": ["vàng", "đỏ"],
+    "minRetrievalScore": 0.25
+  },
+  {
+    "id": "q5",
+    "query": "Đèn đỏ phải làm gì?",
+    "expectedInTopChunk": ["đèn đỏ", "dừng"],
+    "minRetrievalScore": 0.25
+  },
+  {
+    "id": "q6",
+    "query": "Khoảng cách an toàn phía sau xe?",
+    "expectedInTopChunk": ["3 giây", "khoảng cách"],
+    "minRetrievalScore": 0.2
+  },
+  {
+    "id": "q7",
+    "query": "Biển STOP nghĩa là gì?",
+    "expectedInTopChunk": ["STOP", "dừng"],
+    "minRetrievalScore": 0.2
+  },
+  {
+    "id": "q8",
+    "query": "Uống rượu bia khi lái xe có được không?",
+    "expectedInTopChunk": ["rượu", "0.08"],
+    "minRetrievalScore": 0.2
+  },
+  {
+    "id": "q9",
+    "query": "Người đi bộ có quyền ưu tiên không?",
+    "expectedInTopChunk": ["đi bộ", "ưu tiên"],
+    "minRetrievalScore": 0.2
+  },
+  {
+    "id": "q10",
+    "query": "Đỗ xe song song cách lề bao nhiêu?",
+    "expectedInTopChunk": ["12 inch", "đỗ xe"],
+    "minRetrievalScore": 0.2
+  },
+  {
+    "id": "q11",
+    "query": "Biển yield là gì?",
+    "expectedInTopChunk": ["yield", "nhường"],
+    "minRetrievalScore": 0.2
+  },
+  {
+    "id": "q12",
+    "query": "Tốc độ trên đường cao tốc?",
+    "expectedInTopChunk": ["cao tốc", "60", "70"],
+    "minRetrievalScore": 0.2
+  }
+]

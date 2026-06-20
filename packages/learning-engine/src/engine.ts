@@ -52,6 +52,37 @@ export async function getOrCreateUser(displayName: string) {
   return created;
 }
 
+/** Link Clerk account to existing local user — keeps progress when mom signs in on new device */
+export async function linkClerkUser(
+  clerkId: string,
+  displayName: string,
+  localUserId?: string,
+) {
+  const db = getDb();
+
+  const [byClerk] = await db.select().from(users).where(eq(users.clerkId, clerkId)).limit(1);
+  if (byClerk) return byClerk;
+
+  if (localUserId) {
+    const [local] = await db.select().from(users).where(eq(users.id, localUserId)).limit(1);
+    if (local && !local.clerkId) {
+      const [updated] = await db
+        .update(users)
+        .set({ clerkId, displayName, updatedAt: new Date() })
+        .where(eq(users.id, localUserId))
+        .returning();
+      if (updated) return updated;
+    }
+  }
+
+  const [created] = await db
+    .insert(users)
+    .values({ displayName, clerkId, locale: "vi" })
+    .returning();
+  if (!created) throw new Error("Failed to link user");
+  return created;
+}
+
 export async function getNextQuestion(userId: string): Promise<NextQuestionResult> {
   const db = getDb();
 

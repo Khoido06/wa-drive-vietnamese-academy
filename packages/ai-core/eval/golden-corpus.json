@@ -1,0 +1,62 @@
+[
+  {
+    "id": "c1",
+    "content": "Tốc độ tối đa trong khu dân cư (residential area) thường là 25 mph trừ khi có biển báo khác. Luôn điều chỉnh tốc độ phù hợp với điều kiện thời tiết và giao thông.",
+    "sectionTitle": "Tốc độ"
+  },
+  {
+    "id": "c2",
+    "content": "Thắt dây an toàn (seat belt) là bắt buộc cho tài xế và hành khách ở ghế trước. Trẻ em phải ngồi ghế an toàn phù hợp với tuổi và cân nặng.",
+    "sectionTitle": "An toàn"
+  },
+  {
+    "id": "c3",
+    "content": "Khi gặp xe cứu thương, xe cứu hỏa hoặc xe cảnh sát có còi và đèn nhấp nháy, bạn phải nhường đường ngay lập tức. Di chuyển sang phải và dừng lại nếu cần.",
+    "sectionTitle": "Xe ưu tiên"
+  },
+  {
+    "id": "c4",
+    "content": "Đèn vàng (yellow light) có nghĩa là tín hiệu sắp chuyển sang đỏ. Bạn nên dừng lại nếu có thể an toàn. Không tăng tốc để vượt đèn vàng.",
+    "sectionTitle": "Tín hiệu giao thông"
+  },
+  {
+    "id": "c5",
+    "content": "Đèn đỏ (red light) bắt buộc phải dừng hoàn toàn trước vạch dừng hoặc giao lộ. Chỉ được rẽ phải khi đèn đỏ nếu không có biển cấm và đã dừng an toàn.",
+    "sectionTitle": "Tín hiệu giao thông"
+  },
+  {
+    "id": "c6",
+    "content": "Khoảng cách an toàn (following distance) nên duy trì ít nhất 3 giây phía sau xe phía trước. Trong điều kiện mưa hoặc sương mù, tăng lên 4-6 giây.",
+    "sectionTitle": "Khoảng cách"
+  },
+  {
+    "id": "c7",
+    "content": "Biển báo STOP yêu cầu dừng hoàn toàn. Dừng tại vạch dừng, nhìn trái phải, chỉ đi khi an toàn. STOP sign là biển bắt buộc dừng.",
+    "sectionTitle": "Biển báo"
+  },
+  {
+    "id": "c8",
+    "content": "Uống rượu bia (DUI) khi lái xe bị cấm nghiêm. BAC từ 0.08% trở lên là vi phạm luật. Tài xế dưới 21 tuổi không được uống rượu bia khi lái xe.",
+    "sectionTitle": "Rượu bia"
+  },
+  {
+    "id": "c9",
+    "content": "Người đi bộ (pedestrian) có quyền ưu tiên tại vạch sang đường và giao lộ. Luôn nhường đường cho người đi bộ, đặc biệt ở khu học đường.",
+    "sectionTitle": "Người đi bộ"
+  },
+  {
+    "id": "c10",
+    "content": "Khi đỗ xe song song (parallel parking), bạn phải cách lề đường không quá 12 inch. Bật đèn tín hiệu khi đỗ xe hoặc rời khỏi vị trí đỗ.",
+    "sectionTitle": "Đỗ xe"
+  },
+  {
+    "id": "c11",
+    "content": "Biển báo yield (nhường đường) yêu cầu giảm tốc và nhường quyền đi trước cho xe khác. Không cần dừng hoàn toàn nếu không có xe đang tới.",
+    "sectionTitle": "Biển báo"
+  },
+  {
+    "id": "c12",
+    "content": "Trên đường cao tốc (freeway), tốc độ tối đa thường là 60-70 mph tùy khu vực. Luôn đi làn phải trừ khi vượt xe.",
+    "sectionTitle": "Tốc độ"
+  }
+]

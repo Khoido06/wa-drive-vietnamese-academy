@@ -1,6 +1,7 @@
 import type { Context } from "hono";
 import {
   getOrCreateUser,
+  linkClerkUser,
   getNextQuestion,
   recordAttempt,
   getProgress,
@@ -13,6 +14,26 @@ export async function createUser(c: Context) {
 
   const user = await getOrCreateUser(displayName);
   return c.json(user);
+}
+
+export async function linkUser(c: Context) {
+  const { clerkId, displayName, localUserId } = await c.req.json<{
+    clerkId: string;
+    displayName: string;
+    localUserId?: string;
+  }>();
+
+  if (!clerkId || !displayName) {
+    return c.json({ error: "clerkId and displayName required" }, 400);
+  }
+
+  try {
+    const user = await linkClerkUser(clerkId, displayName, localUserId);
+    return c.json(user);
+  } catch (err) {
+    const message = err instanceof Error ? err.message : "Failed to link user";
+    return c.json({ error: message }, 500);
+  }
 }
 
 export async function nextQuestion(c: Context) {

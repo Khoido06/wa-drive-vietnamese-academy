@@ -75,6 +75,8 @@ Production RAG over the official **191-page Vietnamese WA Driver Guide** (100 in
 
 Observability setup: [docs/OBSERVABILITY.md](docs/OBSERVABILITY.md)
 
+Scale roadmap (A + B + C): [docs/SCALE_ROADMAP.md](docs/SCALE_ROADMAP.md)
+
 ---
 
 ## Key Features
@@ -89,6 +91,10 @@ Observability setup: [docs/OBSERVABILITY.md](docs/OBSERVABILITY.md)
 - **OpenAPI docs** — `/docs` + `/openapi.json`
 - **Observability** — Sentry, PostHog, Vercel Analytics, Langfuse (all optional)
 - **Playwright E2E** — smoke tests in CI
+- **RAG eval (CI gate)** — 12 golden queries, 85% retrieval pass rate
+- **Admin dashboard** — `/admin` (RAG traces, mutations, system health)
+- **Clerk auth** — optional login, sync progress across devices
+- **Voice input (STT)** — 🎤 nói câu hỏi trên tutor page
 - **Elderly UX** — TTS 🔊, font scaling, one task per screen
 
 ---
@@ -125,7 +131,8 @@ curl -X POST http://localhost:4000/rag/ingest
 ### Testing
 
 ```bash
-pnpm test              # unit tests (SM-2, keyword RAG)
+pnpm test              # unit tests (SM-2, keyword RAG, golden eval)
+pnpm eval:rag          # RAG retrieval eval report
 pnpm test:e2e          # Playwright smoke tests (4 tests)
 pnpm check-types       # TypeScript across monorepo
 ```
