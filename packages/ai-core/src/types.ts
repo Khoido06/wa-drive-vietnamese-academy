@@ -11,6 +11,7 @@ export interface RetrievalTrace {
   chunks: RagChunk[];
   topK: number;
   latencyMs: number;
+  retrievalMode?: "vector" | "keyword";
 }
 
 export interface RagAnswer {

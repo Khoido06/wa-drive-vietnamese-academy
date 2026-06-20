@@ -25,4 +25,6 @@ jobs:
 
       - run: pnpm check-types
 
+      - run: pnpm test
+
       - run: pnpm --filter web build
