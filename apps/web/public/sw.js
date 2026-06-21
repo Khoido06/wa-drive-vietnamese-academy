@@ -1,4 +1,4 @@
-const CACHE = "wa-drive-v3";
+const CACHE = "wa-drive-v4";
 const API_CACHE = "wa-drive-api-v1";
 const OFFLINE_ASSETS = [
   "/",
@@ -39,6 +39,12 @@ self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET") return;
   const url = new URL(event.request.url);
 
+  // Next.js hashed assets — always network (never serve stale JS/CSS)
+  if (url.pathname.startsWith("/_next/")) {
+    event.respondWith(fetch(event.request));
+    return;
+  }
+
   // Offline exam bundle — cache first
   if (url.pathname.startsWith("/offline/")) {
     event.respondWith(
@@ -71,19 +77,24 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  // Static pages — stale-while-revalidate
-  event.respondWith(
-    caches.match(event.request).then((cached) => {
-      const network = fetch(event.request).then((res) => {
-        if (res.ok && url.origin === self.location.origin) {
-          const clone = res.clone();
-          caches.open(CACHE).then((cache) => cache.put(event.request, clone));
-        }
-        return res;
-      });
-      return cached ?? network;
-    }),
-  );
+  // App shell pages — network first, cache fallback for offline
+  if (OFFLINE_ASSETS.includes(url.pathname)) {
+    event.respondWith(
+      fetch(event.request)
+        .then((res) => {
+          if (res.ok && url.origin === self.location.origin) {
+            const clone = res.clone();
+            caches.open(CACHE).then((cache) => cache.put(event.request, clone));
+          }
+          return res;
+        })
+        .catch(() => caches.match(event.request).then((c) => c ?? Response.error())),
+    );
+    return;
+  }
+
+  // Everything else — network only
+  event.respondWith(fetch(event.request));
 });
 
 // Web Push — SM-2 review reminder
