@@ -1,7 +1,7 @@
 /** Local study gamification — streak, daily goal, combo; syncs to DB when signed in. */
 
 import { apiFetch, getUserId } from "./api";
-import { triggerCelebrate } from "./celebration";
+import { triggerCelebrate, triggerCorrect } from "./celebration";
 
 export interface StudyStats {
   streak: number;
@@ -238,7 +238,7 @@ function praiseForCorrect(combo: number, streak: number): { title: string; subti
     return { title: titles[combo % titles.length]!, subtitle: `${streak} ngày học liên tiếp`, celebrate: combo >= 1 };
   }
   const titles = ["✅ Chính xác!", "👏 Giỏi lắm!", "💚 Đúng rồi!", "🎯 Xuất sắc!", "😊 Tốt lắm!"];
-  return { title: titles[combo % titles.length]! };
+  return { title: titles[combo % titles.length]!, celebrate: true };
 }
 
 export function recordPracticeAnswer(isCorrect: boolean): AnswerRecorded {
@@ -284,12 +284,14 @@ export function recordPracticeAnswer(isCorrect: boolean): AnswerRecorded {
       celebrate: true,
       milestone: "daily_goal",
     };
+    triggerCorrect();
     triggerCelebrate();
     return result;
   }
 
-  if (praise.celebrate) triggerCelebrate();
-  return { stats, ...praise };
+  triggerCorrect();
+  if (praise.celebrate && combo >= 3) triggerCelebrate();
+  return { stats, ...praise, celebrate: true };
 }
 
 export function recordExamComplete(passed: boolean, score: number, total: number): AnswerRecorded {
@@ -304,6 +306,7 @@ export function recordExamComplete(passed: boolean, score: number, total: number
   const stats = getStudyStats();
 
   if (passed) {
+    triggerCorrect();
     triggerCelebrate();
     return {
       stats,

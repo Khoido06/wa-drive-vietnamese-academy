@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { onCelebrate } from "../lib/celebration";
+import { onCelebrate, onCorrect } from "../lib/celebration";
 
 const COLORS = ["#0b5cad", "#007a33", "#f59e0b", "#ec4899", "#8b5cf6", "#22c55e", "#ef4444"];
 
@@ -22,7 +22,7 @@ export function ConfettiOverlay() {
   const rafRef = useRef<number>(0);
 
   useEffect(() => {
-    return onCelebrate(() => {
+    const burst = (count: number) => {
       const canvas = canvasRef.current;
       if (!canvas) return;
       const ctx = canvas.getContext("2d");
@@ -31,7 +31,7 @@ export function ConfettiOverlay() {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
 
-      const particles: Particle[] = Array.from({ length: 120 }, () => ({
+      const particles: Particle[] = Array.from({ length: count }, () => ({
         x: canvas.width * (0.3 + Math.random() * 0.4),
         y: canvas.height * 0.35,
         vx: (Math.random() - 0.5) * 14,
@@ -77,7 +77,14 @@ export function ConfettiOverlay() {
 
       cancelAnimationFrame(rafRef.current);
       rafRef.current = requestAnimationFrame(frame);
-    });
+    };
+
+    const unsubCorrect = onCorrect(() => burst(50));
+    const unsubCelebrate = onCelebrate(() => burst(120));
+    return () => {
+      unsubCorrect();
+      unsubCelebrate();
+    };
   }, []);
 
   useEffect(() => () => cancelAnimationFrame(rafRef.current), []);

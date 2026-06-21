@@ -16,6 +16,7 @@ import { VoiceButton } from "./voice-button";
 import { ManeuverSimulation } from "./maneuver-simulation";
 import { ManeuverVideoGuide } from "./maneuver-video-guide";
 import { DrivingSimulator } from "./driving-simulator";
+import { triggerCorrect } from "../lib/celebration";
 
 interface Props {
   maneuver: PracticalManeuver;
@@ -62,6 +63,7 @@ export function ManeuverWalkthrough({ maneuver, onBack }: Props) {
     if (!quizAnswer) return;
     setQuizSubmitted(true);
     if (quizAnswer === maneuver.quiz.correctOptionId) {
+      triggerCorrect();
       setQuizPassed(maneuver.id);
       setQuizDone(true);
     }
