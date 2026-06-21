@@ -177,7 +177,7 @@ export default function LearnPage() {
                 type={result.isCorrect ? "success" : "error"}
                 title={encouragement?.title ?? (result.isCorrect ? vi.learn.correct : vi.learn.incorrect)}
                 subtitle={encouragement?.subtitle}
-                celebrate={encouragement?.celebrate}
+                celebrate={encouragement?.celebrate ?? result.isCorrect}
                 explanation={result.explanationVi}
               />
               {result.explanationVi && (
