@@ -17,6 +17,7 @@ import { ManeuverSimulation } from "./maneuver-simulation";
 import { ManeuverVideoGuide } from "./maneuver-video-guide";
 import { DrivingSimulator } from "./driving-simulator";
 import { triggerCorrect } from "../lib/celebration";
+import { unlockAudio } from "../lib/correct-sound";
 
 interface Props {
   maneuver: PracticalManeuver;
@@ -61,6 +62,7 @@ export function ManeuverWalkthrough({ maneuver, onBack }: Props) {
 
   const submitQuiz = () => {
     if (!quizAnswer) return;
+    unlockAudio();
     setQuizSubmitted(true);
     if (quizAnswer === maneuver.quiz.correctOptionId) {
       triggerCorrect();

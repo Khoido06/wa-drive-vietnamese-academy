@@ -3,6 +3,7 @@ import { FontSizeProvider } from "../lib/font-size";
 import { MomOnboarding } from "../components/mom-onboarding";
 import { PushPrompt } from "../components/push-prompt";
 import { TtsPreload } from "../components/tts-preload";
+import { AudioUnlock } from "../components/audio-unlock";
 import { ConfettiOverlay } from "../components/confetti-overlay";
 import { CheerMascot } from "../components/cheer-mascot";
 import { ServiceWorkerRegister } from "../components/sw-register";
@@ -50,6 +51,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <OptionalUserSync />
               {children}
               <TtsPreload />
+              <AudioUnlock />
               <ConfettiOverlay />
               <CheerMascot />
               <MomOnboarding />

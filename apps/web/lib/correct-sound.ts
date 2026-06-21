@@ -3,11 +3,33 @@
 const MUTE_KEY = "wa_sound_muted";
 
 let audioCtx: AudioContext | null = null;
+let unlocked = false;
+
+/** Call synchronously inside a user gesture (tap/click) to unlock iOS Safari audio. */
+export function unlockAudio(): void {
+  if (typeof window === "undefined") return;
+  if (localStorage.getItem(MUTE_KEY) === "1") return;
+
+  if (!audioCtx) audioCtx = new AudioContext();
+  if (audioCtx.state === "suspended") void audioCtx.resume();
+
+  if (unlocked) return;
+  try {
+    const buf = audioCtx.createBuffer(1, 1, 22050);
+    const src = audioCtx.createBufferSource();
+    src.buffer = buf;
+    src.connect(audioCtx.destination);
+    src.start(0);
+    unlocked = true;
+  } catch {
+    // iOS may reject until gesture — retry on next tap
+  }
+}
 
 function getCtx(): AudioContext | null {
   if (typeof window === "undefined") return null;
   if (localStorage.getItem(MUTE_KEY) === "1") return null;
-  if (!audioCtx) audioCtx = new AudioContext();
+  if (!audioCtx || !unlocked) return null;
   if (audioCtx.state === "suspended") void audioCtx.resume();
   return audioCtx;
 }

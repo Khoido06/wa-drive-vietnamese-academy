@@ -10,6 +10,7 @@ import { FeedbackBanner } from "@repo/ui/feedback-banner";
 import { vi } from "@repo/ui/i18n/vi";
 import { apiFetch, ensureUser, useTelemetry } from "../../lib/api";
 import { recordPracticeAnswer } from "../../lib/study-stats";
+import { unlockAudio } from "../../lib/correct-sound";
 import { HeaderAction } from "../../components/header-action";
 import { UsageMeter } from "../../components/usage-meter";
 import { VoiceButton } from "../../components/voice-button";
@@ -83,6 +84,7 @@ export default function LearnPage() {
 
   const submit = async () => {
     if (!selected || !question) return;
+    unlockAudio();
     setSubmitting(true);
     try {
       const userId = await ensureUser();

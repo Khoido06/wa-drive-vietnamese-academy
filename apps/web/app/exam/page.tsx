@@ -12,6 +12,7 @@ import { vi } from "@repo/ui/i18n/vi";
 import { apiFetch, ensureUser, useTelemetry } from "../../lib/api";
 import { recordExamComplete } from "../../lib/study-stats";
 import { triggerCorrect } from "../../lib/celebration";
+import { unlockAudio } from "../../lib/correct-sound";
 import { loadOfflineExamBundle } from "../../lib/offline";
 import { OfflineExamBanner } from "../../components/offline-exam-banner";
 import { OfflineExamCard } from "../../components/offline-exam-card";
@@ -177,6 +178,7 @@ export default function ExamPage() {
 
   const submitAnswer = async () => {
     if (!selected || !questions[current]) return;
+    unlockAudio();
     const q = questions[current];
     try {
       if (offlineMode) {
