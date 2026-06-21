@@ -16,6 +16,9 @@ import { UsageMeter } from "../../components/usage-meter";
 import { VoiceButton } from "../../components/voice-button";
 import { QuestionSignImage } from "../../components/question-sign-image";
 
+type PracticeMode = "new" | "review";
+const PRACTICE_MODE_KEY = "wa_practice_mode";
+
 interface Question {
   id: string;
   topic: string;
@@ -48,9 +51,15 @@ const TOPIC_LABELS: Record<string, string> = {
   sharing_the_road: "Chia sẻ đường",
 };
 
+function loadPracticeMode(): PracticeMode {
+  if (typeof window === "undefined") return "new";
+  return localStorage.getItem(PRACTICE_MODE_KEY) === "review" ? "review" : "new";
+}
+
 export default function LearnPage() {
   const router = useRouter();
   const { track } = useTelemetry("learn");
+  const [practiceMode, setPracticeMode] = useState<PracticeMode>(() => loadPracticeMode());
   const [question, setQuestion] = useState<Question | null>(null);
   const [dueTopics, setDueTopics] = useState<string[]>([]);
   const [selected, setSelected] = useState<string | null>(null);
@@ -61,7 +70,7 @@ export default function LearnPage() {
   const [error, setError] = useState<string | null>(null);
   const [encouragement, setEncouragement] = useState<{ title: string; subtitle?: string; celebrate?: boolean } | null>(null);
 
-  const loadQuestion = useCallback(async () => {
+  const loadQuestion = useCallback(async (mode: PracticeMode) => {
     setLoading(true);
     setError(null);
     setSelected(null);
@@ -70,7 +79,9 @@ export default function LearnPage() {
     setStartTime(Date.now());
     try {
       const userId = await ensureUser();
-      const data = await apiFetch<{ question: Question; dueTopics?: string[] }>(`/learning/${userId}/next`);
+      const data = await apiFetch<{ question: Question; dueTopics?: string[]; mode?: PracticeMode }>(
+        `/learning/${userId}/next?mode=${mode}`,
+      );
       setQuestion(data.question);
       setDueTopics(data.dueTopics ?? []);
     } catch (err) {
@@ -80,7 +91,15 @@ export default function LearnPage() {
     }
   }, []);
 
-  useEffect(() => { loadQuestion(); }, [loadQuestion]);
+  useEffect(() => {
+    loadQuestion(practiceMode);
+  }, [practiceMode, loadQuestion]);
+
+  const setMode = (mode: PracticeMode) => {
+    localStorage.setItem(PRACTICE_MODE_KEY, mode);
+    setPracticeMode(mode);
+    track("practice_mode_change", { mode });
+  };
 
   const submit = async () => {
     if (!selected || !question) return;
@@ -108,6 +127,7 @@ export default function LearnPage() {
       track(attempt.isCorrect ? "answer_correct" : "answer_incorrect", {
         combo: recorded.stats.sessionCombo,
         streak: recorded.stats.streak,
+        mode: practiceMode,
       });
     } catch (err) {
       setError(err instanceof Error ? err.message : vi.common.error);
@@ -124,18 +144,52 @@ export default function LearnPage() {
   return (
     <ScreenLayout title={vi.learn.title} subtitle={vi.learn.subtitle} onBack={() => router.push("/")} headerAction={<HeaderAction />}>
       <UsageMeter show="practice" compact />
+
+      <div className="practice-mode-toggle" role="group" aria-label="Chế độ luyện tập">
+        <button
+          type="button"
+          className={`practice-mode-toggle__btn${practiceMode === "new" ? " practice-mode-toggle__btn--active" : ""}`}
+          onClick={() => setMode("new")}
+          aria-pressed={practiceMode === "new"}
+        >
+          🆕 Câu mới
+        </button>
+        <button
+          type="button"
+          className={`practice-mode-toggle__btn${practiceMode === "review" ? " practice-mode-toggle__btn--active" : ""}`}
+          onClick={() => setMode("review")}
+          aria-pressed={practiceMode === "review"}
+        >
+          🔁 Ôn lại
+        </button>
+      </div>
+
       {loading && <LoadingState message={vi.common.loading} />}
       {error && (
         <>
           <p style={{ color: "var(--color-error)", textAlign: "center", fontSize: "var(--font-size-base)" }}>{error}</p>
-          <ElderButton onClick={loadQuestion}>{vi.common.retry}</ElderButton>
+          <ElderButton onClick={() => loadQuestion(practiceMode)}>{vi.common.retry}</ElderButton>
         </>
       )}
       {question && !loading && (
         <>
-          {weakTopicHint && !result && (
-            <div className="weak-topic-banner" role="status">
-              🎯 Ôn chủ đề yếu: <strong>{weakTopicHint}</strong>
+          {!result && (
+            <div className="practice-mode-hint" role="status">
+              {practiceMode === "new" ? (
+                <>
+                  🆕 <strong>Câu mới</strong> — ưu tiên câu chưa làm, xoay chủ đề, không lặp câu vừa học
+                  {weakTopicHint ? (
+                    <span className="practice-mode-hint__sub"> · Gợi ý yếu: {weakTopicHint}</span>
+                  ) : null}
+                </>
+              ) : (
+                <>
+                  🔁 <strong>Ôn lại</strong> — tập trung câu sai
+                  {weakTopicHint ? (
+                    <span className="practice-mode-hint__sub"> · Chủ đề yếu: {weakTopicHint}</span>
+                  ) : null}
+                </>
+              )}
             </div>
           )}
           <div className="question-card">
@@ -183,7 +237,9 @@ export default function LearnPage() {
               {result.explanationVi && (
                 <VoiceButton text={result.explanationVi} label="🔊 Đọc giải thích" />
               )}
-              <ElderButton variant="success" onClick={loadQuestion}>{vi.learn.next}</ElderButton>
+              <ElderButton variant="success" onClick={() => loadQuestion(practiceMode)}>
+                {vi.learn.next}
+              </ElderButton>
             </>
           )}
         </>

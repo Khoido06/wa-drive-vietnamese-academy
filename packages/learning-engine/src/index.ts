@@ -57,7 +57,15 @@ export {
   WA_DMV_EXAM_LENGTH,
   WA_DMV_PASS_COUNT,
   WA_EXAM_SETS,
+  type PracticeMode,
 } from "./curated-exam.js";
+
+export {
+  selectNextCuratedQuestion,
+  computeAvoidTopics,
+  recentQuestionIds,
+  RECENT_EXCLUDE_COUNT,
+} from "./question-selection.js";
 
 export {
   getStudyStats,

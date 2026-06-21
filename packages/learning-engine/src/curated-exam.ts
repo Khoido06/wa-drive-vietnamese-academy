@@ -3,6 +3,14 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { and, eq, sql } from "drizzle-orm";
 import { getDb, questions } from "@repo/db";
+import {
+  type PracticeMode,
+  selectNextCuratedQuestion,
+  type AttemptRecord,
+} from "./question-selection.js";
+
+export type { PracticeMode } from "./question-selection.js";
+export { RECENT_EXCLUDE_COUNT, selectNextCuratedQuestion, computeAvoidTopics, recentQuestionIds } from "./question-selection.js";
 
 const __dir = dirname(fileURLToPath(import.meta.url));
 
@@ -159,17 +167,21 @@ export async function getCuratedQuestionCount(stateCode = "WA"): Promise<number>
   return rows[0]?.count ?? 0;
 }
 
-function pickFromPool<T>(pool: T[]): T | null {
-  if (pool.length === 0) return null;
-  return pool[Math.floor(Math.random() * pool.length)] ?? null;
+export interface GetNextCuratedOptions {
+  mode?: PracticeMode;
+  priorityTopics?: string[];
+  excludeQuestionIds?: string[];
+  avoidTopics?: string[];
 }
 
 export async function getNextCuratedQuestion(
   userId: string,
   stateCode = "WA",
-  priorityTopics: string[] = [],
+  options: GetNextCuratedOptions = {},
 ): Promise<(typeof questions.$inferSelect) | null> {
   const db = getDb();
+  const priorityTopics = options.priorityTopics ?? [];
+  const mode = options.mode ?? "new";
 
   const rows = await db
     .select()
@@ -185,39 +197,30 @@ export async function getNextCuratedQuestion(
   if (rows.length === 0) return null;
 
   const attemptRows = await db.execute(sql`
-    SELECT question_id, is_correct
-    FROM user_attempts
-    WHERE user_id = ${userId}
-    ORDER BY created_at DESC
+    SELECT ua.question_id, ua.is_correct, q.topic
+    FROM user_attempts ua
+    INNER JOIN questions q ON q.id = ua.question_id
+    WHERE ua.user_id = ${userId}
+    ORDER BY ua.created_at DESC
+    LIMIT 50
   `);
-  const attempts = attemptRows as unknown as Array<{ question_id: string; is_correct: boolean }>;
-  const attemptedIds = new Set(attempts.map((r) => r.question_id));
-  const wrongIds = new Set(attempts.filter((r) => !r.is_correct).map((r) => r.question_id));
 
-  const filterUnseen = (pool: typeof rows) => pool.filter((q) => !attemptedIds.has(q.id));
-  const filterWrong = (pool: typeof rows) => pool.filter((q) => wrongIds.has(q.id));
-  const filterTopics = (pool: typeof rows, topics: string[]) =>
-    topics.length > 0 ? pool.filter((q) => topics.includes(q.topic)) : pool;
+  const attempts: AttemptRecord[] = (
+    attemptRows as unknown as Array<{ question_id: string; is_correct: boolean; topic: string }>
+  ).map((r) => ({
+    questionId: r.question_id,
+    isCorrect: r.is_correct,
+    topic: r.topic,
+  }));
 
-  // 1. Weak topics — prefer unseen, then previously wrong
-  if (priorityTopics.length > 0) {
-    const topicPool = filterTopics(rows, priorityTopics);
-    const unseenWeak = filterUnseen(topicPool);
-    if (unseenWeak.length > 0) return pickFromPool(unseenWeak);
-    const wrongWeak = filterWrong(topicPool);
-    if (wrongWeak.length > 0) return pickFromPool(wrongWeak);
-    if (topicPool.length > 0) return pickFromPool(topicPool);
-  }
+  const selected = selectNextCuratedQuestion(rows, attempts, {
+    mode,
+    priorityTopics,
+    excludeQuestionIds: options.excludeQuestionIds,
+    avoidTopics: options.avoidTopics,
+  });
 
-  // 2. Any previously wrong answers
-  const wrongPool = filterWrong(rows);
-  if (wrongPool.length > 0) return pickFromPool(wrongPool);
-
-  // 3. Unseen questions
-  const unseen = filterUnseen(rows);
-  if (unseen.length > 0) return pickFromPool(unseen);
-
-  return pickFromPool(rows);
+  return selected ?? null;
 }
 
 export async function startWaExamSet(

@@ -70,6 +70,8 @@ export async function updateUserProfile(c: Context) {
 export async function nextQuestion(c: Context) {
   const userId = c.req.param("userId");
   if (!userId) return c.json({ error: "userId required" }, 400);
+  const modeParam = c.req.query("mode");
+  const mode = modeParam === "review" ? "review" : "new";
   try {
     const premium = await isUserPremium(userId);
     const usage = await checkAndIncrementUsage(userId, "practice", premium);
@@ -82,7 +84,7 @@ export async function nextQuestion(c: Context) {
         429,
       );
     }
-    const result = await getNextQuestion(userId);
+    const result = await getNextQuestion(userId, mode);
     return c.json(result);
   } catch (err) {
     const message = err instanceof Error ? err.message : "Failed to get question";

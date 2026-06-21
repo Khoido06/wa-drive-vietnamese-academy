@@ -21,7 +21,12 @@ import {
   WA_DRIVER_TOPICS,
   type FailureCluster,
 } from "./spaced-repetition.js";
-import { getNextCuratedQuestion } from "./curated-exam.js";
+import { getNextCuratedQuestion, type PracticeMode } from "./curated-exam.js";
+import {
+  computeAvoidTopics,
+  recentQuestionIds,
+  type AttemptRecord,
+} from "./question-selection.js";
 
 export interface NextQuestionResult {
   question: {
@@ -34,6 +39,7 @@ export interface NextQuestionResult {
     difficultyScore: number;
   };
   dueTopics: string[];
+  mode: PracticeMode;
 }
 
 export async function getOrCreateUser(displayName: string) {
@@ -113,7 +119,10 @@ export async function linkClerkUser(
   return created;
 }
 
-export async function getNextQuestion(userId: string): Promise<NextQuestionResult> {
+export async function getNextQuestion(
+  userId: string,
+  mode: PracticeMode = "new",
+): Promise<NextQuestionResult> {
   const db = getDb();
 
   const [user] = await db.select().from(users).where(eq(users.id, userId)).limit(1);
@@ -135,7 +144,28 @@ export async function getNextQuestion(userId: string): Promise<NextQuestionResul
       ]),
     ].slice(0, 3);
 
-    const curated = await getNextCuratedQuestion(userId, "WA", dueTopics);
+    const recentRows = await db.execute(sql`
+      SELECT ua.question_id, ua.is_correct, q.topic
+      FROM user_attempts ua
+      INNER JOIN questions q ON q.id = ua.question_id
+      WHERE ua.user_id = ${userId}
+      ORDER BY ua.created_at DESC
+      LIMIT 50
+    `);
+    const recentAttempts: AttemptRecord[] = (
+      recentRows as unknown as Array<{ question_id: string; is_correct: boolean; topic: string }>
+    ).map((r) => ({
+      questionId: r.question_id,
+      isCorrect: r.is_correct,
+      topic: r.topic,
+    }));
+
+    const curated = await getNextCuratedQuestion(userId, "WA", {
+      mode,
+      priorityTopics: dueTopics,
+      excludeQuestionIds: recentQuestionIds(recentAttempts),
+      avoidTopics: computeAvoidTopics(recentAttempts),
+    });
     if (curated) {
       return {
         question: {
@@ -148,6 +178,7 @@ export async function getNextQuestion(userId: string): Promise<NextQuestionResul
           difficultyScore: curated.difficultyScore,
         },
         dueTopics,
+        mode,
       };
     }
   }
@@ -191,6 +222,7 @@ export async function getNextQuestion(userId: string): Promise<NextQuestionResul
       difficultyScore: question.difficultyScore,
     },
     dueTopics,
+    mode,
   };
 }
 
