@@ -3,7 +3,6 @@
 const MUTE_KEY = "wa_sound_muted";
 
 let audioCtx: AudioContext | null = null;
-let unlocked = false;
 
 /** Call synchronously inside a user gesture (tap/click) to unlock iOS Safari audio. */
 export function unlockAudio(): void {
@@ -11,30 +10,39 @@ export function unlockAudio(): void {
   if (localStorage.getItem(MUTE_KEY) === "1") return;
 
   if (!audioCtx) audioCtx = new AudioContext();
+
+  if (audioCtx.state === "running") return;
+
   if (audioCtx.state === "suspended") void audioCtx.resume();
 
-  if (unlocked) return;
   try {
     const buf = audioCtx.createBuffer(1, 1, 22050);
     const src = audioCtx.createBufferSource();
     src.buffer = buf;
     src.connect(audioCtx.destination);
     src.start(0);
-    unlocked = true;
   } catch {
     // iOS may reject until gesture — retry on next tap
   }
 }
 
-function getCtx(): AudioContext | null {
+async function ensureRunningCtx(): Promise<AudioContext | null> {
   if (typeof window === "undefined") return null;
   if (localStorage.getItem(MUTE_KEY) === "1") return null;
-  if (!audioCtx || !unlocked) return null;
-  if (audioCtx.state === "suspended") void audioCtx.resume();
-  return audioCtx;
+  if (!audioCtx) return null;
+
+  if (audioCtx.state === "suspended") {
+    try {
+      await audioCtx.resume();
+    } catch {
+      return null;
+    }
+  }
+
+  return audioCtx.state === "running" ? audioCtx : null;
 }
 
-function playTone(ctx: AudioContext, freq: number, start: number, dur: number, vol = 0.14) {
+function playTone(ctx: AudioContext, freq: number, start: number, dur: number, vol = 0.18) {
   const osc = ctx.createOscillator();
   const gain = ctx.createGain();
   osc.type = "sine";
@@ -49,12 +57,14 @@ function playTone(ctx: AudioContext, freq: number, start: number, dur: number, v
 
 /** Duolingo-style ascending chime on correct answer. */
 export function playCorrectSound(): void {
-  const ctx = getCtx();
-  if (!ctx) return;
-  const t = ctx.currentTime;
-  playTone(ctx, 523.25, t, 0.13);
-  playTone(ctx, 659.25, t + 0.09, 0.18);
-  playTone(ctx, 783.99, t + 0.18, 0.22, 0.1);
+  void (async () => {
+    const ctx = await ensureRunningCtx();
+    if (!ctx) return;
+    const t = ctx.currentTime;
+    playTone(ctx, 523.25, t, 0.13);
+    playTone(ctx, 659.25, t + 0.09, 0.18);
+    playTone(ctx, 783.99, t + 0.18, 0.22, 0.12);
+  })();
 }
 
 export function isSoundMuted(): boolean {
