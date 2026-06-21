@@ -306,7 +306,6 @@ export function recordExamComplete(passed: boolean, score: number, total: number
   const stats = getStudyStats();
 
   if (passed) {
-    triggerCorrect();
     triggerCelebrate();
     return {
       stats,

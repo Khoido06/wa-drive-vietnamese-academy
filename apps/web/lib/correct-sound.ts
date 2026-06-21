@@ -4,32 +4,13 @@ const MUTE_KEY = "wa_sound_muted";
 
 let audioCtx: AudioContext | null = null;
 
-/** Call synchronously inside a user gesture (tap/click) to unlock iOS Safari audio. */
-export function unlockAudio(): void {
-  if (typeof window === "undefined") return;
-  if (localStorage.getItem(MUTE_KEY) === "1") return;
-
-  if (!audioCtx) audioCtx = new AudioContext();
-
-  if (audioCtx.state === "running") return;
-
-  if (audioCtx.state === "suspended") void audioCtx.resume();
-
-  try {
-    const buf = audioCtx.createBuffer(1, 1, 22050);
-    const src = audioCtx.createBufferSource();
-    src.buffer = buf;
-    src.connect(audioCtx.destination);
-    src.start(0);
-  } catch {
-    // iOS may reject until gesture — retry on next tap
-  }
-}
-
-async function ensureRunningCtx(): Promise<AudioContext | null> {
+async function getRunningCtx(): Promise<AudioContext | null> {
   if (typeof window === "undefined") return null;
   if (localStorage.getItem(MUTE_KEY) === "1") return null;
-  if (!audioCtx) return null;
+
+  if (!audioCtx || audioCtx.state === "closed") {
+    audioCtx = new AudioContext();
+  }
 
   if (audioCtx.state === "suspended") {
     try {
@@ -42,7 +23,27 @@ async function ensureRunningCtx(): Promise<AudioContext | null> {
   return audioCtx.state === "running" ? audioCtx : null;
 }
 
-function playTone(ctx: AudioContext, freq: number, start: number, dur: number, vol = 0.18) {
+function playSilentWarmup(ctx: AudioContext): void {
+  try {
+    const buf = ctx.createBuffer(1, 1, 22050);
+    const src = ctx.createBufferSource();
+    src.buffer = buf;
+    src.connect(ctx.destination);
+    src.start(0);
+  } catch {
+    // ignore — resume() alone may be enough
+  }
+}
+
+/** Call synchronously inside a user gesture (tap/click) to unlock iOS Safari audio. */
+export function unlockAudio(): void {
+  void (async () => {
+    const ctx = await getRunningCtx();
+    if (ctx) playSilentWarmup(ctx);
+  })();
+}
+
+function playTone(ctx: AudioContext, freq: number, start: number, dur: number, vol = 0.2) {
   const osc = ctx.createOscillator();
   const gain = ctx.createGain();
   osc.type = "sine";
@@ -55,15 +56,23 @@ function playTone(ctx: AudioContext, freq: number, start: number, dur: number, v
   osc.stop(start + dur);
 }
 
+function scheduleChime(ctx: AudioContext): void {
+  const t = ctx.currentTime;
+  playTone(ctx, 523.25, t, 0.13);
+  playTone(ctx, 659.25, t + 0.09, 0.18);
+  playTone(ctx, 783.99, t + 0.18, 0.22, 0.14);
+}
+
 /** Duolingo-style ascending chime on correct answer. */
 export function playCorrectSound(): void {
   void (async () => {
-    const ctx = await ensureRunningCtx();
+    let ctx = await getRunningCtx();
+    if (!ctx) {
+      await new Promise((r) => setTimeout(r, 80));
+      ctx = await getRunningCtx();
+    }
     if (!ctx) return;
-    const t = ctx.currentTime;
-    playTone(ctx, 523.25, t, 0.13);
-    playTone(ctx, 659.25, t + 0.09, 0.18);
-    playTone(ctx, 783.99, t + 0.18, 0.22, 0.12);
+    scheduleChime(ctx);
   })();
 }
 

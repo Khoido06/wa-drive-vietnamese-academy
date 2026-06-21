@@ -237,6 +237,7 @@ export default function ExamPage() {
       if (current + 1 >= questions.length) {
         setFinished(true);
         const passed = newScore >= passCount;
+        if (passed && !result.isCorrect) triggerCorrect();
         const recorded = recordExamComplete(passed, newScore, questions.length);
         setExamCelebration({ title: recorded.title, subtitle: recorded.subtitle });
         track("exam_finish", { score: newScore, total: questions.length, setId: selectedSet, offline: offlineMode, passed });

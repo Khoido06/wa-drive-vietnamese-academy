@@ -16,6 +16,8 @@ import { applyCollisionResponse, detectCollision } from "../lib/drive-sim/collis
 import { SteeringWheel } from "./steering-wheel";
 import { MirrorHud } from "./mirror-hud";
 import type { CameraMode, WeatherMode } from "./drive-sim-3d/drive-canvas-3d";
+import { triggerCelebrate, triggerCorrect } from "../lib/celebration";
+import { unlockAudio } from "../lib/correct-sound";
 
 const DriveCanvas3D = dynamic(
   () => import("./drive-sim-3d/drive-canvas-3d").then((m) => m.DriveCanvas3D),
@@ -196,6 +198,7 @@ export function DrivingSimulator({ scenarioId, onExit }: Props) {
 
   const checkScore = () => {
     if (!scenario) return;
+    unlockAudio();
     const hillScenario =
       scenario.id === "hill_parking" ? { ...scenario, hillMode } : scenario;
     const res = evaluateScenario(hillScenario, carRef.current, {
@@ -210,6 +213,10 @@ export function DrivingSimulator({ scenarioId, onExit }: Props) {
       collisions: collisionCount,
     });
     setResult(res);
+    if (res.passed) {
+      triggerCorrect();
+      triggerCelebrate();
+    }
   };
 
   if (!scenario) {

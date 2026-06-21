@@ -998,12 +998,14 @@ a { color: inherit; text-decoration: none; }
 }
 
 .cheer-mascot__arm--left {
-  transform-origin: 52px 96px;
+  transform-box: fill-box;
+  transform-origin: 70% 20%;
   animation: cheer-wave-left 0.45s ease infinite alternate;
 }
 
 .cheer-mascot__arm--right {
-  transform-origin: 68px 96px;
+  transform-box: fill-box;
+  transform-origin: 30% 20%;
   animation: cheer-wave-right 0.45s ease infinite alternate;
 }
 
