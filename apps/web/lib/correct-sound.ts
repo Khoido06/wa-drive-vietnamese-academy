@@ -1,26 +1,39 @@
 "use client";
 
 const MUTE_KEY = "wa_sound_muted";
+const CTX_KEY = "__waAudioCtx";
 
-let audioCtx: AudioContext | null = null;
+type WaWindow = Window & { [CTX_KEY]?: AudioContext };
+
+function getCtxRef(): AudioContext | null {
+  if (typeof window === "undefined") return null;
+  return (window as WaWindow)[CTX_KEY] ?? null;
+}
+
+function setCtxRef(ctx: AudioContext | undefined): void {
+  if (typeof window === "undefined") return;
+  (window as WaWindow)[CTX_KEY] = ctx;
+}
 
 async function getRunningCtx(): Promise<AudioContext | null> {
   if (typeof window === "undefined") return null;
   if (localStorage.getItem(MUTE_KEY) === "1") return null;
 
-  if (!audioCtx || audioCtx.state === "closed") {
-    audioCtx = new AudioContext();
+  let ctx = getCtxRef();
+  if (!ctx || ctx.state === "closed") {
+    ctx = new AudioContext();
+    setCtxRef(ctx);
   }
 
-  if (audioCtx.state === "suspended") {
+  if (ctx.state === "suspended") {
     try {
-      await audioCtx.resume();
+      await ctx.resume();
     } catch {
       return null;
     }
   }
 
-  return audioCtx.state === "running" ? audioCtx : null;
+  return ctx.state === "running" ? ctx : null;
 }
 
 function playSilentWarmup(ctx: AudioContext): void {
