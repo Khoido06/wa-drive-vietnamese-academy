@@ -9,4 +9,11 @@ declare module "web-push" {
     payload: string | Buffer,
     options?: Record<string, unknown>,
   ): Promise<void>;
+
+  /** Present when dynamically imported from an ESM package (Node CJS interop). */
+  const defaultExport: {
+    setVapidDetails: typeof setVapidDetails;
+    sendNotification: typeof sendNotification;
+  };
+  export default defaultExport;
 }

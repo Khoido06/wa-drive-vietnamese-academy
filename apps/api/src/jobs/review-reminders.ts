@@ -1,5 +1,6 @@
 import { and, eq, gte, lte } from "drizzle-orm";
 import { getDb, masteryStates, pushSubscriptions, userAttempts } from "@repo/db";
+import { loadWebPush } from "../lib/load-web-push.js";
 import { logger } from "../middleware/logger.js";
 
 type PushSubscription = {
@@ -91,9 +92,9 @@ export async function sendReviewReminders(): Promise<{
     return { sent: 0, failed: 0, skipped: 0 };
   }
 
-  let webpush: typeof import("web-push");
+  let webpush;
   try {
-    webpush = await import("web-push");
+    webpush = await loadWebPush();
   } catch {
     logger.warn("web-push not installed — run pnpm install in apps/api");
     return { sent: 0, failed: 0, skipped: 0 };

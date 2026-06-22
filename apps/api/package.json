@@ -8,7 +8,8 @@
     "build": "tsc",
     "start": "tsx src/index.ts",
     "lint": "eslint . --max-warnings 0",
-    "check-types": "tsc --noEmit"
+    "check-types": "tsc --noEmit",
+    "test": "node --import tsx --test src/**/*.test.ts"
   },
   "dependencies": {
     "@clerk/backend": "^2.17.0",
