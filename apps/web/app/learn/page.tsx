@@ -113,7 +113,7 @@ export default function LearnPage() {
           userId,
           questionId: question.id,
           selectedOptionId: selected,
-          responseTimeMs: Date.now() - startTime,
+          responseTimeMs: Math.min(Date.now() - startTime, 600_000),
           context: "practice",
         }),
       });

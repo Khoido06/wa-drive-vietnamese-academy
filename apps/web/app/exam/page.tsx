@@ -63,7 +63,7 @@ export default function ExamPage() {
   const [loading, setLoading] = useState(false);
   const [setsLoading, setSetsLoading] = useState(true);
   const [started, setStarted] = useState(false);
-  const [startTime, setStartTime] = useState(Date.now());
+  const [startTime, setStartTime] = useState(() => Date.now());
   const [offlineMode, setOfflineMode] = useState(false);
   const [offlineAnswers, setOfflineAnswers] = useState<
     Map<string, { correctOptionId: string; explanationVi: string }>
@@ -71,6 +71,10 @@ export default function ExamPage() {
   const [error, setError] = useState<string | null>(null);
   const [examCelebration, setExamCelebration] = useState<{ title: string; subtitle?: string } | null>(null);
   const { ready: offlineReady, isOnline, bundle: offlineBundle } = useOfflineExamReady();
+
+  useEffect(() => {
+    if (started && !finished) setStartTime(Date.now());
+  }, [current, started, finished]);
 
   const applyOfflineBundle = (bundle: NonNullable<typeof offlineBundle>) => {
     const answerMap = new Map(
@@ -205,7 +209,7 @@ export default function ExamPage() {
           userId,
           questionId: q.id,
           selectedOptionId: selected,
-          responseTimeMs: Date.now() - startTime,
+          responseTimeMs: Math.min(Date.now() - startTime, 600_000),
           context: "exam",
         }),
       });
@@ -244,7 +248,6 @@ export default function ExamPage() {
       } else {
         setCurrent((c) => c + 1);
         setSelected(null);
-        setStartTime(Date.now());
       }
   };
 

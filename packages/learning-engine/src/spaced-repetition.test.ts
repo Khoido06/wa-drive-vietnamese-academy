@@ -25,6 +25,21 @@ describe("updateSpacedRepetition", () => {
     );
     assert.ok(result.intervalDays >= 3);
   });
+
+  it("caps interval days so next review stays within postgres range", () => {
+    const result = updateSpacedRepetition(
+      {
+        easeFactor: 2.5,
+        intervalDays: 50_000,
+        repetitions: 20,
+        totalAttempts: 40,
+        correctAttempts: 38,
+      },
+      5,
+    );
+    assert.ok(result.intervalDays <= 365);
+    assert.ok(result.nextReviewAt.getFullYear() < 2100);
+  });
 });
 
 describe("detectFailureClusters", () => {

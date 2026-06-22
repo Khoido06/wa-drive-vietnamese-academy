@@ -318,13 +318,21 @@ export async function recordAttempt(input: {
     )
     .limit(1);
 
-  const srInput = existingMastery ?? {
-    easeFactor: 2.5,
-    intervalDays: 1,
-    repetitions: 0,
-    totalAttempts: 0,
-    correctAttempts: 0,
-  };
+  const srInput = existingMastery
+    ? {
+        easeFactor: existingMastery.easeFactor,
+        intervalDays: existingMastery.intervalDays,
+        repetitions: existingMastery.repetitions,
+        totalAttempts: existingMastery.totalAttempts,
+        correctAttempts: existingMastery.correctAttempts,
+      }
+    : {
+        easeFactor: 2.5,
+        intervalDays: 1,
+        repetitions: 0,
+        totalAttempts: 0,
+        correctAttempts: 0,
+      };
 
   const updated = updateSpacedRepetition(srInput, quality);
 

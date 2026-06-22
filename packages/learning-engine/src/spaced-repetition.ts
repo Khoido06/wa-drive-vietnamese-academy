@@ -7,6 +7,27 @@ export interface ReviewResult {
   masteryLevel: number;
 }
 
+/** Postgres timestamptz safe horizon — SM-2 intervals must not explode. */
+export const MAX_INTERVAL_DAYS = 365;
+export const MAX_EASE_FACTOR = 2.5;
+export const MIN_EASE_FACTOR = 1.3;
+
+function clampIntervalDays(days: number): number {
+  if (!Number.isFinite(days) || days < 1) return 1;
+  return Math.min(MAX_INTERVAL_DAYS, Math.round(days));
+}
+
+function clampEaseFactor(factor: number): number {
+  if (!Number.isFinite(factor)) return MAX_EASE_FACTOR;
+  return Math.min(MAX_EASE_FACTOR, Math.max(MIN_EASE_FACTOR, factor));
+}
+
+export function computeNextReviewAt(intervalDays: number, from = new Date()): Date {
+  const next = new Date(from);
+  next.setUTCDate(next.getUTCDate() + clampIntervalDays(intervalDays));
+  return next;
+}
+
 export function updateSpacedRepetition(
   current: {
     easeFactor: number;
@@ -18,7 +39,9 @@ export function updateSpacedRepetition(
   quality: number,
 ): ReviewResult {
   // quality: 0-5 (0=complete blackout, 5=perfect)
-  let { easeFactor, intervalDays, repetitions } = current;
+  let easeFactor = clampEaseFactor(current.easeFactor);
+  let intervalDays = clampIntervalDays(current.intervalDays);
+  let { repetitions } = current;
 
   if (quality < 3) {
     repetitions = 0;
@@ -29,18 +52,16 @@ export function updateSpacedRepetition(
     } else if (repetitions === 1) {
       intervalDays = 3;
     } else {
-      intervalDays = Math.round(intervalDays * easeFactor);
+      intervalDays = clampIntervalDays(intervalDays * easeFactor);
     }
     repetitions++;
   }
 
-  easeFactor = Math.max(
-    1.3,
+  easeFactor = clampEaseFactor(
     easeFactor + (0.1 - (5 - quality) * (0.08 + (5 - quality) * 0.02)),
   );
 
-  const nextReviewAt = new Date();
-  nextReviewAt.setDate(nextReviewAt.getDate() + intervalDays);
+  const nextReviewAt = computeNextReviewAt(intervalDays);
 
   const masteryLevel = Math.min(
     1,
