@@ -119,7 +119,10 @@ export async function submitAttempt(c: Context) {
   }
 
   try {
-    const result = await recordAttempt(body);
+    const result = await recordAttempt({
+      ...body,
+      responseTimeMs: Math.max(0, Math.min(Number(body.responseTimeMs) || 0, 600_000)),
+    });
     return c.json(result);
   } catch (err) {
     const message = err instanceof Error ? err.message : "Failed to record attempt";

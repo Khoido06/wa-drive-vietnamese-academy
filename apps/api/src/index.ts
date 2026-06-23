@@ -55,7 +55,7 @@ import {
 import { serve as inngestServeHandler } from "inngest/hono";
 import { inngest } from "./jobs/inngest-client.js";
 import { inngestFunctions } from "./jobs/inngest-functions.js";
-import { ensurePushSubscriptionsTable, ensureStudyStatsColumns } from "./db/bootstrap.js";
+import { ensurePushSubscriptionsTable, ensureStudyStatsColumns, ensureMasteryStatesSanitized } from "./db/bootstrap.js";
 
 const inngestServe = inngestServeHandler({ client: inngest, functions: inngestFunctions });
 
@@ -76,7 +76,7 @@ app.use("*", optionalClerkAuth);
 const ragRateLimit = createRateLimit({ windowMs: 60_000, max: 20, keyPrefix: "rag" });
 
 app.get("/health", (c) =>
-  c.json({ status: "ok", system: "wa-drive-vietnamese-academy", version: "0.7.1" }),
+  c.json({ status: "ok", system: "wa-drive-vietnamese-academy", version: "0.7.2" }),
 );
 
 app.get("/health/observability", observabilityStatus);
@@ -157,6 +157,7 @@ startReviewReminderCron();
 
 void ensurePushSubscriptionsTable();
 void ensureStudyStatsColumns();
+void ensureMasteryStatesSanitized();
 
 serveHttp({ fetch: app.fetch, port });
 

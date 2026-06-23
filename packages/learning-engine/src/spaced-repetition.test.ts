@@ -39,6 +39,22 @@ describe("updateSpacedRepetition", () => {
     );
     assert.ok(result.intervalDays <= 365);
     assert.ok(result.nextReviewAt.getFullYear() < 2100);
+    assert.ok(result.nextReviewAt.getFullYear() <= 9999);
+  });
+
+  it("sanitizes astronomically corrupted legacy state", () => {
+    const result = updateSpacedRepetition(
+      {
+        easeFactor: 999,
+        intervalDays: 3_652_000,
+        repetitions: 50,
+        totalAttempts: 100,
+        correctAttempts: 90,
+      },
+      5,
+    );
+    assert.equal(result.intervalDays, 365);
+    assert.ok(result.nextReviewAt.getFullYear() < 2100);
   });
 });
 

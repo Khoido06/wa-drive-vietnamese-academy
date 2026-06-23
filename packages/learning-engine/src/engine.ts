@@ -18,6 +18,8 @@ import {
   qualityFromAttempt,
   detectFailureClusters,
   reorderCurriculum,
+  clampResponseTimeMs,
+  sanitizeSpacedRepetitionInput,
   WA_DRIVER_TOPICS,
   type FailureCluster,
 } from "./spaced-repetition.js";
@@ -280,15 +282,16 @@ export async function recordAttempt(input: {
 
   if (!question) throw new Error("Question not found");
 
+  const responseTimeMs = clampResponseTimeMs(input.responseTimeMs);
   const isCorrect = input.selectedOptionId === question.correctOptionId;
-  const quality = qualityFromAttempt(isCorrect, input.responseTimeMs);
+  const quality = qualityFromAttempt(isCorrect, responseTimeMs);
 
   await db.insert(userAttempts).values({
     userId: input.userId,
     questionId: input.questionId,
     selectedOptionId: input.selectedOptionId,
     isCorrect,
-    responseTimeMs: input.responseTimeMs,
+    responseTimeMs,
     context: input.context ?? "practice",
   });
 
@@ -302,7 +305,7 @@ export async function recordAttempt(input: {
       difficultyScore: updateDifficulty(
         question.difficultyScore,
         isCorrect,
-        input.responseTimeMs,
+        responseTimeMs,
       ),
     })
     .where(eq(questions.id, input.questionId));
@@ -318,50 +321,56 @@ export async function recordAttempt(input: {
     )
     .limit(1);
 
-  const srInput = existingMastery
-    ? {
-        easeFactor: existingMastery.easeFactor,
-        intervalDays: existingMastery.intervalDays,
-        repetitions: existingMastery.repetitions,
-        totalAttempts: existingMastery.totalAttempts,
-        correctAttempts: existingMastery.correctAttempts,
-      }
-    : {
-        easeFactor: 2.5,
-        intervalDays: 1,
-        repetitions: 0,
-        totalAttempts: 0,
-        correctAttempts: 0,
-      };
+  const srInput = sanitizeSpacedRepetitionInput(
+    existingMastery
+      ? {
+          easeFactor: existingMastery.easeFactor,
+          intervalDays: existingMastery.intervalDays,
+          repetitions: existingMastery.repetitions,
+          totalAttempts: existingMastery.totalAttempts,
+          correctAttempts: existingMastery.correctAttempts,
+        }
+      : {
+          easeFactor: 2.5,
+          intervalDays: 1,
+          repetitions: 0,
+          totalAttempts: 0,
+          correctAttempts: 0,
+        },
+  );
 
   const updated = updateSpacedRepetition(srInput, quality);
 
-  if (existingMastery) {
-    await db
-      .update(masteryStates)
-      .set({
+  try {
+    if (existingMastery) {
+      await db
+        .update(masteryStates)
+        .set({
+          easeFactor: updated.easeFactor,
+          intervalDays: updated.intervalDays,
+          repetitions: updated.repetitions,
+          nextReviewAt: updated.nextReviewAt,
+          masteryLevel: updated.masteryLevel,
+          totalAttempts: existingMastery.totalAttempts + 1,
+          correctAttempts: existingMastery.correctAttempts + (isCorrect ? 1 : 0),
+          updatedAt: new Date(),
+        })
+        .where(eq(masteryStates.id, existingMastery.id));
+    } else {
+      await db.insert(masteryStates).values({
+        userId: input.userId,
+        topic: question.topic,
         easeFactor: updated.easeFactor,
         intervalDays: updated.intervalDays,
         repetitions: updated.repetitions,
         nextReviewAt: updated.nextReviewAt,
         masteryLevel: updated.masteryLevel,
-        totalAttempts: existingMastery.totalAttempts + 1,
-        correctAttempts: existingMastery.correctAttempts + (isCorrect ? 1 : 0),
-        updatedAt: new Date(),
-      })
-      .where(eq(masteryStates.id, existingMastery.id));
-  } else {
-    await db.insert(masteryStates).values({
-      userId: input.userId,
-      topic: question.topic,
-      easeFactor: updated.easeFactor,
-      intervalDays: updated.intervalDays,
-      repetitions: updated.repetitions,
-      nextReviewAt: updated.nextReviewAt,
-      masteryLevel: updated.masteryLevel,
-      totalAttempts: 1,
-      correctAttempts: isCorrect ? 1 : 0,
-    });
+        totalAttempts: 1,
+        correctAttempts: isCorrect ? 1 : 0,
+      });
+    }
+  } catch {
+    // Corrupted legacy SM-2 rows must not block exam/practice submissions.
   }
 
   return {

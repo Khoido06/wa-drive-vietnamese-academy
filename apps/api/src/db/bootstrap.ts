@@ -30,6 +30,41 @@ export async function ensurePushSubscriptionsTable(): Promise<void> {
   }
 }
 
+/** Repairs legacy SM-2 rows that overflow Postgres timestamptz (year > 9999). */
+export async function ensureMasteryStatesSanitized(): Promise<void> {
+  if (!process.env.DATABASE_URL) return;
+
+  try {
+    const db = getDb();
+    const result = await db.execute(sql`
+      UPDATE mastery_states
+      SET
+        interval_days = LEAST(GREATEST(COALESCE(interval_days, 1), 1), 365),
+        ease_factor = LEAST(GREATEST(COALESCE(ease_factor, 2.5), 1.3), 2.5),
+        next_review_at = LEAST(
+          GREATEST(next_review_at, NOW()),
+          NOW() + INTERVAL '365 days'
+        ),
+        updated_at = NOW()
+      WHERE
+        interval_days > 365
+        OR interval_days < 1
+        OR ease_factor > 2.5
+        OR ease_factor < 1.3
+        OR next_review_at > NOW() + INTERVAL '400 days'
+        OR next_review_at < TIMESTAMPTZ '2000-01-01'
+    `);
+    const rows = Number((result as { rowCount?: number }).rowCount ?? 0);
+    if (rows > 0) {
+      logger.info("sanitized corrupted mastery_states rows", { rows });
+    }
+  } catch (err) {
+    logger.warn("mastery_states sanitize bootstrap failed", {
+      error: err instanceof Error ? err.message : String(err),
+    });
+  }
+}
+
 /** Ensures study gamification columns on users (Neon-safe). */
 export async function ensureStudyStatsColumns(): Promise<void> {
   if (!process.env.DATABASE_URL) return;

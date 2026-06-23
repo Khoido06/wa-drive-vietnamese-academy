@@ -11,21 +11,63 @@ export interface ReviewResult {
 export const MAX_INTERVAL_DAYS = 365;
 export const MAX_EASE_FACTOR = 2.5;
 export const MIN_EASE_FACTOR = 1.3;
+/** JS Date → ISO with year > 9999 breaks node-postgres / timestamptz inserts. */
+export const POSTGRES_SAFE_MAX_YEAR = 9999;
 
-function clampIntervalDays(days: number): number {
+export function clampIntervalDays(days: number): number {
   if (!Number.isFinite(days) || days < 1) return 1;
   return Math.min(MAX_INTERVAL_DAYS, Math.round(days));
 }
 
-function clampEaseFactor(factor: number): number {
+export function clampEaseFactor(factor: number): number {
   if (!Number.isFinite(factor)) return MAX_EASE_FACTOR;
   return Math.min(MAX_EASE_FACTOR, Math.max(MIN_EASE_FACTOR, factor));
 }
 
+export function clampResponseTimeMs(ms: number): number {
+  if (!Number.isFinite(ms) || ms < 0) return 0;
+  return Math.min(Math.round(ms), 600_000);
+}
+
+export function isPostgresSafeDate(date: Date): boolean {
+  if (!(date instanceof Date) || Number.isNaN(date.getTime())) return false;
+  const year = date.getUTCFullYear();
+  return year >= 1970 && year <= POSTGRES_SAFE_MAX_YEAR;
+}
+
+/** Coerce any computed review date into a range Postgres and node-postgres accept. */
+export function toPostgresSafeDate(date: Date, fallbackDays = MAX_INTERVAL_DAYS): Date {
+  if (isPostgresSafeDate(date)) return date;
+  return computeNextReviewAt(fallbackDays);
+}
+
+export function sanitizeSpacedRepetitionInput(current: {
+  easeFactor: number;
+  intervalDays: number;
+  repetitions: number;
+  totalAttempts: number;
+  correctAttempts: number;
+}): typeof current {
+  return {
+    easeFactor: clampEaseFactor(current.easeFactor),
+    intervalDays: clampIntervalDays(current.intervalDays),
+    repetitions: Number.isFinite(current.repetitions) && current.repetitions >= 0
+      ? Math.round(current.repetitions)
+      : 0,
+    totalAttempts: Number.isFinite(current.totalAttempts) && current.totalAttempts >= 0
+      ? Math.round(current.totalAttempts)
+      : 0,
+    correctAttempts: Number.isFinite(current.correctAttempts) && current.correctAttempts >= 0
+      ? Math.round(current.correctAttempts)
+      : 0,
+  };
+}
+
 export function computeNextReviewAt(intervalDays: number, from = new Date()): Date {
-  const next = new Date(from);
+  const base = from instanceof Date && !Number.isNaN(from.getTime()) ? from : new Date();
+  const next = new Date(base);
   next.setUTCDate(next.getUTCDate() + clampIntervalDays(intervalDays));
-  return next;
+  return toPostgresSafeDate(next);
 }
 
 export function updateSpacedRepetition(
@@ -38,10 +80,11 @@ export function updateSpacedRepetition(
   },
   quality: number,
 ): ReviewResult {
+  const safe = sanitizeSpacedRepetitionInput(current);
   // quality: 0-5 (0=complete blackout, 5=perfect)
-  let easeFactor = clampEaseFactor(current.easeFactor);
-  let intervalDays = clampIntervalDays(current.intervalDays);
-  let { repetitions } = current;
+  let easeFactor = safe.easeFactor;
+  let intervalDays = safe.intervalDays;
+  let { repetitions } = safe;
 
   if (quality < 3) {
     repetitions = 0;
@@ -65,8 +108,8 @@ export function updateSpacedRepetition(
 
   const masteryLevel = Math.min(
     1,
-    (current.correctAttempts + (quality >= 3 ? 1 : 0)) /
-      Math.max(current.totalAttempts + 1, 1),
+    (safe.correctAttempts + (quality >= 3 ? 1 : 0)) /
+      Math.max(safe.totalAttempts + 1, 1),
   );
 
   return { easeFactor, intervalDays, repetitions, nextReviewAt, masteryLevel };
@@ -88,10 +131,11 @@ export function qualityFromAttempt(
   isCorrect: boolean,
   responseTimeMs: number,
 ): number {
+  const ms = clampResponseTimeMs(responseTimeMs);
   if (!isCorrect) return 1;
-  if (responseTimeMs < 5000) return 5;
-  if (responseTimeMs < 10000) return 4;
-  if (responseTimeMs < 20000) return 3;
+  if (ms < 5000) return 5;
+  if (ms < 10000) return 4;
+  if (ms < 20000) return 3;
   return 3;
 }
 
